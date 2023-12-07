@@ -43,6 +43,11 @@
 
         function parseUserIdFromAccessToken(accessToken) {
             const tokenParts = accessToken.split('.');
+            
+            if (tokenParts.length < 2) {
+                throw new Error('Invalid access token format');
+            }
+
             const encodedPayload = tokenParts[1];
 
             // Padding may be needed to make the encoded payload length a multiple of 4
