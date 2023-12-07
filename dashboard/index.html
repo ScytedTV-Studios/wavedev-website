@@ -24,7 +24,7 @@
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             const storedUserId = localStorage.getItem("userId");
-    
+
             // Redirect to login if user is not authenticated
             if (!storedUserId) {
                 window.location.href = "../login";
@@ -42,13 +42,13 @@
                     });
             }
         });
-    
+
         function fetchDiscordUserData(userId) {
             // Implement your Discord API call to fetch user data using the user ID
             // Example URL: `https://discord.com/api/users/${userId}`
             // Return a Promise with the user data
             // ...
-    
+
             // For now, a placeholder Promise is returned
             return Promise.resolve({
                 id: userId,
@@ -56,26 +56,26 @@
                 avatar: "abc123"
             });
         }
-    
+
         function displayUserInfo(userData) {
             const userInfoDiv = document.getElementById("userInfo");
-    
+
             const profilePicture = document.createElement("img");
             profilePicture.src = `https://cdn.discordapp.com/avatars/${userData.id}/${userData.avatar}.png`;
             profilePicture.alt = "Profile Picture";
             profilePicture.classList.add("profile-picture");
-    
+
             const usernameElement = document.createElement("h2");
             usernameElement.textContent = userData.username;
-    
+
             userInfoDiv.appendChild(profilePicture);
             userInfoDiv.appendChild(usernameElement);
         }
-    
+
         function logout() {
             // Clear localStorage
             localStorage.removeItem("userId");
-    
+
             // Redirect to login page
             window.location.href = "../login";
         }
