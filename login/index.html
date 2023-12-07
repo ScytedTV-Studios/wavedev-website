@@ -28,12 +28,17 @@
         const accessToken = urlParams.get("access_token");
 
         if (accessToken) {
-            // Extract user ID from the access token and store it in localStorage
-            const userId = parseUserIdFromAccessToken(accessToken);
-            localStorage.setItem("userId", userId);
+            try {
+                // Extract user ID from the access token and store it in localStorage
+                const userId = parseUserIdFromAccessToken(accessToken);
+                localStorage.setItem("userId", userId);
 
-            // Redirect to the dashboard
-            window.location.href = "../dashboard";
+                // Redirect to the dashboard
+                window.location.href = "../dashboard";
+            } catch (error) {
+                // Handle errors by displaying an error message
+                displayErrorMessage("An error occurred while processing the access token.");
+            }
         }
 
         function parseUserIdFromAccessToken(accessToken) {
@@ -44,6 +49,11 @@
             }).join(''));
 
             return JSON.parse(jsonPayload).id;
+        }
+
+        function displayErrorMessage(message) {
+            const errorMessageDiv = document.getElementById("errorMessage");
+            errorMessageDiv.textContent = message;
         }
     </script>
 </body>
