@@ -1,12 +1,12 @@
 document.addEventListener("DOMContentLoaded", function () {
-    const storedAccessToken = getCookie("accessToken");
+    const storedUserId = localStorage.getItem("userId");
 
-    if (!storedAccessToken) {
-        // Redirect to login if access token is not found
+    if (!storedUserId) {
+        // Redirect to login if user is not authenticated
         window.location.href = "../login";
     } else {
         // Fetch user data from Discord API
-        fetchDiscordUserData(storedAccessToken)
+        fetchDiscordUserData(storedUserId)
             .then(userData => {
                 // Display user info on the dashboard
                 displayUserInfo(userData);
@@ -19,19 +19,17 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 });
 
-function fetchDiscordUserData(accessToken) {
-    const apiUrl = 'https://discord.com/api/users/@me';
+function fetchDiscordUserData(userId) {
+    // Implement your Discord API call to fetch user data using the user ID
+    // Example URL: `https://discord.com/api/users/${userId}`
+    // Return a Promise with the user data
+    // ...
 
-    return fetch(apiUrl, {
-        headers: {
-            Authorization: `Bearer ${accessToken}`,
-        },
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error(`Discord API Request Failed! Status: ${response.status}`);
-        }
-        return response.json();
+    // For now, a placeholder Promise is returned
+    return Promise.resolve({
+        id: userId,
+        username: "SampleUser",
+        avatar: "abc123"
     });
 }
 
@@ -51,20 +49,9 @@ function displayUserInfo(userData) {
 }
 
 function logout() {
-    // Clear cookies
-    document.cookie = "accessToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    // Clear localStorage
+    localStorage.removeItem("userId");
 
     // Redirect to login page
     window.location.href = "../login";
-}
-
-function getCookie(name) {
-    const cookies = document.cookie.split("; ");
-    for (let i = 0; i < cookies.length; i++) {
-        const cookie = cookies[i].split("=");
-        if (cookie[0] === name) {
-            return cookie[1];
-        }
-    }
-    return null;
 }
