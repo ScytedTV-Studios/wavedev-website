@@ -14,7 +14,12 @@
         header {
             background-color: #7289da;
             color: #fff;
-            padding: 10px 20px;
+            padding: 10px 0;
+        }
+
+        nav {
+            max-width: 900px;
+            margin: 0 auto;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -23,47 +28,24 @@
         .logo {
             font-size: 24px;
             font-weight: bold;
-            cursor: pointer;
         }
 
-        .user-info {
+        nav ul {
+            list-style-type: none;
             display: flex;
-            align-items: center;
-            cursor: pointer;
         }
 
-        .profile-picture {
-            max-width: 30px;
-            border-radius: 50%;
-            margin-right: 10px;
-        }
-
-        .username {
-            color: #fff;
-        }
-
-        .dropdown {
-            display: none;
-            position: absolute;
-            top: 60px;
-            right: 20px;
-            background-color: #fff;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            border-radius: 5px;
-            flex-direction: column;
-            z-index: 1;
-        }
-
-        .dropdown-button {
-            color: #333;
-            padding: 10px;
+        nav a {
             text-decoration: none;
-            cursor: pointer;
-            transition: background-color 0.3s;
+            color: #fff;
+            margin: 0 20px;
+            font-weight: bold;
+            font-size: 16px;
+            transition: color 0.3s;
         }
 
-        .dropdown-button:hover {
-            background-color: #f0f0f0;
+        nav a:hover {
+            color: #ddd;
         }
 
         .container {
@@ -80,20 +62,21 @@
             color: #333;
         }
 
-        .user-info-container {
-            display: flex;
-            align-items: center;
+        .user-info {
             margin-top: 20px;
+            text-align: right; /* Align to the right */
         }
 
         .profile-picture {
-            max-width: 150px;
+            max-width: 50px; /* Adjust the size as needed */
             border-radius: 50%;
-            margin-right: 10px;
+            margin-bottom: 10px;
+            margin-right: 10px; /* Add some right margin */
         }
 
         h2 {
             color: #333;
+            display: inline-block; /* Keep the text on the same line as the image */
         }
 
         .bot-info-container {
@@ -125,19 +108,17 @@
 </head>
 <body>
     <header>
-        <div class="logo" onclick="goHome()">ScytedTV Bot Network</div>
-        <div class="user-info" onclick="toggleDropdown()">
-            <img src="https://cdn.discordapp.com/avatars/123456789/avatar.png" alt="Profile Picture" class="profile-picture">
-            <div class="username">Username</div>
-            <div class="dropdown" id="dropdown">
-                <a href="../" class="dropdown-button">Home</a>
-                <a href="#" onclick="logout()" class="dropdown-button" style="color: red;">Logout</a>
-            </div>
-        </div>
+        <nav>
+            <div class="logo">ScytedTV Bot Network</div>
+            <ul>
+                <li><a href="../" class="active">Home</a></li>
+                <li><a href="#" onclick="logout()">Logout</a></li>
+            </ul>
+        </nav>
     </header>
     <div class="container">
         <h1>Dashboard</h1>
-        <div id="userInfo" class="user-info-container"></div>
+        <div id="userInfo" class="user-info"></div>
         <div id="botInfo" class="bot-info-container"></div>
     </div>
     <script src="scripts.js"></script>
@@ -248,15 +229,6 @@
                 }
             }
             return null;
-        }
-
-        function toggleDropdown() {
-            const dropdown = document.getElementById("dropdown");
-            dropdown.style.display = dropdown.style.display === "none" ? "flex" : "none";
-        }
-
-        function goHome() {
-            window.location.href = "../";
         }
     </script>
 </body>
