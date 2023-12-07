@@ -13,6 +13,15 @@
         <button onclick="redirectToDiscord()">Login with Discord</button>
     </div>
     <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Check if an access token is already stored
+            const storedAccessToken = getCookie("accessToken");
+            if (storedAccessToken) {
+                // Redirect to the dashboard
+                window.location.href = "../dashboard";
+            }
+        });
+
         function redirectToDiscord() {
             const clientId = '1182368783248134175'; // Replace with your Discord application's client ID
             const redirectUri = 'https://bots.scyted.tv/login/'; // Replace with your Discord application's redirect URI
@@ -50,6 +59,17 @@
         function displayErrorMessage(message) {
             const errorMessageDiv = document.getElementById("errorMessage");
             errorMessageDiv.textContent = message;
+        }
+
+        function getCookie(name) {
+            const cookies = document.cookie.split("; ");
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].split("=");
+                if (cookie[0] === name) {
+                    return cookie[1];
+                }
+            }
+            return null;
         }
     </script>
 </body>
