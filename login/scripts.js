@@ -14,11 +14,17 @@ function login() {
         return;
     }
 
+    // Validate the user ID (simple numeric check for demonstration)
+    if (!isValidUserId(userId)) {
+        alert('Invalid Discord User ID. Please enter a valid numeric ID.');
+        return;
+    }
+
     // Set user ID in cookie
     setCookie('userId', userId, 30);
 
     // Redirect to the user's page
-    window.location.href = `/users/${userId}`;
+    window.location.href = `./users/${userId}`;
 }
 
 // Function to set cookie
@@ -33,4 +39,9 @@ function getCookie(name) {
     const value = `; ${document.cookie}`;
     const parts = value.split(`; ${name}=`);
     if (parts.length === 2) return parts.pop().split(';').shift();
+}
+
+// Function to validate Discord User ID (simple numeric check for demonstration)
+function isValidUserId(userId) {
+    return /^\d+$/.test(userId);
 }
