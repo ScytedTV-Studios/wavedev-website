@@ -93,40 +93,47 @@
         .bot-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
-            justify-content: center;
+            grid-gap: 20px;
             margin-top: 20px;
         }
 
-        .bot-details {
+        .bot-container {
             text-align: center;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .bot-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            z-index: -1;
+        }
+
+        .bot-details {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            color: #fff;
         }
 
         .bot-profile-picture {
-            width: 100px;
-            height: 100px;
+            width: 80px;
+            height: 80px;
             border-radius: 50%;
             margin-bottom: 10px;
-            cursor: pointer;
         }
 
         .bot-name {
             font-weight: bold;
-            cursor: pointer;
-        }
-
-        .bot-info-container {
-            display: flex;
-            align-items: center;
-            margin-top: 20px;
-        }
-
-        .bot-profile-picture {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            margin-right: 10px;
-            cursor: pointer;
         }
     </style>
 </head>
@@ -146,7 +153,7 @@
     </header>
     <div class="container">
         <h1>Dashboard</h1>
-        <div id="botInfo" class="bot-grid"></div>
+        <div class="bot-grid" id="botGrid"></div>
     </div>
     <script src="scripts.js"></script>
     <script>
@@ -188,44 +195,57 @@
         }
 
         function displayBotInfo() {
-            const botInfoDiv = document.getElementById("botInfo");
+            const botGrid = document.getElementById("botGrid");
 
             // Example data (replace with actual data)
             const botData = [
-                { name: "Wave 24/7", profilePicture: "https://cdn.scyted.tv/discord-wave/wave.jpg", info: "Some information about Bot 1" },
-                { name: "Wave Premium", profilePicture: "https://cdn.scyted.tv/discord-wave/wave-premium.jpg", info: "Some information about Bot 6" },
-                { name: "Wave DEV", profilePicture: "https://cdn.scyted.tv/discord-wave/wave-dev.jpg", info: "Some information about Bot 2" },
-                { name: "Levlr", profilePicture: "https://cdn.scyted.tv/discord-wave/wave-dev.jpg", info: "Some information about Bot 3" },
-                { name: "Nat 20", profilePicture: "https://cdn.scyted.tv/discord-wave/wave-dev.jpg", info: "Some information about Bot 4" },
-                { name: "Heart Collectors", profilePicture: "https://cdn.scyted.tv/discord-wave/wave-dev.jpg", info: "Some information about Bot 5" },
-                // Add more bot data as needed
+                { name: "Wave 24/7", profilePicture: "https://cdn.scyted.tv/discord-wave/wave.jpg", background: "#3498db" },
+                { name: "Wave Premium", profilePicture: "https://cdn.scyted.tv/discord-wave/wave-premium.jpg", background: "#e74c3c" },
+                { name: "Wave DEV", profilePicture: "https://cdn.scyted.tv/discord-wave/wave-dev.jpg", background: "#2ecc71" },
+                { name: "Levlr", profilePicture: "https://cdn.scyted.tv/discord-wave/wave-dev.jpg", background: "#f39c12" },
+                { name: "Nat 20", profilePicture: "https://cdn.scyted.tv/discord-wave/wave-dev.jpg", background: "#9b59b6" },
+                { name: "Heart Collectors", profilePicture: "https://cdn.scyted.tv/discord-wave/wave-dev.jpg", background: "#16a085" },
             ];
 
             botData.forEach(bot => {
                 const botContainer = document.createElement("div");
-                botContainer.classList.add("bot-details");
+                botContainer.classList.add("bot-container");
+                botContainer.style.background = bot.background;
+
+                const botBackground = document.createElement("div");
+                botBackground.classList.add("bot-background");
+                botBackground.style.backgroundImage = `url(${bot.background})`;
+
+                const botDetails = document.createElement("div");
+                botDetails.classList.add("bot-details");
 
                 const botProfilePicture = document.createElement("img");
                 botProfilePicture.src = bot.profilePicture;
                 botProfilePicture.alt = "Bot Profile Picture";
                 botProfilePicture.classList.add("bot-profile-picture");
-                botProfilePicture.setAttribute("onclick", "window.location.href='#'");
 
                 const botName = document.createElement("div");
                 botName.classList.add("bot-name");
                 botName.textContent = bot.name;
-                botName.setAttribute("onclick", "window.location.href='#'");
 
-                const botInfo = document.createElement("div");
-                botInfo.classList.add("bot-info");
-                botInfo.textContent = bot.info;
+                botDetails.appendChild(botProfilePicture);
+                botDetails.appendChild(botName);
 
-                botContainer.appendChild(botProfilePicture);
-                botContainer.appendChild(botName);
-                botContainer.appendChild(botInfo);
+                botContainer.appendChild(botBackground);
+                botContainer.appendChild(botDetails);
 
-                botInfoDiv.appendChild(botContainer);
+                botContainer.addEventListener("click", function () {
+                    // Handle click on bot container (you can customize this)
+                    alert(`Clicked on ${bot.name}`);
+                });
+
+                botGrid.appendChild(botContainer);
             });
+        }
+
+        function toggleUserDropdown() {
+            const userDropdown = document.getElementById("userDropdown");
+            userDropdown.classList.toggle("show");
         }
 
         function logout() {
@@ -245,21 +265,6 @@
                 }
             }
             return null;
-        }
-
-        function toggleUserDropdown() {
-            const userDropdown = document.getElementById("userDropdown");
-            userDropdown.classList.toggle("show");
-        }
-
-        // Close the dropdown if the user clicks outside of it
-        window.onclick = function(event) {
-            if (!event.target.matches('.user-info')) {
-                const userDropdown = document.getElementById("userDropdown");
-                if (userDropdown.classList.contains('show')) {
-                    userDropdown.classList.remove('show');
-                }
-            }
         }
     </script>
 </body>
