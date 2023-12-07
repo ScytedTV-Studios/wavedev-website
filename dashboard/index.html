@@ -17,38 +17,12 @@
             padding: 10px 0;
         }
 
-        .navbar {
+        nav {
+            max-width: 900px;
+            margin: 0 auto;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 10px;
-            background-color: #333;
-            color: white;
-        }
-
-        .navbar-dropdown {
-            position: relative;
-        }
-
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            top: 40px;
-            right: 0;
-            background-color: #333;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
-            z-index: 1;
-        }
-
-        .dropdown-content a {
-            color: white;
-            padding: 12px 16px;
-            text-decoration: none;
-            display: block;
-        }
-
-        .dropdown:hover .dropdown-content {
-            display: block;
         }
 
         .logo {
@@ -88,68 +62,60 @@
             color: #333;
         }
 
-        .bot-info-container {
-            display: flex;
-            flex-wrap: wrap;
+        .user-info {
             margin-top: 20px;
         }
 
-        .bot-details {
-            box-sizing: border-box;
-            width: 33.333%;
-            padding: 10px;
-            text-align: center;
-            cursor: pointer;
-        }
-
-        .bot-details img {
-            width: 100px;
-            height: 100px;
+        .profile-picture {
+            max-width: 150px;
             border-radius: 50%;
             margin-bottom: 10px;
         }
 
-        .bot-name {
-            font-weight: bold;
-            margin-bottom: 5px;
+        h2 {
+            color: #333;
         }
 
-        @media only screen and (max-width: 600px) {
-            .navbar {
-                flex-direction: column;
-            }
+        .bot-info-container {
+            display: flex;
+            align-items: center;
+            margin-top: 20px;
+        }
 
-            .navbar-dropdown {
-                margin-top: 10px;
-            }
+        .bot-profile-picture {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
 
-            .dropdown-content {
-                top: 20px;
-            }
+        .bot-details {
+            display: flex;
+            flex-direction: column;
+        }
 
-            .bot-details {
-                width: 50%;
-            }
+        .bot-name {
+            font-weight: bold;
+        }
+
+        .bot-info {
+            margin-top: 5px;
         }
     </style>
 </head>
 <body>
     <header>
-        <div class="navbar">
+        <nav>
             <div class="logo">ScytedTV Bot Network</div>
-            <div class="navbar-dropdown">
-                <div class="dropdown">
-                    <div id="userInfo" class="user-info"></div>
-                    <div class="dropdown-content">
-                        <a href="#">Home</a>
-                        <a href="#" onclick="logout()" style="color: red;">Logout</a>
-                    </div>
-                </div>
-            </div>
-        </div>
+            <ul>
+                <li><a href="../" class="active">Home</a></li>
+                <li><a href="#" onclick="logout()">Logout</a></li>
+            </ul>
+        </nav>
     </header>
     <div class="container">
         <h1>Dashboard</h1>
+        <div id="userInfo" class="user-info"></div>
         <div id="botInfo" class="bot-info-container"></div>
     </div>
     <script src="scripts.js"></script>
@@ -253,7 +219,7 @@
 
         function getCookie(name) {
             const cookies = document.cookie.split("; ");
-            for (let i = 0; cookies.length; i++) {
+            for (let i = 0; i < cookies.length; i++) {
                 const cookie = cookies[i].split("=");
                 if (cookie[0] === name) {
                     return cookie[1];
