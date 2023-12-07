@@ -14,12 +14,7 @@
         header {
             background-color: #7289da;
             color: #fff;
-            padding: 10px 0;
-        }
-
-        nav {
-            max-width: 900px;
-            margin: 0 auto;
+            padding: 10px 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -30,22 +25,55 @@
             font-weight: bold;
         }
 
-        nav ul {
-            list-style-type: none;
+        nav {
+            display: flex;
+            align-items: center;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            margin-right: 20px;
+        }
+
+        .profile-picture {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        .user-dropdown {
+            display: none;
+            position: absolute;
+            top: 60px;
+            right: 20px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            flex-direction: column;
+            z-index: 1;
+        }
+
+        .user-dropdown a {
+            color: #333;
+            padding: 10px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .user-dropdown a:hover {
+            background-color: #ddd;
+        }
+
+        .user-dropdown.show {
             display: flex;
         }
 
-        nav a {
-            text-decoration: none;
-            color: #fff;
-            margin: 0 20px;
-            font-weight: bold;
-            font-size: 16px;
-            transition: color 0.3s;
-        }
-
-        nav a:hover {
-            color: #ddd;
+        .user-dropdown a.logout {
+            color: #ff5252;
         }
 
         .container {
@@ -60,23 +88,6 @@
 
         h1 {
             color: #333;
-        }
-
-        .user-info {
-            margin-top: 20px;
-            text-align: right; /* Align to the right */
-        }
-
-        .profile-picture {
-            max-width: 50px; /* Adjust the size as needed */
-            border-radius: 50%;
-            margin-bottom: 10px;
-            margin-right: 10px; /* Add some right margin */
-        }
-
-        h2 {
-            color: #333;
-            display: inline-block; /* Keep the text on the same line as the image */
         }
 
         .bot-info-container {
@@ -108,21 +119,29 @@
 </head>
 <body>
     <header>
+        <div class="logo">ScytedTV Bot Network</div>
         <nav>
-            <div class="logo">ScytedTV Bot Network</div>
-            <ul>
-                <li><a href="../" class="active">Home</a></li>
-                <li><a href="#" onclick="logout()">Logout</a></li>
-            </ul>
+            <div class="user-info" onclick="toggleUserDropdown()">
+                <img src="https://cdn.discordapp.com/avatars/123456789/avatar.png" alt="Profile Picture" class="profile-picture">
+                <span>Username</span>
+                <div class="user-dropdown" id="userDropdown">
+                    <a href="#" class="home">Home</a>
+                    <a href="#" class="logout" onclick="logout()">Logout</a>
+                </div>
+            </div>
         </nav>
     </header>
     <div class="container">
         <h1>Dashboard</h1>
-        <div id="userInfo" class="user-info"></div>
         <div id="botInfo" class="bot-info-container"></div>
     </div>
     <script src="scripts.js"></script>
     <script>
+        function toggleUserDropdown() {
+            const userDropdown = document.getElementById('userDropdown');
+            userDropdown.classList.toggle('show');
+        }
+
         document.addEventListener("DOMContentLoaded", function () {
             const storedAccessToken = getCookie("accessToken");
 
@@ -133,8 +152,6 @@
                 // Fetch user data from Discord API
                 fetchDiscordUserData(storedAccessToken)
                     .then(userData => {
-                        // Display user info on the dashboard
-                        displayUserInfo(userData);
                         // Display bot info on the dashboard
                         displayBotInfo();
                     })
@@ -159,22 +176,21 @@
                     throw new Error(`Discord API Request Failed! Status: ${response.status}`);
                 }
                 return response.json();
+            })
+            .then(userData => {
+                // Display user info on the dashboard
+                displayUserInfo(userData);
             });
         }
 
         function displayUserInfo(userData) {
-            const userInfoDiv = document.getElementById("userInfo");
+            const userDropdown = document.getElementById('userDropdown');
+            const profilePicture = document.querySelector('.profile-picture');
+            const username = document.querySelector('.user-info span');
 
-            const profilePicture = document.createElement("img");
             profilePicture.src = `https://cdn.discordapp.com/avatars/${userData.id}/${userData.avatar}.png`;
-            profilePicture.alt = "Profile Picture";
-            profilePicture.classList.add("profile-picture");
-
-            const usernameElement = document.createElement("h2");
-            usernameElement.textContent = userData.username;
-
-            userInfoDiv.appendChild(profilePicture);
-            userInfoDiv.appendChild(usernameElement);
+            username.textContent = userData.username;
+            userDropdown.querySelector('.home').href = `../dashboard?user=${userData.id}`;
         }
 
         function displayBotInfo() {
