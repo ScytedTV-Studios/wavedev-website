@@ -23,14 +23,14 @@
     <script src="scripts.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", function () {
-            const storedUserId = localStorage.getItem("userId");
+            const storedAccessToken = getCookie("accessToken");
 
-            // Redirect to login if user is not authenticated
-            if (!storedUserId) {
+            // Redirect to login if access token is not found
+            if (!storedAccessToken) {
                 window.location.href = "../login";
             } else {
                 // Fetch user data from Discord API
-                fetchDiscordUserData(storedUserId)
+                fetchDiscordUserData(storedAccessToken)
                     .then(userData => {
                         // Display user info on the dashboard
                         displayUserInfo(userData);
@@ -43,17 +43,19 @@
             }
         });
 
-        function fetchDiscordUserData(userId) {
-            // Implement your Discord API call to fetch user data using the user ID
-            // Example URL: `https://discord.com/api/users/${userId}`
-            // Return a Promise with the user data
-            // ...
+        function fetchDiscordUserData(accessToken) {
+            const apiUrl = 'https://discord.com/api/users/@me';
 
-            // For now, a placeholder Promise is returned
-            return Promise.resolve({
-                id: userId,
-                username: "SampleUser",
-                avatar: "abc123"
+            return fetch(apiUrl, {
+                headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                },
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`Discord API Request Failed! Status: ${response.status}`);
+                }
+                return response.json();
             });
         }
 
@@ -73,11 +75,22 @@
         }
 
         function logout() {
-            // Clear localStorage
-            localStorage.removeItem("userId");
+            // Clear cookies
+            document.cookie = "accessToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
 
             // Redirect to login page
             window.location.href = "../login";
+        }
+
+        function getCookie(name) {
+            const cookies = document.cookie.split("; ");
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].split("=");
+                if (cookie[0] === name) {
+                    return cookie[1];
+                }
+            }
+            return null;
         }
     </script>
 </body>
