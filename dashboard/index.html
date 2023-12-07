@@ -19,6 +19,7 @@
     <div class="container">
         <h1>Dashboard</h1>
         <div id="userInfo" class="user-info"></div>
+        <div id="botInfo" class="bot-info"></div>
     </div>
     <script src="scripts.js"></script>
     <script>
@@ -34,6 +35,9 @@
                     .then(userData => {
                         // Display user info on the dashboard
                         displayUserInfo(userData);
+
+                        // Display bot info on the dashboard
+                        displayBotInfo();
                     })
                     .catch(error => {
                         console.error("Error fetching user data:", error);
@@ -72,6 +76,34 @@
 
             userInfoDiv.appendChild(profilePicture);
             userInfoDiv.appendChild(usernameElement);
+        }
+
+        function displayBotInfo() {
+            const botInfoDiv = document.getElementById("botInfo");
+
+            // Example bot data (replace with actual bot names and IDs)
+            const bots = [
+                { name: "Bot 1", id: "123456789012345678" },
+                { name: "Bot 2", id: "987654321098765432" },
+            ];
+
+            bots.forEach(bot => {
+                const botBox = document.createElement("div");
+                botBox.classList.add("bot-box");
+
+                const botProfilePicture = document.createElement("img");
+                botProfilePicture.src = `https://cdn.discordapp.com/avatars/${bot.id}/default.png`;
+                botProfilePicture.alt = "Bot Profile Picture";
+                botProfilePicture.classList.add("bot-profile-picture");
+
+                const botNameElement = document.createElement("h3");
+                botNameElement.textContent = bot.name;
+
+                botBox.appendChild(botProfilePicture);
+                botBox.appendChild(botNameElement);
+
+                botInfoDiv.appendChild(botBox);
+            });
         }
 
         function logout() {
