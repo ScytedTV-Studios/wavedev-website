@@ -9,7 +9,7 @@
 <body>
     <div class="container">
         <h1>Login to Your Dashboard</h1>
-        <form id="loginForm">
+        <form id="loginForm" onsubmit="submitLoginForm(event)">
             <label for="userId">Discord User ID:</label>
             <input type="text" id="userId" name="userId" required>
             <button type="submit">Login</button>
@@ -17,5 +17,32 @@
         <div id="errorMessage" class="error-message"></div>
     </div>
     <script src="scripts.js"></script>
+    <script>
+        function submitLoginForm(event) {
+            event.preventDefault();
+            const userId = document.getElementById("userId").value;
+
+            // Validate the user ID (you may add more validation as needed)
+            if (!/^\d+$/.test(userId)) {
+                displayErrorMessage("Invalid Discord User ID. Please enter a valid numeric ID.");
+                return;
+            }
+
+            // Assuming you have a function to set cookies, set the user ID cookie
+            setCookie("userId", userId);
+
+            // Redirect to the dashboard
+            window.location.href = "../dashboard";
+        }
+
+        function setCookie(name, value) {
+            document.cookie = `${name}=${value}; path=/;`;
+        }
+
+        function displayErrorMessage(message) {
+            const errorMessageDiv = document.getElementById("errorMessage");
+            errorMessageDiv.textContent = message;
+        }
+    </script>
 </body>
 </html>
