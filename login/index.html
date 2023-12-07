@@ -12,7 +12,7 @@
         <div id="errorMessage" class="error-message"></div>
         <button onclick="redirectToDiscord()">Login with Discord</button>
     </div>
-    <!-- <script src="scripts.js"></script> -->
+    <script src="scripts.js"></script>
     <script>
         function redirectToDiscord() {
             const clientId = '1182368783248134175'; // Replace with your Discord application's client ID
@@ -25,7 +25,7 @@
         }
 
         // Check for access token in the URL after redirection
-        const urlParams = new URLSearchParams(window.location.search);
+        const urlParams = new URLSearchParams(window.location.hash.substring(1));
         const accessToken = urlParams.get("access_token");
 
         if (accessToken) {
@@ -52,18 +52,6 @@
             date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
             const expires = "expires=" + date.toUTCString();
             document.cookie = name + "=" + value + ";" + expires + ";path=/";
-        }
-
-        // Function to read cookies
-        function getCookie(name) {
-            const cookies = document.cookie.split("; ");
-            for (let i = 0; i < cookies.length; i++) {
-                const cookie = cookies[i].split("=");
-                if (cookie[0] === name) {
-                    return cookie[1];
-                }
-            }
-            return null;
         }
     </script>
 </body>
