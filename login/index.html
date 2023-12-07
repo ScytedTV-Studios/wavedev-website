@@ -16,12 +16,35 @@
     <script>
         function redirectToDiscord() {
             const clientId = '1182368783248134175'; // Replace with your Discord application's client ID
-            const redirectUri = 'https://bots.scyted.tv/dashboard'; // Replace with your Discord application's redirect URI
+            const redirectUri = 'https://bots.scyted.tv/login/'; // Replace with your Discord application's redirect URI
             const scope = 'identify'; // Adjust scopes as needed
 
             const discordAuthUrl = `https://discord.com/api/oauth2/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=token&scope=${scope}`;
 
             window.location.href = discordAuthUrl;
+        }
+
+        // Check for access token in the URL after redirection
+        const urlParams = new URLSearchParams(window.location.hash.substring(1));
+        const accessToken = urlParams.get("access_token");
+
+        if (accessToken) {
+            // Extract user ID from the access token and store it in a cookie
+            const userId = parseUserIdFromAccessToken(accessToken);
+            document.cookie = `userId=${userId}; path=/`;
+
+            // Redirect to the dashboard
+            window.location.href = "../dashboard";
+        }
+
+        function parseUserIdFromAccessToken(accessToken) {
+            const base64Url = accessToken.split('.')[1];
+            const base64 = base64Url.replace('-', '+').replace('_', '/');
+            const jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
+                return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+            }).join(''));
+
+            return JSON.parse(jsonPayload).id;
         }
     </script>
 </body>
