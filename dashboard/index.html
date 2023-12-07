@@ -23,45 +23,47 @@
         .logo {
             font-size: 24px;
             font-weight: bold;
+            cursor: pointer;
         }
 
-        .profile-container {
+        .user-info {
             display: flex;
             align-items: center;
             cursor: pointer;
         }
 
         .profile-picture {
-            max-width: 40px;
+            max-width: 30px;
             border-radius: 50%;
             margin-right: 10px;
         }
 
+        .username {
+            color: #fff;
+        }
+
         .dropdown {
+            display: none;
             position: absolute;
             top: 60px;
             right: 20px;
             background-color: #fff;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             border-radius: 5px;
-            display: none;
             flex-direction: column;
             z-index: 1;
         }
 
-        .dropdown a {
+        .dropdown-button {
+            color: #333;
             padding: 10px;
             text-decoration: none;
-            color: #000;
+            cursor: pointer;
             transition: background-color 0.3s;
         }
 
-        .dropdown a:hover {
-            background-color: #ddd;
-        }
-
-        .logout {
-            color: #f00;
+        .dropdown-button:hover {
+            background-color: #f0f0f0;
         }
 
         .container {
@@ -78,14 +80,16 @@
             color: #333;
         }
 
-        .user-info {
+        .user-info-container {
+            display: flex;
+            align-items: center;
             margin-top: 20px;
         }
 
-        .profile-picture-main {
+        .profile-picture {
             max-width: 150px;
             border-radius: 50%;
-            margin-bottom: 10px;
+            margin-right: 10px;
         }
 
         h2 {
@@ -121,19 +125,19 @@
 </head>
 <body>
     <header>
-        <div class="logo">ScytedTV Bot Network</div>
-        <div class="profile-container" onclick="toggleDropdown()">
-            <img src="https://cdn.discordapp.com/avatars/USER_ID/USER_AVATAR.png" alt="Profile Picture" class="profile-picture">
-            <h2>Username</h2>
+        <div class="logo" onclick="goHome()">ScytedTV Bot Network</div>
+        <div class="user-info" onclick="toggleDropdown()">
+            <img src="https://cdn.discordapp.com/avatars/123456789/avatar.png" alt="Profile Picture" class="profile-picture">
+            <div class="username">Username</div>
             <div class="dropdown" id="dropdown">
-                <a href="../" class="home">Home</a>
-                <a href="#" class="logout" onclick="logout()">Logout</a>
+                <a href="../" class="dropdown-button">Home</a>
+                <a href="#" onclick="logout()" class="dropdown-button" style="color: red;">Logout</a>
             </div>
         </div>
     </header>
     <div class="container">
         <h1>Dashboard</h1>
-        <div id="userInfo" class="user-info"></div>
+        <div id="userInfo" class="user-info-container"></div>
         <div id="botInfo" class="bot-info-container"></div>
     </div>
     <script src="scripts.js"></script>
@@ -161,11 +165,6 @@
             }
         });
 
-        function toggleDropdown() {
-            const dropdown = document.getElementById("dropdown");
-            dropdown.style.display = dropdown.style.display === "flex" ? "none" : "flex";
-        }
-
         function fetchDiscordUserData(accessToken) {
             const apiUrl = 'https://discord.com/api/users/@me';
 
@@ -188,7 +187,7 @@
             const profilePicture = document.createElement("img");
             profilePicture.src = `https://cdn.discordapp.com/avatars/${userData.id}/${userData.avatar}.png`;
             profilePicture.alt = "Profile Picture";
-            profilePicture.classList.add("profile-picture-main");
+            profilePicture.classList.add("profile-picture");
 
             const usernameElement = document.createElement("h2");
             usernameElement.textContent = userData.username;
@@ -249,6 +248,15 @@
                 }
             }
             return null;
+        }
+
+        function toggleDropdown() {
+            const dropdown = document.getElementById("dropdown");
+            dropdown.style.display = dropdown.style.display === "none" ? "flex" : "none";
+        }
+
+        function goHome() {
+            window.location.href = "../";
         }
     </script>
 </body>
