@@ -14,7 +14,7 @@
         header {
             background-color: #7289da;
             color: #fff;
-            padding: 10px 0;
+            padding: 10px 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -25,46 +25,43 @@
             font-weight: bold;
         }
 
-        nav {
+        .profile-container {
             display: flex;
             align-items: center;
-        }
-
-        .profile-dropdown {
-            position: relative;
-            display: inline-block;
             cursor: pointer;
-            margin-right: 20px;
-        }
-
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            background-color: #f9f9f9;
-            min-width: 160px;
-            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-            z-index: 1;
-            border-radius: 4px;
-            right: 0;
-            top: 100%;
-        }
-
-        .dropdown-content a {
-            color: #333;
-            padding: 12px 16px;
-            text-decoration: none;
-            display: block;
-            transition: background-color 0.3s;
-        }
-
-        .dropdown-content a:hover {
-            background-color: #ddd;
         }
 
         .profile-picture {
-            max-width: 30px;
+            max-width: 40px;
             border-radius: 50%;
-            margin-right: 8px;
+            margin-right: 10px;
+        }
+
+        .dropdown {
+            position: absolute;
+            top: 60px;
+            right: 20px;
+            background-color: #fff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            border-radius: 5px;
+            display: none;
+            flex-direction: column;
+            z-index: 1;
+        }
+
+        .dropdown a {
+            padding: 10px;
+            text-decoration: none;
+            color: #000;
+            transition: background-color 0.3s;
+        }
+
+        .dropdown a:hover {
+            background-color: #ddd;
+        }
+
+        .logout {
+            color: #f00;
         }
 
         .container {
@@ -85,7 +82,7 @@
             margin-top: 20px;
         }
 
-        .profile-picture {
+        .profile-picture-main {
             max-width: 150px;
             border-radius: 50%;
             margin-bottom: 10px;
@@ -125,16 +122,14 @@
 <body>
     <header>
         <div class="logo">ScytedTV Bot Network</div>
-        <nav>
-            <div class="profile-dropdown" onclick="toggleDropdown()">
-                <img src="https://cdn.discordapp.com/avatars/USER_ID/USER_AVATAR.png" alt="Profile Picture" class="profile-picture">
-                <span class="username">Username</span>
-                <div class="dropdown-content" id="dropdownContent">
-                    <a href="#" style="color: black;">Home</a>
-                    <a href="#" onclick="logout()" style="color: red;">Logout</a>
-                </div>
+        <div class="profile-container" onclick="toggleDropdown()">
+            <img src="https://cdn.discordapp.com/avatars/USER_ID/USER_AVATAR.png" alt="Profile Picture" class="profile-picture">
+            <h2>Username</h2>
+            <div class="dropdown" id="dropdown">
+                <a href="../" class="home">Home</a>
+                <a href="#" class="logout" onclick="logout()">Logout</a>
             </div>
-        </nav>
+        </div>
     </header>
     <div class="container">
         <h1>Dashboard</h1>
@@ -166,6 +161,11 @@
             }
         });
 
+        function toggleDropdown() {
+            const dropdown = document.getElementById("dropdown");
+            dropdown.style.display = dropdown.style.display === "flex" ? "none" : "flex";
+        }
+
         function fetchDiscordUserData(accessToken) {
             const apiUrl = 'https://discord.com/api/users/@me';
 
@@ -188,7 +188,7 @@
             const profilePicture = document.createElement("img");
             profilePicture.src = `https://cdn.discordapp.com/avatars/${userData.id}/${userData.avatar}.png`;
             profilePicture.alt = "Profile Picture";
-            profilePicture.classList.add("profile-picture");
+            profilePicture.classList.add("profile-picture-main");
 
             const usernameElement = document.createElement("h2");
             usernameElement.textContent = userData.username;
@@ -250,18 +250,6 @@
             }
             return null;
         }
-
-        function toggleDropdown() {
-            const dropdownContent = document.getElementById("dropdownContent");
-            dropdownContent.style.display = (dropdownContent.style.display === "block") ? "none" : "block";
-        }
-
-        document.addEventListener("click", function (event) {
-            const dropdown = document.getElementById("dropdownContent");
-            if (event.target.closest(".profile-dropdown") === null && !event.target.matches(".dropdown-content a")) {
-                dropdown.style.display = "none";
-            }
-        });
     </script>
 </body>
 </html>
