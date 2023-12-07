@@ -24,7 +24,7 @@
         }
 
         // Check for access token in the URL after redirection
-        const urlParams = new URLSearchParams(window.location.hash.substring(1));
+        const urlParams = new URLSearchParams(window.location.search);
         const accessToken = urlParams.get("access_token");
 
         if (accessToken) {
@@ -51,18 +51,6 @@
             date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
             const expires = "expires=" + date.toUTCString();
             document.cookie = name + "=" + value + ";" + expires + ";path=/";
-        }
-
-        document.addEventListener("DOMContentLoaded", function () {
-            // Check if user is already authenticated
-            const storedUserId = getCookie("userId");
-            if (storedUserId) {
-                redirectToDashboard();
-            }
-        });
-
-        function redirectToDashboard() {
-            window.location.href = "../dashboard";
         }
     </script>
 </body>
