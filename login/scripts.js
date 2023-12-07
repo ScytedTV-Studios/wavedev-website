@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // Check if user is already logged in
     const userId = getCookie('userId');
     if (userId) {
-        window.location.href = `./users/${userId}`;
+        window.location.href = `../users/${userId}`;
     }
 });
 
@@ -24,7 +24,7 @@ function login() {
     setCookie('userId', userId, 30);
 
     // Redirect to the user's page
-    window.location.href = `./users/${userId}`;
+    window.location.href = `../users/${userId}`;
 }
 
 // Function to set cookie
