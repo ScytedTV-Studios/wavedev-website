@@ -16,7 +16,7 @@
     <script>
         function redirectToDiscord() {
             const clientId = '1182368783248134175'; // Replace with your Discord application's client ID
-            const redirectUri = 'https://bots.scyted.tv/login/'; // Replace with your Discord application's redirect URI
+            const redirectUri = 'https://bots.scyted.tv/login'; // Replace with your Discord application's redirect URI
             const scope = 'identify'; // Adjust scopes as needed
 
             const discordAuthUrl = `https://discord.com/api/oauth2/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=token&scope=${scope}`;
