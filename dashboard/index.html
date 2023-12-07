@@ -90,6 +90,31 @@
             color: #333;
         }
 
+        .bot-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .bot-details {
+            text-align: center;
+        }
+
+        .bot-profile-picture {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin-bottom: 10px;
+            cursor: pointer;
+        }
+
+        .bot-name {
+            font-weight: bold;
+            cursor: pointer;
+        }
+
         .bot-info-container {
             display: flex;
             align-items: center;
@@ -101,19 +126,7 @@
             height: 50px;
             border-radius: 50%;
             margin-right: 10px;
-        }
-
-        .bot-details {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .bot-name {
-            font-weight: bold;
-        }
-
-        .bot-info {
-            margin-top: 5px;
+            cursor: pointer;
         }
     </style>
 </head>
@@ -125,7 +138,7 @@
                 <img src="https://cdn.discordapp.com/avatars/123456789/avatar.png" alt="Profile Picture" class="profile-picture">
                 <span>Username</span>
                 <div class="user-dropdown" id="userDropdown">
-                    <a href="../" class="home">Home</a>
+                    <a href="#" class="home">Home</a>
                     <a href="#" class="logout" onclick="logout()">Logout</a>
                 </div>
             </div>
@@ -133,15 +146,10 @@
     </header>
     <div class="container">
         <h1>Dashboard</h1>
-        <div id="botInfo" class="bot-info-container"></div>
+        <div id="botInfo" class="bot-grid"></div>
     </div>
     <script src="scripts.js"></script>
     <script>
-        function toggleUserDropdown() {
-            const userDropdown = document.getElementById('userDropdown');
-            userDropdown.classList.toggle('show');
-        }
-
         document.addEventListener("DOMContentLoaded", function () {
             const storedAccessToken = getCookie("accessToken");
 
@@ -176,21 +184,7 @@
                     throw new Error(`Discord API Request Failed! Status: ${response.status}`);
                 }
                 return response.json();
-            })
-            .then(userData => {
-                // Display user info on the dashboard
-                displayUserInfo(userData);
             });
-        }
-
-        function displayUserInfo(userData) {
-            const userDropdown = document.getElementById('userDropdown');
-            const profilePicture = document.querySelector('.profile-picture');
-            const username = document.querySelector('.user-info span');
-
-            profilePicture.src = `https://cdn.discordapp.com/avatars/${userData.id}/${userData.avatar}.png`;
-            username.textContent = userData.username;
-            userDropdown.querySelector('.home').href = `../`;
         }
 
         function displayBotInfo() {
@@ -198,8 +192,12 @@
 
             // Example data (replace with actual data)
             const botData = [
-                { name: "Wave", profilePicture: "https://cdn.scyted.tv/discord-wave/wave.jpg", info: "Some information about Bot 1" },
+                { name: "Wave 24/7", profilePicture: "https://cdn.scyted.tv/discord-wave/wave.jpg", info: "Some information about Bot 1" },
+                { name: "Wave Premium", profilePicture: "https://cdn.scyted.tv/discord-wave/wave-premium.jpg", info: "Some information about Bot 6" },
                 { name: "Wave DEV", profilePicture: "https://cdn.scyted.tv/discord-wave/wave-dev.jpg", info: "Some information about Bot 2" },
+                { name: "Levlr", profilePicture: "https://cdn.scyted.tv/discord-wave/wave-dev.jpg", info: "Some information about Bot 3" },
+                { name: "Nat 20", profilePicture: "https://cdn.scyted.tv/discord-wave/wave-dev.jpg", info: "Some information about Bot 4" },
+                { name: "Heart Collectors", profilePicture: "https://cdn.scyted.tv/discord-wave/wave-dev.jpg", info: "Some information about Bot 5" },
                 // Add more bot data as needed
             ];
 
@@ -211,10 +209,12 @@
                 botProfilePicture.src = bot.profilePicture;
                 botProfilePicture.alt = "Bot Profile Picture";
                 botProfilePicture.classList.add("bot-profile-picture");
+                botProfilePicture.setAttribute("onclick", "window.location.href='#'");
 
                 const botName = document.createElement("div");
                 botName.classList.add("bot-name");
                 botName.textContent = bot.name;
+                botName.setAttribute("onclick", "window.location.href='#'");
 
                 const botInfo = document.createElement("div");
                 botInfo.classList.add("bot-info");
@@ -233,7 +233,7 @@
             document.cookie = "accessToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
 
             // Redirect to login page
-            window.location.href = "../";
+            window.location.href = "../login";
         }
 
         function getCookie(name) {
@@ -245,6 +245,21 @@
                 }
             }
             return null;
+        }
+
+        function toggleUserDropdown() {
+            const userDropdown = document.getElementById("userDropdown");
+            userDropdown.classList.toggle("show");
+        }
+
+        // Close the dropdown if the user clicks outside of it
+        window.onclick = function(event) {
+            if (!event.target.matches('.user-info')) {
+                const userDropdown = document.getElementById("userDropdown");
+                if (userDropdown.classList.contains('show')) {
+                    userDropdown.classList.remove('show');
+                }
+            }
         }
     </script>
 </body>
