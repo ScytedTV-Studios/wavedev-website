@@ -28,9 +28,9 @@
         const accessToken = urlParams.get("access_token");
 
         if (accessToken) {
-            // Extract user ID from the access token and store it in a cookie
+            // Extract user ID from the access token and store it in localStorage
             const userId = parseUserIdFromAccessToken(accessToken);
-            setCookie("userId", userId, 30); // Set cookie to expire in 30 days
+            localStorage.setItem("userId", userId);
 
             // Redirect to the dashboard
             window.location.href = "../dashboard";
@@ -44,13 +44,6 @@
             }).join(''));
 
             return JSON.parse(jsonPayload).id;
-        }
-
-        function setCookie(name, value, days) {
-            const date = new Date();
-            date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-            const expires = "expires=" + date.toUTCString();
-            document.cookie = name + "=" + value + ";" + expires + ";path=/";
         }
     </script>
 </body>
