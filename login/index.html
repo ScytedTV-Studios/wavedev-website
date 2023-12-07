@@ -25,13 +25,13 @@
         }
 
         // Check for access token in the URL after redirection
-        const urlParams = new URLSearchParams(window.location.hash.substring(1));
+        const urlParams = new URLSearchParams(window.location.search);
         const accessToken = urlParams.get("access_token");
 
         if (accessToken) {
-            // Extract user ID from the access token and save it to localStorage
+            // Extract user ID from the access token and store it in a cookie
             const userId = parseUserIdFromAccessToken(accessToken);
-            localStorage.setItem("userId", userId);
+            setCookie("userId", userId, 30); // Set cookie to expire in 30 days
 
             // Redirect to the dashboard
             window.location.href = "../dashboard";
@@ -45,6 +45,25 @@
             }).join(''));
 
             return JSON.parse(jsonPayload).id;
+        }
+
+        function setCookie(name, value, days) {
+            const date = new Date();
+            date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+            const expires = "expires=" + date.toUTCString();
+            document.cookie = name + "=" + value + ";" + expires + ";path=/";
+        }
+
+        // Function to read cookies
+        function getCookie(name) {
+            const cookies = document.cookie.split("; ");
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].split("=");
+                if (cookie[0] === name) {
+                    return cookie[1];
+                }
+            }
+            return null;
         }
     </script>
 </body>
