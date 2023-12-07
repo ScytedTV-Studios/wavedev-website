@@ -48,7 +48,12 @@ function fetchDiscordUserData(userId) {
         },
         body: `grant_type=client_credentials&client_id=${clientId}&client_secret=${clientSecret}&redirect_uri=${redirectUri}&scope=identify`,
     })
-    .then(response => response.json())
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`OAuth2 Token Request Failed! Status: ${response.status}`);
+        }
+        return response.json();
+    })
     .then(tokenResponse => {
         const accessToken = tokenResponse.access_token;
 
@@ -60,7 +65,7 @@ function fetchDiscordUserData(userId) {
     })
     .then(response => {
         if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
+            throw new Error(`Discord API Request Failed! Status: ${response.status}`);
         }
         return response.json();
     });
