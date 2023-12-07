@@ -37,18 +37,22 @@
                 window.location.href = "../dashboard";
             } catch (error) {
                 // Handle errors by displaying an error message
-                displayErrorMessage("An error occurred while processing the access token.");
+                displayErrorMessage("An error occurred while processing the access token: " + error.message);
             }
         }
 
         function parseUserIdFromAccessToken(accessToken) {
-            const base64Url = accessToken.split('.')[1];
-            const base64 = base64Url.replace('-', '+').replace('_', '/');
-            const jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
-                return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-            }).join(''));
+            const tokenParts = accessToken.split('.');
+            const encodedPayload = tokenParts[1];
 
-            return JSON.parse(jsonPayload).id;
+            // Padding may be needed to make the encoded payload length a multiple of 4
+            const padding = '='.repeat((4 - encodedPayload.length % 4) % 4);
+            const base64 = (encodedPayload + padding).replace(/-/g, '+').replace(/_/g, '/');
+
+            const decodedPayload = atob(base64);
+            const payloadObj = JSON.parse(decodedPayload);
+
+            return payloadObj.id;
         }
 
         function displayErrorMessage(message) {
