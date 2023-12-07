@@ -1,33 +1,46 @@
 document.addEventListener("DOMContentLoaded", function () {
-    const storedUserId = getCookie("userId");
+    try {
+        const storedUserId = getCookie("userId");
 
-    // Redirect to login if user is not authenticated
-    if (!storedUserId) {
-        window.location.href = "../login";
-    } else {
-        // Fetch user data from Discord API
-        fetchDiscordUserData(storedUserId)
-            .then(userData => {
-                // Display user info on the dashboard
-                displayUserInfo(userData);
-            })
-            .catch(error => {
-                console.error("Error fetching user data:", error);
-                // Handle error (e.g., redirect to login page)
+        if (!storedUserId) {
+            displayErrorMessage("User ID not found. Redirecting to login...");
+            setTimeout(() => {
                 window.location.href = "../login";
-            });
+            }, 3000); // Redirect after 3 seconds
+        } else {
+            fetchDiscordUserData(storedUserId)
+                .then(userData => {
+                    displayUserInfo(userData);
+                })
+                .catch(error => {
+                    displayErrorMessage("Error fetching user data. Redirecting to login...");
+                    setTimeout(() => {
+                        window.location.href = "../login";
+                    }, 3000); // Redirect after 3 seconds
+                });
+        }
+    } catch (error) {
+        displayErrorMessage("An unexpected error occurred. Redirecting to login...");
+        setTimeout(() => {
+            window.location.href = "../login";
+        }, 3000); // Redirect after 3 seconds
     }
 });
+
+function displayErrorMessage(message) {
+    const errorMessageDiv = document.createElement("div");
+    errorMessageDiv.className = "error-message";
+    errorMessageDiv.textContent = message;
+    document.body.appendChild(errorMessageDiv);
+}
 
 function fetchDiscordUserData(userId) {
     const clientId = '1182368783248134175'; // Replace with your Discord application's client ID
     const clientSecret = 'UTou2PJ5o_gCxh8wVE7pkV1W5ngjkeIg'; // Replace with your Discord application's client secret
     const redirectUri = 'http://localhost:3000/callback'; // Replace with your Discord application's redirect URI
 
-    // Construct the URL for fetching user data
     const apiUrl = `https://discord.com/api/users/${userId}`;
 
-    // Fetch OAuth2 token using client credentials (this should be done securely on the server side)
     return fetch('https://discord.com/api/oauth2/token', {
         method: 'POST',
         headers: {
@@ -39,7 +52,6 @@ function fetchDiscordUserData(userId) {
     .then(tokenResponse => {
         const accessToken = tokenResponse.access_token;
 
-        // Fetch user data using the obtained access token
         return fetch(apiUrl, {
             headers: {
                 Authorization: `Bearer ${accessToken}`,
@@ -70,10 +82,7 @@ function displayUserInfo(userData) {
 }
 
 function logout() {
-    // Clear cookies
     document.cookie = "userId=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-
-    // Redirect to login page
     window.location.href = "../login";
 }
 
