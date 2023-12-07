@@ -5,6 +5,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
     <title>Dashboard - Discord Bot Dashboard</title>
+    <style>
+        .bot-info-container {
+            display: flex;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .bot-profile-picture {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        .bot-details {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .bot-name {
+            font-weight: bold;
+        }
+
+        .bot-info {
+            margin-top: 5px;
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -19,7 +46,7 @@
     <div class="container">
         <h1>Dashboard</h1>
         <div id="userInfo" class="user-info"></div>
-        <div id="botInfo" class="bot-info"></div>
+        <div id="botInfo" class="bot-info-container"></div>
     </div>
     <script src="scripts.js"></script>
     <script>
@@ -35,7 +62,6 @@
                     .then(userData => {
                         // Display user info on the dashboard
                         displayUserInfo(userData);
-
                         // Display bot info on the dashboard
                         displayBotInfo();
                     })
@@ -81,29 +107,35 @@
         function displayBotInfo() {
             const botInfoDiv = document.getElementById("botInfo");
 
-            // Example bot data (replace with actual bot names and IDs)
-            const bots = [
-                { name: "Wave 24/7", id: "1174137218181369878" },
-                { name: "Levlr", id: "1153134189688934470" },
-                { name: "Heart Collectors", id: "1175104796567552121" },
+            // Example data (replace with actual data)
+            const botData = [
+                { name: "Wave", profilePicture: "https://cdn.scyted.tv/discord-wave/wave.jpg", info: "Some information about Bot 1" },
+                { name: "Wave DEV", profilePicture: "https://cdn.scyted.tv/discord-wave/wave-dev.jpg", info: "Some information about Bot 2" },
+                // Add more bot data as needed
             ];
 
-            bots.forEach(bot => {
-                const botBox = document.createElement("div");
-                botBox.classList.add("bot-box");
+            botData.forEach(bot => {
+                const botContainer = document.createElement("div");
+                botContainer.classList.add("bot-details");
 
                 const botProfilePicture = document.createElement("img");
-                botProfilePicture.src = `https://cdn.discordapp.com/avatars/${bot.id}/default.png`;
+                botProfilePicture.src = bot.profilePicture;
                 botProfilePicture.alt = "Bot Profile Picture";
                 botProfilePicture.classList.add("bot-profile-picture");
 
-                const botNameElement = document.createElement("h3");
-                botNameElement.textContent = bot.name;
+                const botName = document.createElement("div");
+                botName.classList.add("bot-name");
+                botName.textContent = bot.name;
 
-                botBox.appendChild(botProfilePicture);
-                botBox.appendChild(botNameElement);
+                const botInfo = document.createElement("div");
+                botInfo.classList.add("bot-info");
+                botInfo.textContent = bot.info;
 
-                botInfoDiv.appendChild(botBox);
+                botContainer.appendChild(botProfilePicture);
+                botContainer.appendChild(botName);
+                botContainer.appendChild(botInfo);
+
+                botInfoDiv.appendChild(botContainer);
             });
         }
 
