@@ -29,9 +29,9 @@
 
         if (accessToken) {
             try {
-                // Extract user ID from the access token and store it in localStorage
+                // Extract user ID from the access token and store it in a cookie
                 const userId = parseUserIdFromAccessToken(accessToken);
-                localStorage.setItem("userId", userId);
+                setCookie("userId", userId, 30); // Set cookie to expire in 30 days
 
                 // Redirect to the dashboard
                 window.location.href = "../dashboard";
@@ -43,21 +43,27 @@
 
         function parseUserIdFromAccessToken(accessToken) {
             const tokenParts = accessToken.split('.');
-            
-            if (tokenParts.length < 2) {
+
+            if (tokenParts.length !== 3) {
                 throw new Error('Invalid access token format');
             }
 
             const encodedPayload = tokenParts[1];
-
-            // Padding may be needed to make the encoded payload length a multiple of 4
-            const padding = '='.repeat((4 - encodedPayload.length % 4) % 4);
-            const base64 = (encodedPayload + padding).replace(/-/g, '+').replace(/_/g, '/');
-
-            const decodedPayload = atob(base64);
+            const decodedPayload = atob(encodedPayload);
             const payloadObj = JSON.parse(decodedPayload);
 
+            if (!payloadObj.id) {
+                throw new Error('User ID not found in access token');
+            }
+
             return payloadObj.id;
+        }
+
+        function setCookie(name, value, days) {
+            const date = new Date();
+            date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+            const expires = "expires=" + date.toUTCString();
+            document.cookie = name + "=" + value + ";" + expires + ";path=/";
         }
 
         function displayErrorMessage(message) {
