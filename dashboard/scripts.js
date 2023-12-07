@@ -55,6 +55,10 @@ function fetchDiscordUserData(userId) {
         return response.json();
     })
     .then(tokenResponse => {
+        if (tokenResponse.error) {
+            throw new Error(`OAuth2 Token Request Failed! Error: ${tokenResponse.error}`);
+        }
+
         const accessToken = tokenResponse.access_token;
 
         return fetch(apiUrl, {
@@ -68,6 +72,13 @@ function fetchDiscordUserData(userId) {
             throw new Error(`Discord API Request Failed! Status: ${response.status}`);
         }
         return response.json();
+    })
+    .then(userData => {
+        if (userData.message === '401: Unauthorized') {
+            throw new Error('Unauthorized: Check your client ID, client secret, and redirect URI');
+        }
+
+        return userData;
     });
 }
 
