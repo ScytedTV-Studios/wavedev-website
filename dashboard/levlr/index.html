@@ -84,9 +84,6 @@
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             text-align: center;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
         }
 
         h1 {
@@ -96,7 +93,7 @@
         .user-info-container {
             display: flex;
             justify-content: space-between;
-            align-items: center;
+            align-items: flex-start;
             margin-top: 20px;
         }
 
@@ -107,7 +104,6 @@
             cursor: pointer;
             padding: 20px;
             border-radius: 8px;
-            margin-right: 20px;
         }
 
         .bot-profile-picture {
@@ -120,28 +116,30 @@
         .bot-name {
             font-weight: bold;
             color: #333;
-            margin-bottom: 10px;
         }
 
         .user-info-box {
-            padding: 20px;
-            border-radius: 8px;
-            background-color: #ddd;
             flex: 1;
-        }
-
-        .user-info-box h2 {
-            color: #333;
-            margin-bottom: 10px;
+            padding: 20px;
+            background-color: #eee;
+            border-radius: 8px;
         }
 
         .user-info-content {
-            color: #555;
+            text-align: left;
         }
 
         .error-message {
             color: #ff5252;
-            margin-top: 20px;
+            margin-top: 10px;
+        }
+
+        .bot-details a {
+            text-decoration: none;
+        }
+
+        .bot-details a:hover .bot-name {
+            text-decoration: underline;
         }
     </style>
 </head>
@@ -184,7 +182,7 @@
                     .then(userData => {
                         // Display bot info and user info on the dashboard
                         displayBotInfo();
-                        displayUserInfo(userData);
+                        displayUserInfo();
                     })
                     .catch(error => {
                         console.error("Error fetching user data:", error);
@@ -194,22 +192,7 @@
             }
         });
 
-        function displayBotInfo() {
-            // Display bot info
-            const botProfilePicture = document.querySelector('.bot-profile-picture');
-            const botName = document.querySelector('.bot-name');
-
-            // Example data (replace with actual data)
-            const botData = {
-                profilePicture: "https://cdn.scyted.tv/discord-wave/wave.jpg",
-                name: "Levlr",
-            };
-
-            botProfilePicture.src = botData.profilePicture;
-            botName.textContent = botData.name;
-        }
-
-        function displayUserInfo(userData) {
+        function displayUserInfo() {
             const userInfoBox = document.getElementById('userInfoBox');
             const errorMessage = document.getElementById('errorMessage');
 
@@ -224,21 +207,22 @@
                     }
                     return response.json();
                 })
-                .then(userApiData => {
+                .then(userData => {
                     // Display user info
                     const userContent = `
                         <h2>User Information</h2>
                         <div class="user-info-content">
-                            <p>User ID: ${userApiData.userId}</p>
-                            <p>Username: ${userApiData.username}</p>
-                            <p>XP: ${userApiData.xp}</p>
-                            <p>Level: ${userApiData.level}</p>
+                            <p>User ID: ${userData.userId}</p>
+                            <p>Username: ${userData.username}</p>
+                            <p>XP: ${userData.xp}</p>
+                            <p>Level: ${userData.level}</p>
                         </div>
                     `;
                     userInfoBox.innerHTML = userContent;
+                    errorMessage.textContent = ''; // Clear error message if any
                 })
                 .catch(error => {
-                    console.error("Error fetching user API data:", error);
+                    console.error("Error fetching user data:", error);
                     // Display error message
                     errorMessage.textContent = 'Error fetching user data. Please try again later.';
                     userInfoBox.innerHTML = ''; // Clear user info box
