@@ -92,6 +92,7 @@
 
         .bot-info-container {
             display: flex;
+            flex-direction: column;
             align-items: center;
             margin-top: 20px;
         }
@@ -100,17 +101,15 @@
             width: 100px;
             height: 100px;
             border-radius: 50%;
-            margin-right: 20px;
+            margin-bottom: 20px;
         }
 
         .bot-name {
             font-weight: bold;
+            margin-bottom: 10px;
         }
 
         .user-info-container {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
             margin-top: 20px;
         }
 
@@ -126,10 +125,7 @@
 </head>
 <body>
     <header>
-        <div class="bot-info-container">
-            <img src="https://cdn.scyted.tv/discord-wave/wave-dev.jpg" alt="Levlr Bot Profile Picture" class="bot-profile-picture">
-            <div class="bot-name">Levlr</div>
-        </div>
+        <div class="logo">ScytedTV Bot Network</div>
         <nav>
             <div class="user-info" onclick="toggleUserDropdown()">
                 <img src="https://cdn.discordapp.com/avatars/123456789/avatar.png" alt="Profile Picture" class="profile-picture">
@@ -142,6 +138,11 @@
         </nav>
     </header>
     <div class="container">
+        <h1>Levlr Bot Information</h1>
+        <div class="bot-info-container">
+            <img src="https://cdn.scyted.tv/discord-wave/wave-dev.jpg" alt="Levlr Bot Profile Picture" class="bot-profile-picture">
+            <div class="bot-name">Levlr</div>
+        </div>
         <div class="user-info-container" id="userInfoContainer"></div>
     </div>
     <script src="scripts.js"></script>
