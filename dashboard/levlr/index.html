@@ -1,10 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Levlr - Discord Bot Dashboard</title>
+    <title>User Information - Discord Bot Dashboard</title>
     <style>
         body {
             margin: 0;
@@ -94,7 +93,7 @@
             color: #333;
         }
 
-        .bot-profile-container {
+        .user-info-container {
             display: flex;
             margin-top: 20px;
         }
@@ -106,6 +105,7 @@
             cursor: pointer;
             padding: 20px;
             border-radius: 8px;
+            margin-right: 20px;
         }
 
         .bot-profile-picture {
@@ -115,43 +115,58 @@
             margin-bottom: 10px;
         }
 
-        .bot-info {
-            margin-left: 20px;
-            text-align: left;
+        .bot-name {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 10px;
         }
 
-        .info-item {
+        .user-info-box {
+            padding: 20px;
+            border-radius: 8px;
+            background-color: #ddd;
+            flex: 1;
+        }
+
+        .user-info-box h2 {
+            color: #333;
             margin-bottom: 10px;
+        }
+
+        .user-info-content {
+            color: #555;
+        }
+
+        .error-message {
+            color: #ff5252;
+            margin-top: 20px;
         }
     </style>
 </head>
-
 <body>
     <header>
         <div class="logo">ScytedTV Bot Network</div>
         <nav>
             <div class="user-info" onclick="toggleUserDropdown()">
-                <img src="https://cdn.discordapp.com/avatars/123456789/avatar.png" alt="Profile Picture"
-                    class="profile-picture">
+                <img src="https://cdn.discordapp.com/avatars/123456789/avatar.png" alt="Profile Picture" class="profile-picture">
                 <span>Username</span>
                 <div class="user-dropdown" id="userDropdown">
-                    <a href="../" class="home">Home</a>
+                    <a href="https://bots.scyted.tv/" class="home">Home</a>
                     <a href="#" class="logout" onclick="logout()">Logout</a>
                 </div>
             </div>
         </nav>
     </header>
     <div class="container">
-        <h1>Levlr Bot</h1>
-        <div class="bot-profile-container">
-            <div class="bot-details" id="levlrBot">
-                <img src="https://cdn.scyted.tv/discord-wave/wave.jpg" alt="Levlr Profile Picture"
-                    class="bot-profile-picture">
-                <div class="bot-info" id="levlrInfo">
-                    <!-- User information will be displayed here -->
-                </div>
+        <h1>User Information</h1>
+        <div class="user-info-container">
+            <div class="bot-details">
+                <img src="https://cdn.scyted.tv/discord-wave/wave.jpg" alt="Bot Profile Picture" class="bot-profile-picture">
+                <div class="bot-name">Levlr</div>
             </div>
+            <div class="user-info-box" id="userInfoBox"></div>
         </div>
+        <div class="error-message" id="errorMessage"></div>
     </div>
     <script src="scripts.js"></script>
     <script>
@@ -159,90 +174,74 @@
             const storedAccessToken = getCookie("accessToken");
 
             // Redirect to login if access token is not found
-            // if (!storedAccessToken) {
-            //     window.location.href = "https://bots.scyted.tv/login";
-            // } else {
-            //     // Fetch user data from Discord API
-            //     fetchDiscordUserData(storedAccessToken)
-            //         .then(userData => {
-            //             // Display user info on the dashboard
-            //             displayUserInfo(userData);
-            //             // Display Levlr bot info
-            //             displayLevlrBotInfo();
-            //         })
-            //         .catch(error => {
-            //             console.error("Error fetching user data:", error);
-            //             // Handle error (e.g., redirect to login page)
-            //             window.location.href = "https://bots.scyted.tv/login";
-            //         });
-            // }
+            if (!storedAccessToken) {
+                window.location.href = "https://bots.scyted.tv/login";
+            } else {
+                // Fetch user data from Discord API
+                fetchDiscordUserData(storedAccessToken)
+                    .then(userData => {
+                        // Display bot info and user info on the dashboard
+                        displayBotInfo();
+                        displayUserInfo();
+                    })
+                    .catch(error => {
+                        console.error("Error fetching user data:", error);
+                        // Handle error (e.g., redirect to login page)
+                        window.location.href = "https://bots.scyted.tv/login";
+                    });
+            }
         });
 
-        function fetchDiscordUserData(accessToken) {
-            const apiUrl = 'https://discord.com/api/users/@me';
+        function displayBotInfo() {
+            // Display bot info
+            const botProfilePicture = document.querySelector('.bot-profile-picture');
+            const botName = document.querySelector('.bot-name');
 
-            return fetch(apiUrl, {
-                headers: {
-                    Authorization: `Bearer ${accessToken}`,
-                },
-            })
+            // Example data (replace with actual data)
+            const botData = {
+                profilePicture: "https://cdn.scyted.tv/discord-wave/wave.jpg",
+                name: "Levlr",
+            };
+
+            botProfilePicture.src = botData.profilePicture;
+            botName.textContent = botData.name;
+        }
+
+        function displayUserInfo() {
+            const userInfoBox = document.getElementById('userInfoBox');
+            const errorMessage = document.getElementById('errorMessage');
+
+            // Example API URL for Levlr
+            const apiUrl = 'https://api.scyted.tv/levlr/userdata.json';
+
+            // Fetch user data from the provided API URL
+            fetch(apiUrl)
                 .then(response => {
                     if (!response.ok) {
-                        throw new Error(`Discord API Request Failed! Status: ${response.status}`);
+                        throw new Error(`API Request Failed! Status: ${response.status}`);
                     }
                     return response.json();
                 })
                 .then(userData => {
-                    // Display user info on the dashboard
-                    displayUserInfo(userData);
-                });
-        }
-
-        function displayUserInfo(userData) {
-            const userDropdown = document.getElementById('userDropdown');
-            const profilePicture = document.querySelector('.profile-picture');
-            const username = document.querySelector('.user-info span');
-
-            profilePicture.src = `https://cdn.discordapp.com/avatars/${userData.id}/${userData.avatar}.png`;
-            username.textContent = userData.username;
-            userDropdown.querySelector('.home').href = `../`;
-        }
-
-        function displayLevlrBotInfo() {
-            const levlrInfoContainer = document.getElementById('levlrInfo');
-
-            // Fetch user data from Levlr API
-            fetch('https://api.scyted.tv/levlr/userdata.json')
-                .then(response => response.json())
-                .then(levlrData => {
-                    // Check if user data is available
-                    if (levlrData && levlrData.userId) {
-                        const levlrUserId = levlrData.userId;
-                        const levlrUsername = levlrData.username || 'Unknown';
-                        const levlrXp = levlrData.xp || 0;
-                        const levlrLevel = levlrData.level || 0;
-
-                        // Display Levlr bot information
-                        levlrInfoContainer.innerHTML = `
-                            <div class="info-item">User ID: ${levlrUserId}</div>
-                            <div class="info-item">Username: ${levlrUsername}</div>
-                            <div class="info-item">XP: ${levlrXp}</div>
-                            <div class="info-item">Level: ${levlrLevel}</div>
-                        `;
-                    } else {
-                        // Display a message if no user data is available
-                        levlrInfoContainer.textContent = 'No information available for this user from Levlr bot.';
-                    }
+                    // Display user info
+                    const userContent = `
+                        <h2>User Information</h2>
+                        <div class="user-info-content">
+                            <p>User ID: ${userData.userId}</p>
+                            <p>Username: ${userData.username}</p>
+                            <p>XP: ${userData.xp}</p>
+                            <p>Level: ${userData.level}</p>
+                        </div>
+                    `;
+                    userInfoBox.innerHTML = userContent;
+                    errorMessage.textContent = ''; // Clear error message if any
                 })
                 .catch(error => {
-                    console.error('Error fetching Levlr data:', error);
-                    levlrInfoContainer.textContent = 'Failed to fetch data from Levlr bot.';
+                    console.error("Error fetching user data:", error);
+                    // Display error message
+                    errorMessage.textContent = 'Error fetching user data. Please try again later.';
+                    userInfoBox.innerHTML = ''; // Clear user info box
                 });
-        }
-
-        function toggleUserDropdown() {
-            const userDropdown = document.getElementById('userDropdown');
-            userDropdown.classList.toggle('show');
         }
 
         function logout() {
@@ -265,5 +264,4 @@
         }
     </script>
 </body>
-
 </html>
