@@ -84,29 +84,18 @@
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
         h1 {
             color: #333;
         }
 
-        .bot-details-container {
+        .bot-profile-container {
             display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
             margin-top: 20px;
-        }
-
-        .bot-info-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            flex: 1;
-        }
-
-        .user-info-container {
-            flex: 1;
-            padding-left: 20px;
         }
 
         .bot-details {
@@ -118,10 +107,6 @@
             border-radius: 8px;
         }
 
-        .bot-details a {
-            text-decoration: none; /* Remove underline from links */
-        }
-
         .bot-profile-picture {
             width: 80px;
             height: 80px;
@@ -129,18 +114,13 @@
             margin-bottom: 10px;
         }
 
-        .bot-name {
-            font-weight: bold;
-            color: #333;
-            margin-top: 10px;
-        }
-
-        .user-info-content {
+        .bot-info {
+            margin-left: 20px;
             text-align: left;
         }
 
-        .user-info-content p {
-            margin: 0;
+        .info-item {
+            margin-bottom: 10px;
         }
     </style>
 </head>
@@ -152,48 +132,44 @@
                 <img src="https://cdn.discordapp.com/avatars/123456789/avatar.png" alt="Profile Picture" class="profile-picture">
                 <span>Username</span>
                 <div class="user-dropdown" id="userDropdown">
-                    <a href="https://bots.scyted.tv/" class="home">Home</a>
+                    <a href="../" class="home">Home</a>
                     <a href="#" class="logout" onclick="logout()">Logout</a>
                 </div>
             </div>
         </nav>
     </header>
     <div class="container">
-        <h1>Levlr Bot Information</h1>
-        <div class="bot-details-container">
-            <div class="bot-info-container" id="botInfo">
-                <!-- Levlr bot info will be displayed here -->
-            </div>
-            <div class="user-info-container" id="userInfo">
-                <!-- User info will be displayed here -->
+        <h1>Levlr Bot</h1>
+        <div class="bot-profile-container">
+            <div class="bot-details" id="levlrBot">
+                <img src="https://cdn.scyted.tv/discord-wave/wave.jpg" alt="Levlr Profile Picture" class="bot-profile-picture">
+                <div class="bot-info" id="levlrInfo">
+                    <!-- User information will be displayed here -->
+                </div>
             </div>
         </div>
     </div>
     <script src="scripts.js"></script>
     <script>
-        function toggleUserDropdown() {
-            const userDropdown = document.getElementById('userDropdown');
-            userDropdown.classList.toggle('show');
-        }
-
         document.addEventListener("DOMContentLoaded", function () {
             const storedAccessToken = getCookie("accessToken");
 
             // Redirect to login if access token is not found
             if (!storedAccessToken) {
-                window.location.href = "https://bots.scyted.tv/login/";
+                window.location.href = "../login";
             } else {
                 // Fetch user data from Discord API
                 fetchDiscordUserData(storedAccessToken)
                     .then(userData => {
-                        // Display bot info and user info on the dashboard
-                        displayBotInfo();
-                        displayUserInfo();
+                        // Display user info on the dashboard
+                        displayUserInfo(userData);
+                        // Display Levlr bot info
+                        displayLevlrBotInfo();
                     })
                     .catch(error => {
                         console.error("Error fetching user data:", error);
                         // Handle error (e.g., redirect to login page)
-                        window.location.href = "https://bots.scyted.tv/login/";
+                        window.location.href = "../login";
                     });
             }
         });
@@ -219,67 +195,50 @@
         }
 
         function displayUserInfo(userData) {
+            const userDropdown = document.getElementById('userDropdown');
             const profilePicture = document.querySelector('.profile-picture');
             const username = document.querySelector('.user-info span');
 
             profilePicture.src = `https://cdn.discordapp.com/avatars/${userData.id}/${userData.avatar}.png`;
             username.textContent = userData.username;
+            userDropdown.querySelector('.home').href = `../`;
         }
 
-        function displayBotInfo() {
-            const botInfoDiv = document.getElementById("botInfo");
+        function displayLevlrBotInfo() {
+            const levlrInfoContainer = document.getElementById('levlrInfo');
 
-            // Example data (replace with actual data)
-            const levlrBotDataUrl = 'https://api.scyted.tv/levlr/userdata.json';
+            // Fetch user data from Levlr API
+            fetch('https://api.scyted.tv/levlr/userdata.json')
+                .then(response => response.json())
+                .then(levlrData => {
+                    // Check if user data is available
+                    if (levlrData && levlrData.userId) {
+                        const levlrUserId = levlrData.userId;
+                        const levlrUsername = levlrData.username || 'Unknown';
+                        const levlrXp = levlrData.xp || 0;
+                        const levlrLevel = levlrData.level || 0;
 
-            fetch(levlrBotDataUrl)
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error(`Failed to fetch Levlr bot data! Status: ${response.status}`);
-                    }
-                    return response.json();
-                })
-                .then(botData => {
-                    // Display Levlr bot info on the dashboard
-                    const levlrBotContainer = document.createElement("div");
-                    levlrBotContainer.classList.add("bot-details");
-                    levlrBotContainer.style.backgroundColor = "#9e3595"; // Set background color for Levlr bot
-
-                    const levlrBotProfilePicture = document.createElement("img");
-                    levlrBotProfilePicture.src = "https://cdn.scyted.tv/discord-wave/wave.jpg"; // Replace with Levlr bot profile picture
-                    levlrBotProfilePicture.alt = "Levlr Bot Profile Picture";
-                    levlrBotProfilePicture.classList.add("bot-profile-picture");
-
-                    const levlrBotName = document.createElement("div");
-                    levlrBotName.classList.add("bot-name");
-                    levlrBotName.textContent = "Levlr";
-
-                    levlrBotContainer.appendChild(levlrBotProfilePicture);
-                    levlrBotContainer.appendChild(levlrBotName);
-
-                    botInfoDiv.appendChild(levlrBotContainer);
-
-                    // Display user info for Levlr bot
-                    const userInfoDiv = document.getElementById("userInfo");
-                    const userInfoContent = document.createElement("div");
-                    userInfoContent.classList.add("user-info-content");
-
-                    if (botData.userId) {
-                        userInfoContent.innerHTML = `
-                            <p><strong>User ID:</strong> ${botData.userId}</p>
-                            <p><strong>Username:</strong> ${botData.username}</p>
-                            <p><strong>XP:</strong> ${botData.xp}</p>
-                            <p><strong>Level:</strong> ${botData.level}</p>
+                        // Display Levlr bot information
+                        levlrInfoContainer.innerHTML = `
+                            <div class="info-item">User ID: ${levlrUserId}</div>
+                            <div class="info-item">Username: ${levlrUsername}</div>
+                            <div class="info-item">XP: ${levlrXp}</div>
+                            <div class="info-item">Level: ${levlrLevel}</div>
                         `;
                     } else {
-                        userInfoContent.textContent = "No information available for this user.";
+                        // Display a message if no user data is available
+                        levlrInfoContainer.textContent = 'No information available for this user from Levlr bot.';
                     }
-
-                    userInfoDiv.appendChild(userInfoContent);
                 })
                 .catch(error => {
-                    console.error("Error fetching Levlr bot data:", error);
+                    console.error('Error fetching Levlr data:', error);
+                    levlrInfoContainer.textContent = 'Failed to fetch data from Levlr bot.';
                 });
+        }
+
+        function toggleUserDropdown() {
+            const userDropdown = document.getElementById('userDropdown');
+            userDropdown.classList.toggle('show');
         }
 
         function logout() {
@@ -287,7 +246,7 @@
             document.cookie = "accessToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
 
             // Redirect to login page
-            window.location.href = "https://bots.scyted.tv/login/";
+            window.location.href = "../";
         }
 
         function getCookie(name) {
