@@ -26,7 +26,7 @@
             font-weight: bold;
         }
 
-        nav {
+        .nav-container {
             display: flex;
             align-items: center;
         }
@@ -143,62 +143,51 @@
             text-decoration: underline;
         }
 
-        /* Media query for mobile devices */
-        @media screen and (max-width: 600px) {
-            header {
+        /* Hamburger menu styles */
+        .hamburger-menu {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            padding: 10px;
+        }
+
+        .bar {
+            width: 25px;
+            height: 3px;
+            background-color: #fff;
+            margin: 3px 0;
+            transition: 0.4s;
+        }
+
+        @media screen and (max-width: 768px) {
+            .nav-container {
+                display: none;
+            }
+
+            .hamburger-menu {
+                display: flex;
+            }
+
+            .user-info,
+            .user-info-container {
                 flex-direction: column;
                 align-items: flex-start;
             }
 
-            nav {
-                margin-top: 10px;
-            }
-
-            .user-info {
-                margin-right: 0;
-            }
-
             .user-dropdown {
-                right: auto;
-                left: 20px;
+                right: 0;
             }
 
-            .logo {
-                margin-bottom: 10px;
+            .user-info.show-dropdown .bar:nth-child(1) {
+                transform: rotate(-45deg) translate(-5px, 6px);
             }
 
-            .user-info-container {
-                flex-direction: column;
-                align-items: center;
-            }
-        }
-
-        /* Hamburger menu styles */
-        .hamburger-menu {
-            display: none;
-            cursor: pointer;
-        }
-
-        @media screen and (max-width: 600px) {
-            .hamburger-menu {
-                display: block;
+            .user-info.show-dropdown .bar:nth-child(2) {
+                opacity: 0;
             }
 
-            nav {
-                display: none;
-                position: absolute;
-                top: 60px;
-                right: 20px;
-                background-color: #fff;
-                border: 1px solid #ddd;
-                border-radius: 4px;
-                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-                flex-direction: column;
-                z-index: 1;
-            }
-
-            nav.show {
-                display: flex;
+            .user-info.show-dropdown .bar:nth-child(3) {
+                transform: rotate(45deg) translate(-5px, -6px);
             }
         }
     </style>
@@ -207,16 +196,18 @@
 <body>
     <header>
         <div class="logo">ScytedTV Bot Network</div>
-        <div class="hamburger-menu" onclick="toggleNav()">
-            &#9776;
+        <div class="hamburger-menu" onclick="toggleUserDropdown()">
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
         </div>
-        <nav>
+        <nav class="nav-container">
             <div class="user-info" onclick="toggleUserDropdown()">
                 <img src="" alt="Profile Picture" class="profile-picture">
                 <span>Username</span>
                 <div class="user-dropdown" id="userDropdown">
                     <a href="https://bots.scyted.tv/" class="home">Home</a>
-                    <a href="" class="logout" onclick="logout()">Logout</a>
+                    <a href="#" class="logout" onclick="logout()">Logout</a>
                 </div>
             </div>
         </nav>
@@ -228,21 +219,16 @@
                     class="bot-profile-picture">
                 <div class="bot-name">Levlr</div>
             </div>
-            <div class="user-info-box" id="userInfoBox">
-                <p>User data isn't currently available for this bot.</p>
-            </div>
+            <div class="user-info-box" id="userInfoBox"><p>User data isn't currently available for this bot.</p></div>
         </div>
         <div class="error-message" id="errorMessage"></div>
     </div>
     <script>
-        function toggleNav() {
-            const nav = document.querySelector('nav');
-            nav.classList.toggle('show');
-        }
-
         function toggleUserDropdown() {
             const userDropdown = document.getElementById('userDropdown');
             userDropdown.classList.toggle('show');
+            const userInfo = document.querySelector('.user-info');
+            userInfo.classList.toggle('show-dropdown');
         }
 
         document.addEventListener("DOMContentLoaded", function () {
