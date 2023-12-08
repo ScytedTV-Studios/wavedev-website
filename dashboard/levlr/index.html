@@ -95,6 +95,8 @@
 
         .user-info-container {
             display: flex;
+            justify-content: space-between;
+            align-items: center;
             margin-top: 20px;
         }
 
@@ -151,7 +153,7 @@
                 <img src="https://cdn.discordapp.com/avatars/123456789/avatar.png" alt="Profile Picture" class="profile-picture">
                 <span>Username</span>
                 <div class="user-dropdown" id="userDropdown">
-                    <a href="https://bots.scyted.tv/" class="home">Home</a>
+                    <a href="../" class="home">Home</a>
                     <a href="#" class="logout" onclick="logout()">Logout</a>
                 </div>
             </div>
@@ -175,19 +177,19 @@
 
             // Redirect to login if access token is not found
             if (!storedAccessToken) {
-                window.location.href = "https://bots.scyted.tv/login";
+                window.location.href = "../login";
             } else {
                 // Fetch user data from Discord API
                 fetchDiscordUserData(storedAccessToken)
                     .then(userData => {
                         // Display bot info and user info on the dashboard
                         displayBotInfo();
-                        displayUserInfo();
+                        displayUserInfo(userData);
                     })
                     .catch(error => {
                         console.error("Error fetching user data:", error);
                         // Handle error (e.g., redirect to login page)
-                        window.location.href = "https://bots.scyted.tv/login";
+                        window.location.href = "../login";
                     });
             }
         });
@@ -207,16 +209,7 @@
             botName.textContent = botData.name;
         }
 
-        function displayUserInfo() {
-
-            const userDropdown = document.getElementById('userDropdown');
-            const profilePicture = document.querySelector('.profile-picture');
-            const username = document.querySelector('.user-info span');
-
-            profilePicture.src = `https://cdn.discordapp.com/avatars/${userData.id}/${userData.avatar}.png`;
-            username.textContent = userData.username;
-            userDropdown.querySelector('.home').href = `../`;
-
+        function displayUserInfo(userData) {
             const userInfoBox = document.getElementById('userInfoBox');
             const errorMessage = document.getElementById('errorMessage');
 
@@ -231,22 +224,21 @@
                     }
                     return response.json();
                 })
-                .then(userData => {
+                .then(userApiData => {
                     // Display user info
                     const userContent = `
                         <h2>User Information</h2>
                         <div class="user-info-content">
-                            <p>User ID: ${userData.userId}</p>
-                            <p>Username: ${userData.username}</p>
-                            <p>XP: ${userData.xp}</p>
-                            <p>Level: ${userData.level}</p>
+                            <p>User ID: ${userApiData.userId}</p>
+                            <p>Username: ${userApiData.username}</p>
+                            <p>XP: ${userApiData.xp}</p>
+                            <p>Level: ${userApiData.level}</p>
                         </div>
                     `;
                     userInfoBox.innerHTML = userContent;
-                    errorMessage.textContent = ''; // Clear error message if any
                 })
                 .catch(error => {
-                    console.error("Error fetching user data:", error);
+                    console.error("Error fetching user API data:", error);
                     // Display error message
                     errorMessage.textContent = 'Error fetching user data. Please try again later.';
                     userInfoBox.innerHTML = ''; // Clear user info box
@@ -258,7 +250,7 @@
             document.cookie = "accessToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
 
             // Redirect to login page
-            window.location.href = "https://bots.scyted.tv/login";
+            window.location.href = "../";
         }
 
         function getCookie(name) {
