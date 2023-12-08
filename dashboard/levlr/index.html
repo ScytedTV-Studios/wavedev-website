@@ -177,7 +177,7 @@
                 window.location.href = "https://bots.scyted.tv/login";
             } else {
                 // Fetch user data from Discord API
-                fetchDiscordUserData(storedAccessToken)
+                fetchDiscordUserData(accessToken)
                     .then(userData => {
                         // Display bot info and user info on the dashboard
                         displayBotInfo();
