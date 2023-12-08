@@ -208,6 +208,15 @@
         }
 
         function displayUserInfo() {
+
+            const userDropdown = document.getElementById('userDropdown');
+            const profilePicture = document.querySelector('.profile-picture');
+            const username = document.querySelector('.user-info span');
+
+            profilePicture.src = `https://cdn.discordapp.com/avatars/${userData.id}/${userData.avatar}.png`;
+            username.textContent = userData.username;
+            userDropdown.querySelector('.home').href = `../`;
+
             const userInfoBox = document.getElementById('userInfoBox');
             const errorMessage = document.getElementById('errorMessage');
 
