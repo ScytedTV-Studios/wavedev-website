@@ -200,18 +200,19 @@
 
             // Example data (replace with actual data)
             const botData = [
-                { name: "Wave 24/7", profilePicture: "https://cdn.scyted.tv/discord-wave/wave.jpg", backgroundColor: "#9b72f9" },
-                { name: "Wave Premium", profilePicture: "https://cdn.scyted.tv/discord-wave/wave-premium.jpg", backgroundColor: "#fac940" },
-                { name: "Wave DEV", profilePicture: "https://cdn.scyted.tv/discord-wave/wave-dev.jpg", backgroundColor: "#222222" },
-                { name: "Levlr", profilePicture: "https://cdn.scyted.tv/discord-wave/wave.jpg", backgroundColor: "#9e3595" },
-                { name: "Nat 20", profilePicture: "https://cdn.scyted.tv/discord-wave/wave-premium.jpg", backgroundColor: "#fac940" },
-                { name: "Heart Collectors", profilePicture: "https://cdn.scyted.tv/discord-wave/wave-dev.jpg", backgroundColor: "#222222" },
+                { name: "Wave 24/7", profilePicture: "https://cdn.scyted.tv/discord-wave/wave.jpg", backgroundColor: "#9b72f9", link: "#" },
+                { name: "Wave Premium", profilePicture: "https://cdn.scyted.tv/discord-wave/wave-premium.jpg", backgroundColor: "#fac940", link: "#" },
+                { name: "Wave DEV", profilePicture: "https://cdn.scyted.tv/discord-wave/wave-dev.jpg", backgroundColor: "#222222", link: "#" },
+                { name: "Levlr", profilePicture: "https://cdn.scyted.tv/discord-wave/wave.jpg", backgroundColor: "#9e3595", link: "#" },
+                { name: "Nat 20", profilePicture: "https://cdn.scyted.tv/discord-wave/wave-premium.jpg", backgroundColor: "#fac940", link: "#" },
+                { name: "Heart Collectors", profilePicture: "https://cdn.scyted.tv/discord-wave/wave-dev.jpg", backgroundColor: "#222222", link: "#" },
             ];
 
             botData.forEach(bot => {
-                const botContainer = document.createElement("div");
+                const botContainer = document.createElement("a");
                 botContainer.classList.add("bot-details");
                 botContainer.style.backgroundColor = bot.backgroundColor || "#ddd"; // Set background color
+                botContainer.href = bot.link || "#"; // Set link
 
                 const botProfilePicture = document.createElement("img");
                 botProfilePicture.src = bot.profilePicture;
@@ -225,9 +226,11 @@
                 botContainer.appendChild(botProfilePicture);
                 botContainer.appendChild(botName);
 
-                botContainer.addEventListener("click", function() {
+                botContainer.addEventListener("click", function(event) {
                     // Handle click on bot square (add your logic here)
                     console.log(`Clicked on ${bot.name}`);
+                    // Prevent the default behavior of the link
+                    event.preventDefault();
                 });
 
                 botInfoDiv.appendChild(botContainer);
