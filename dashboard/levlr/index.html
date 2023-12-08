@@ -247,6 +247,26 @@
             }
             return null;
         }
+
+        function fetchDiscordUserData(accessToken) {
+        const apiUrl = 'https://discord.com/api/users/@me';
+
+        return fetch(apiUrl, {
+            headers: {
+                Authorization: `Bearer ${accessToken}`,
+            },
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`Discord API Request Failed! Status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(userData => {
+            // Display user info on the dashboard
+            displayUserInfo(userData);
+        });
+    }
     </script>
 </body>
 </html>
