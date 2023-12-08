@@ -238,27 +238,22 @@
                     return response.json();
                 })
                 .then(userApiData => {
-                    // Check the structure of the received JSON data
-                    if (userApiData && userApiData.userId && userApiData.username && userApiData.xp && userApiData.level) {
-                        // Display user info
-                        const userContent = `
-                    <h2>User Information</h2>
-                    <div class="user-info-content">
-                        <p>User ID: ${userApiData.userId}</p>
-                        <p>Username: ${userApiData.username}</p>
-                        <p>XP: ${userApiData.xp}</p>
-                        <p>Level: ${userApiData.level}</p>
-                    </div>
-                `;
-                        userInfoBox.innerHTML = userContent;
-                        errorMessage.textContent = ''; // Clear error message if any
-                    } else {
-                        throw new Error('Invalid JSON structure');
-                    }
+                    // Display user info
+                    const userContent = `
+            <h2>User Information</h2>
+            <div class="user-info-content">
+                <p>User ID: ${userApiData.userId}</p>
+                <p>Username: ${userApiData.username}</p>
+                <p>XP: ${userApiData.xp}</p>
+                <p>Level: ${userApiData.level}</p>
+            </div>
+        `;
+                    userInfoBox.innerHTML = userContent;
+                    errorMessage.textContent = ''; // Clear error message if any
                 })
                 .catch(error => {
                     console.error("Error fetching user data:", error);
-                    console.log("Invalid JSON structure. Received:", userApiData);
+                    console.log("Invalid JSON structure. Received:", userApiData); // Log userApiData here
                     // Display error message
                     errorMessage.textContent = 'Error fetching user data. Please try again later.';
                     userInfoBox.innerHTML = ''; // Clear user info box
