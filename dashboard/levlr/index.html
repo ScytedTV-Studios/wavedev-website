@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Levlr Bot Information - Discord Bot Dashboard</title>
+    <title>Levlr Bot - User Information</title>
     <style>
         body {
             margin: 0;
@@ -92,28 +92,40 @@
 
         .bot-info-container {
             display: flex;
+            flex-direction: column;
             align-items: center;
+        }
+
+        .bot-details {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            border-radius: 8px;
+            background-color: #9e3595;
             margin-top: 20px;
         }
 
         .bot-profile-picture {
-            width: 50px;
-            height: 50px;
+            width: 150px;
+            height: 150px;
             border-radius: 50%;
-            margin-right: 10px;
+            margin-bottom: 20px;
         }
 
         .bot-name {
             font-weight: bold;
-        }
-
-        .user-data-container {
-            margin-top: 20px;
+            color: #fff;
+            font-size: 24px;
         }
 
         .user-data {
-            margin-bottom: 10px;
-            color: #333;
+            margin-top: 20px;
+            font-size: 18px;
+        }
+
+        .user-data span {
+            font-weight: bold;
         }
     </style>
 </head>
@@ -132,12 +144,8 @@
         </nav>
     </header>
     <div class="container">
-        <h1>Levlr Bot Information</h1>
-        <div class="bot-info-container">
-            <img src="https://cdn.scyted.tv/discord-wave/wave-dev.jpg" alt="Levlr Bot Profile Picture" class="bot-profile-picture">
-            <div class="bot-name">Levlr</div>
-        </div>
-        <div class="user-data-container" id="userData"></div>
+        <h1>Levlr Bot - User Information</h1>
+        <div id="botInfo" class="bot-info-container"></div>
     </div>
     <script src="scripts.js"></script>
     <script>
@@ -153,12 +161,11 @@
             if (!storedAccessToken) {
                 window.location.href = "../login";
             } else {
-                // Fetch user data from the API
-                fetchLevlrUserData(storedAccessToken)
+                // Fetch user data from Discord API
+                fetchDiscordUserData(storedAccessToken)
                     .then(userData => {
-                        // Display Levlr bot info and user data
-                        displayLevlrBotInfo();
-                        displayUserData(userData);
+                        // Display bot info on the page
+                        displayLevlrInfo();
                     })
                     .catch(error => {
                         console.error("Error fetching user data:", error);
@@ -168,8 +175,8 @@
             }
         });
 
-        function fetchLevlrUserData(accessToken) {
-            const apiUrl = 'https://api.scyted.tv/levlr/userdata.json';
+        function fetchDiscordUserData(accessToken) {
+            const apiUrl = 'https://discord.com/api/users/@me';
 
             return fetch(apiUrl, {
                 headers: {
@@ -178,53 +185,58 @@
             })
             .then(response => {
                 if (!response.ok) {
-                    throw new Error(`API Request Failed! Status: ${response.status}`);
+                    throw new Error(`Discord API Request Failed! Status: ${response.status}`);
                 }
                 return response.json();
+            })
+            .then(userData => {
+                // Display user info on the page
+                displayUserInfo(userData);
             });
         }
 
-        function displayLevlrBotInfo() {
-            // Display Levlr bot info (profile picture and name)
-            const botProfilePicture = document.querySelector('.bot-profile-picture');
-            botProfilePicture.src = 'https://cdn.scyted.tv/discord-wave/wave-dev.jpg'; // Replace with actual Levlr bot profile picture URL
-            const botName = document.querySelector('.bot-name');
-            botName.textContent = 'Levlr'; // Replace with actual Levlr bot name
+        function displayUserInfo(userData) {
+            const userDropdown = document.getElementById('userDropdown');
+            const profilePicture = document.querySelector('.profile-picture');
+            const username = document.querySelector('.user-info span');
+
+            profilePicture.src = `https://cdn.discordapp.com/avatars/${userData.id}/${userData.avatar}.png`;
+            username.textContent = userData.username;
+            userDropdown.querySelector('.home').href = `../`;
         }
 
-        function displayUserData(userData) {
-            const userDataContainer = document.getElementById('userData');
+        function displayLevlrInfo() {
+            const botInfoDiv = document.getElementById("botInfo");
 
-            if (userData && userData.userId) {
-                // Display user data if available
-                const userId = document.createElement('div');
-                userId.classList.add('user-data');
-                userId.textContent = `User ID: ${userData.userId}`;
+            // Example data (replace with actual data from the API)
+            const levlrData = {
+                "userId": "852572302590607361",
+                "username": "loydosborne",
+                "xp": 607,
+                "level": 12
+            };
 
-                const username = document.createElement('div');
-                username.classList.add('user-data');
-                username.textContent = `Username: ${userData.username}`;
+            const botContainer = document.createElement("div");
+            botContainer.classList.add("bot-details");
 
-                const xp = document.createElement('div');
-                xp.classList.add('user-data');
-                xp.textContent = `XP: ${userData.xp}`;
+            const botProfilePicture = document.createElement("img");
+            botProfilePicture.src = "https://cdn.scyted.tv/discord-wave/wave.jpg"; // Replace with actual bot image URL
+            botProfilePicture.alt = "Levlr Bot Profile Picture";
+            botProfilePicture.classList.add("bot-profile-picture");
 
-                const level = document.createElement('div');
-                level.classList.add('user-data');
-                level.textContent = `Level: ${userData.level}`;
+            const botName = document.createElement("div");
+            botName.classList.add("bot-name");
+            botName.textContent = "Levlr"; // Replace with actual bot name
 
-                userDataContainer.appendChild(userId);
-                userDataContainer.appendChild(username);
-                userDataContainer.appendChild(xp);
-                userDataContainer.appendChild(level);
-            } else {
-                // Display message if no user data is available
-                const noDataMessage = document.createElement('div');
-                noDataMessage.classList.add('user-data');
-                noDataMessage.textContent = 'No data available for this user.';
+            const userData = document.createElement("div");
+            userData.classList.add("user-data");
+            userData.innerHTML = `<span>Username:</span> ${levlrData.username}<br><span>XP:</span> ${levlrData.xp}<br><span>Level:</span> ${levlrData.level}`;
 
-                userDataContainer.appendChild(noDataMessage);
-            }
+            botContainer.appendChild(botProfilePicture);
+            botContainer.appendChild(botName);
+            botContainer.appendChild(userData);
+
+            botInfoDiv.appendChild(botContainer);
         }
 
         function logout() {
