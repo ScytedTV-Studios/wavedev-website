@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -107,7 +108,8 @@
         }
 
         .bot-details a {
-            text-decoration: none; /* Remove underline from links */
+            text-decoration: none;
+            /* Remove underline from links */
         }
 
         .bot-profile-picture {
@@ -123,10 +125,12 @@
         }
 
         .bot-details a:hover .bot-name {
-            text-decoration: underline; /* Add underline on hover */
+            text-decoration: underline;
+            /* Add underline on hover */
         }
     </style>
 </head>
+
 <body>
     <header>
         <div class="logo">ScytedTV Bot Network</div>
@@ -181,16 +185,16 @@
                     Authorization: `Bearer ${accessToken}`,
                 },
             })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error(`Discord API Request Failed! Status: ${response.status}`);
-                }
-                return response.json();
-            })
-            .then(userData => {
-                // Display user info on the dashboard
-                displayUserInfo(userData);
-            });
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`Discord API Request Failed! Status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(userData => {
+                    // Display user info on the dashboard
+                    displayUserInfo(userData);
+                });
         }
 
         function displayUserInfo(userData) {
@@ -234,11 +238,11 @@
                 botContainer.appendChild(botProfilePicture);
                 botContainer.appendChild(botName);
 
-                botContainer.addEventListener("click", function(event) {
+                botContainer.addEventListener("click", function (event) {
                     // Handle click on bot square (add your logic here)
                     console.log(`Clicked on ${bot.name}`);
-                    // Prevent the default behavior of the link
-                    event.preventDefault();
+                    // If you want to navigate to the link, remove the next line
+                    // event.preventDefault();
                 });
 
                 botInfoDiv.appendChild(botContainer);
@@ -265,4 +269,5 @@
         }
     </script>
 </body>
+
 </html>
