@@ -257,14 +257,14 @@
 
             // Display user info
             const userContent = `
-        <h2>User Information</h2>
-        <div class="user-info-content">
-            <p>User ID: ${userApiData.userId}</p>
-            <p>Username: ${userApiData.username}</p>
-            <p>XP: ${userApiData.xp}</p>
-            <p>Level: ${userApiData.level}</p>
-        </div>
-    `;
+    <h2>User Information</h2>
+    <div class="user-info-content">
+        <p>User ID: ${userData.id}</p>
+        <p>Username: ${userData.username}</p>
+        <p>XP: ${userData.xp}</p>
+        <p>Level: ${userData.level}</p>
+    </div>
+`;
             userInfoBox.innerHTML = userContent;
             errorMessage.textContent = ''; // Clear error message if any
         }
