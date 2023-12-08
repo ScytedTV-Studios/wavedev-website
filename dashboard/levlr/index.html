@@ -117,7 +117,8 @@
         .bot-name {
             font-weight: bold;
             color: #333;
-            text-align: center; /* Center the bot name */
+            text-align: center;
+            /* Center the bot name */
         }
 
         .user-info-box {
@@ -172,7 +173,8 @@
             .user-info,
             .user-info-container {
                 flex-direction: column;
-                align-items: center; /* Center the user info */
+                align-items: center;
+                /* Center the user info */
             }
 
             .user-dropdown {
@@ -220,7 +222,9 @@
                     class="bot-profile-picture">
                 <div class="bot-name">Levlr</div>
             </div>
-            <div class="user-info-box" id="userInfoBox"><p>User data isn't currently available for this bot.</p></div>
+            <div class="user-info-box" id="userInfoBox">
+                <p>User data isn't currently available for this bot.</p>
+            </div>
         </div>
         <div class="error-message" id="errorMessage"></div>
     </div>
@@ -228,6 +232,9 @@
         function toggleUserDropdown() {
             const userDropdown = document.getElementById('userDropdown');
             userDropdown.classList.toggle('show');
+        }
+
+        function toggleMobileMenu() {
             const userInfo = document.querySelector('.user-info');
             userInfo.classList.toggle('show-dropdown');
         }
