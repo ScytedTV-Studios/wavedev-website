@@ -102,9 +102,10 @@
             flex-direction: column;
             align-items: center;
             cursor: pointer;
-            background-color: #ddd; /* Placeholder color */
             padding: 20px;
             border-radius: 8px;
+            background-size: cover;
+            background-position: center;
         }
 
         .bot-profile-picture {
@@ -116,6 +117,7 @@
 
         .bot-name {
             font-weight: bold;
+            color: #fff;
         }
     </style>
 </head>
@@ -200,18 +202,17 @@
 
             // Example data (replace with actual data)
             const botData = [
-                { name: "Wave 24/7", profilePicture: "https://cdn.scyted.tv/discord-wave/wave.jpg" },
-                { name: "Wave Premium", profilePicture: "https://cdn.scyted.tv/discord-wave/wave-premium.jpg" },
-                { name: "Wave DEV", profilePicture: "https://cdn.scyted.tv/discord-wave/wave-dev.jpg" },
-                { name: "Levlr", profilePicture: "https://cdn.scyted.tv/discord-wave/wave-dev.jpg" },
-                { name: "Nat 20", profilePicture: "https://cdn.scyted.tv/discord-wave/wave-dev.jpg" },
-                { name: "Heart Collectors", profilePicture: "https://cdn.scyted.tv/discord-wave/wave-dev.jpg" },
+                { name: "Wave 24/7", profilePicture: "https://cdn.scyted.tv/discord-wave/wave.jpg", backgroundColor: "#9b72f9" },
+                { name: "Wave Premium", profilePicture: "https://cdn.scyted.tv/discord-wave/wave-premium.jpg", backgroundColor: "#fac940" },
+                { name: "Wave DEV", profilePicture: "https://cdn.scyted.tv/discord-wave/wave-dev.jpg", backgroundColor: "#222222" },
+                // Add more bot data as needed
             ];
 
             botData.forEach(bot => {
                 const botContainer = document.createElement("div");
                 botContainer.classList.add("bot-details");
                 botContainer.style.backgroundImage = `url(${bot.profilePicture})`; // Set background image
+                botContainer.style.backgroundColor = bot.backgroundColor || "#ddd"; // Set background color
 
                 const botProfilePicture = document.createElement("img");
                 botProfilePicture.src = bot.profilePicture;
