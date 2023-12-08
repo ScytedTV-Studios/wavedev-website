@@ -171,6 +171,11 @@
         <div class="error-message" id="errorMessage"></div>
     </div>
     <script>
+        function toggleUserDropdown() {
+            const userDropdown = document.getElementById('userDropdown');
+            userDropdown.classList.toggle('show');
+        }
+
         document.addEventListener("DOMContentLoaded", function () {
             const storedAccessToken = getCookie("accessToken");
 
@@ -256,36 +261,36 @@
             username.textContent = userData.username;
             userDropdown.querySelector('.home').href = `../`;
 
-// Example API URL for Levlr
-const apiUrl = 'https://api.scyted.tv/levlr/userdata.json';
+            // Example API URL for Levlr
+            const apiUrl = 'https://api.scyted.tv/levlr/userdata.json';
 
-// Fetch user data from the provided API URL
-fetch(apiUrl)
-    .then(response => {
-        if (!response.ok) {
-            throw new Error(`API Request Failed! Status: ${response.status}`);
-        }
-        return response.json(); // Parse the JSON response
-    })
-    .then(usersData => {
-        // Find the user data for the logged-in user
-        const userApiData = usersData.find(user => user.userId === userId);
+            // Fetch user data from the provided API URL
+            fetch(apiUrl)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`API Request Failed! Status: ${response.status}`);
+                    }
+                    return response.json(); // Parse the JSON response
+                })
+                .then(usersData => {
+                    // Find the user data for the logged-in user
+                    const userApiData = usersData.find(user => user.userId === userId);
 
-        if (!userApiData) {
-            throw new Error('User data not found for the logged-in user.');
-        }
+                    if (!userApiData) {
+                        throw new Error('User data not found for the logged-in user.');
+                    }
 
-        // Display user info
-        displayUserInfo(userApiData);
-    })
-    .catch(error => {
-        console.error("Error fetching user data:", error);
-        // Display error message
-        const errorMessage = document.getElementById('errorMessage');
-        errorMessage.textContent = 'Error fetching user data. Please try again later.';
-        const userInfoBox = document.getElementById('userInfoBox');
-        userInfoBox.innerHTML = ''; // Clear user info box
-    });
+                    // Display user info
+                    displayUserInfo(userApiData);
+                })
+                .catch(error => {
+                    console.error("Error fetching user data:", error);
+                    // Display error message
+                    const errorMessage = document.getElementById('errorMessage');
+                    errorMessage.textContent = 'Error fetching user data. Please try again later.';
+                    const userInfoBox = document.getElementById('userInfoBox');
+                    userInfoBox.innerHTML = ''; // Clear user info box
+                });
 
             const userInfoBox = document.getElementById('userInfoBox');
             const errorMessage = document.getElementById('errorMessage');
