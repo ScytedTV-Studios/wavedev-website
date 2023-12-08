@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Information - Discord Bot Dashboard</title>
+    <title>Dashboard - Discord Bot Dashboard</title>
     <style>
         body {
             margin: 0;
@@ -90,10 +90,10 @@
             color: #333;
         }
 
-        .user-info-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
+        .bot-info-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
             margin-top: 20px;
         }
 
@@ -106,6 +106,10 @@
             border-radius: 8px;
         }
 
+        .bot-details a {
+            text-decoration: none; /* Remove underline from links */
+        }
+
         .bot-profile-picture {
             width: 80px;
             height: 80px;
@@ -115,31 +119,11 @@
 
         .bot-name {
             font-weight: bold;
-            color: #333;
-        }
-
-        .user-info-box {
-            flex: 1;
-            padding: 20px;
-            background-color: #eee;
-            border-radius: 8px;
-        }
-
-        .user-info-content {
-            text-align: left;
-        }
-
-        .error-message {
-            color: #ff5252;
-            margin-top: 10px;
-        }
-
-        .bot-details a {
-            text-decoration: none;
+            color: #fff;
         }
 
         .bot-details a:hover .bot-name {
-            text-decoration: underline;
+            text-decoration: underline; /* Add underline on hover */
         }
     </style>
 </head>
@@ -158,18 +142,16 @@
         </nav>
     </header>
     <div class="container">
-        <h1>User Information</h1>
-        <div class="user-info-container">
-            <div class="bot-details">
-                <img src="https://cdn.scyted.tv/discord-wave/wave.jpg" alt="Bot Profile Picture" class="bot-profile-picture">
-                <div class="bot-name">Levlr</div>
-            </div>
-            <div class="user-info-box" id="userInfoBox"></div>
-        </div>
-        <div class="error-message" id="errorMessage"></div>
+        <h1>Dashboard</h1>
+        <div id="botInfo" class="bot-info-container"></div>
     </div>
     <script src="scripts.js"></script>
     <script>
+        function toggleUserDropdown() {
+            const userDropdown = document.getElementById('userDropdown');
+            userDropdown.classList.toggle('show');
+        }
+
         document.addEventListener("DOMContentLoaded", function () {
             const storedAccessToken = getCookie("accessToken");
 
@@ -180,9 +162,8 @@
                 // Fetch user data from Discord API
                 fetchDiscordUserData(storedAccessToken)
                     .then(userData => {
-                        // Display bot info and user info on the dashboard
+                        // Display bot info on the dashboard
                         displayBotInfo();
-                        displayUserInfo();
                     })
                     .catch(error => {
                         console.error("Error fetching user data:", error);
@@ -192,41 +173,34 @@
             }
         });
 
-        function displayUserInfo() {
-            const userInfoBox = document.getElementById('userInfoBox');
-            const errorMessage = document.getElementById('errorMessage');
+        function fetchDiscordUserData(accessToken) {
+            const apiUrl = 'https://discord.com/api/users/@me';
 
-            // Example API URL for Levlr
-            const apiUrl = 'https://api.scyted.tv/levlr/userdata.json';
+            return fetch(apiUrl, {
+                headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                },
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`Discord API Request Failed! Status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(userData => {
+                // Display user info on the dashboard
+                displayUserInfo(userData);
+            });
+        }
 
-            // Fetch user data from the provided API URL
-            fetch(apiUrl)
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error(`API Request Failed! Status: ${response.status}`);
-                    }
-                    return response.json();
-                })
-                .then(userData => {
-                    // Display user info
-                    const userContent = `
-                        <h2>User Information</h2>
-                        <div class="user-info-content">
-                            <p>User ID: ${userData.userId}</p>
-                            <p>Username: ${userData.username}</p>
-                            <p>XP: ${userData.xp}</p>
-                            <p>Level: ${userData.level}</p>
-                        </div>
-                    `;
-                    userInfoBox.innerHTML = userContent;
-                    errorMessage.textContent = ''; // Clear error message if any
-                })
-                .catch(error => {
-                    console.error("Error fetching user data:", error);
-                    // Display error message
-                    errorMessage.textContent = 'Error fetching user data. Please try again later.';
-                    userInfoBox.innerHTML = ''; // Clear user info box
-                });
+        function displayUserInfo(userData) {
+            const userDropdown = document.getElementById('userDropdown');
+            const profilePicture = document.querySelector('.profile-picture');
+            const username = document.querySelector('.user-info span');
+
+            profilePicture.src = `https://cdn.discordapp.com/avatars/${userData.id}/${userData.avatar}.png`;
+            username.textContent = userData.username;
+            userDropdown.querySelector('.home').href = `../`;
         }
 
         function displayBotInfo() {
