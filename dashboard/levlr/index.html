@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -143,12 +144,14 @@
         }
     </style>
 </head>
+
 <body>
     <header>
         <div class="logo">ScytedTV Bot Network</div>
         <nav>
             <div class="user-info" onclick="toggleUserDropdown()">
-                <img src="https://cdn.discordapp.com/avatars/123456789/avatar.png" alt="Profile Picture" class="profile-picture">
+                <img src="https://cdn.discordapp.com/avatars/123456789/avatar.png" alt="Profile Picture"
+                    class="profile-picture">
                 <span>Username</span>
                 <div class="user-dropdown" id="userDropdown">
                     <a href="https://bots.scyted.tv/" class="home">Home</a>
@@ -161,7 +164,8 @@
         <h1>User Information</h1>
         <div class="user-info-container">
             <div class="bot-details">
-                <img src="https://cdn.scyted.tv/discord-wave/wave.jpg" alt="Bot Profile Picture" class="bot-profile-picture">
+                <img src="https://cdn.scyted.tv/discord-wave/wave.jpg" alt="Bot Profile Picture"
+                    class="bot-profile-picture">
                 <div class="bot-name">Levlr</div>
             </div>
             <div class="user-info-box" id="userInfoBox"></div>
@@ -199,19 +203,33 @@
                     Authorization: `Bearer ${accessToken}`,
                 },
             })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error(`Discord API Request Failed! Status: ${response.status}`);
-                }
-                return response.json();
-            })
-            .then(userData => {
-                // Display user info on the dashboard
-                displayUserInfo(userData);
-            });
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`Discord API Request Failed! Status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(userData => {
+                    // Display user info on the dashboard
+                    displayUserInfo(userData);
+                });
         }
 
         function displayUserInfo(userData) {
+
+            const userDropdown = document.getElementById('userDropdown');
+            const profilePicture = document.querySelector('.profile-picture');
+            const username = document.querySelector('.user-info span');
+
+            // Use a fallback avatar URL if the user doesn't have an avatar
+            const avatarURL = userData.avatar
+                ? `https://cdn.discordapp.com/avatars/${userData.id}/${userData.avatar}.png`
+                : 'https://example.com/fallback-avatar.png';
+
+            profilePicture.src = avatarURL;
+            username.textContent = userData.username;
+            userDropdown.querySelector('.home').href = `../`;
+
             const userInfoBox = document.getElementById('userInfoBox');
             const errorMessage = document.getElementById('errorMessage');
 
@@ -272,4 +290,5 @@
         }
     </script>
 </body>
+
 </html>
