@@ -104,7 +104,7 @@
             align-items: center;
             cursor: pointer;
             padding: 20px;
-            border-radius: 8px;
+            margin-right: 20px;
         }
 
         .bot-profile-picture {
@@ -142,12 +142,74 @@
         .bot-details a:hover .bot-name {
             text-decoration: underline;
         }
+
+        /* Media query for mobile devices */
+        @media screen and (max-width: 600px) {
+            header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            nav {
+                margin-top: 10px;
+            }
+
+            .user-info {
+                margin-right: 0;
+            }
+
+            .user-dropdown {
+                right: auto;
+                left: 20px;
+            }
+
+            .logo {
+                margin-bottom: 10px;
+            }
+
+            .user-info-container {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+
+        /* Hamburger menu styles */
+        .hamburger-menu {
+            display: none;
+            cursor: pointer;
+        }
+
+        @media screen and (max-width: 600px) {
+            .hamburger-menu {
+                display: block;
+            }
+
+            nav {
+                display: none;
+                position: absolute;
+                top: 60px;
+                right: 20px;
+                background-color: #fff;
+                border: 1px solid #ddd;
+                border-radius: 4px;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                flex-direction: column;
+                z-index: 1;
+            }
+
+            nav.show {
+                display: flex;
+            }
+        }
     </style>
 </head>
 
 <body>
     <header>
         <div class="logo">ScytedTV Bot Network</div>
+        <div class="hamburger-menu" onclick="toggleNav()">
+            &#9776;
+        </div>
         <nav>
             <div class="user-info" onclick="toggleUserDropdown()">
                 <img src="" alt="Profile Picture" class="profile-picture">
@@ -166,11 +228,18 @@
                     class="bot-profile-picture">
                 <div class="bot-name">Levlr</div>
             </div>
-            <div class="user-info-box" id="userInfoBox"><p>User data isn't currently available for this bot.</p></div>
+            <div class="user-info-box" id="userInfoBox">
+                <p>User data isn't currently available for this bot.</p>
+            </div>
         </div>
         <div class="error-message" id="errorMessage"></div>
     </div>
     <script>
+        function toggleNav() {
+            const nav = document.querySelector('nav');
+            nav.classList.toggle('show');
+        }
+
         function toggleUserDropdown() {
             const userDropdown = document.getElementById('userDropdown');
             userDropdown.classList.toggle('show');
@@ -288,8 +357,8 @@
                     // Display error message
                     const errorMessage = document.getElementById('errorMessage');
                     errorMessage.textContent = 'Error fetching user data. Please try again later.';
-                    // const userInfoBox = document.getElementById('userInfoBox');
-                    // userInfoBox.innerHTML = ''; // Clear user info box
+                    const userInfoBox = document.getElementById('userInfoBox');
+                    userInfoBox.innerHTML = ''; // Clear user info box
                 });
 
             const userInfoBox = document.getElementById('userInfoBox');
