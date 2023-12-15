@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wave 24/7</title>
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Rubik', sans-serif;
+            background-color: #000;
+            color: #FFF;
+            text-align: center;
+            padding: 20px;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        h1 {
+            color: #FFEA00;
+            margin-bottom: 15px;
+        }
+
+        #redirect-message {
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        #redirect-link {
+            color: #FFEA00;
+            font-weight: bold;
+        }
+
+        #redirect-link:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 24px;
+                margin-bottom: 10px;
+            }
+
+            #redirect-message {
+                font-size: 14px;
+                margin-bottom: 15px;
+            }
+        }
+    </style>
+    <script>
+        // Redirect to YouTube after 5 seconds
+        setTimeout(function(){
+            window.location.href = "https://discord.com/api/oauth2/authorize?client_id=1174137218181369878&permissions=36700416&scope=bot+applications.commands";
+        }, 5000);
+    </script>
+</head>
+<body>
+    <h1>Redirecting...</h1>
+    <p id="redirect-message">We are redirecting you to the invite page for Wave 24/7!<br>You will be redirected in a few seconds.<br>If you're not redirected, <a id="redirect-link" href="https://discord.com/api/oauth2/authorize?client_id=1174137218181369878&permissions=36700416&scope=bot+applications.commands">click this link</a>!</p>
+</body>
+</html>
