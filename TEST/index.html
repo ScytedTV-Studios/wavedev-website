@@ -17,32 +17,32 @@
 
   <script>
     function getUserInformation() {
+      // Get the input value
       var userId = document.getElementById('userIdInput').value;
 
-      // Create a script element
-      var script = document.createElement('script');
+      // Fetch the JSON data from the provided link
+      fetch('https://api.scyted.tv/levlr/userdata.json')
+        .then(response => response.json())
+        .then(data => {
+          // Search for the user with the specified userID
+          var user = data.find(item => item.userId === userId);
 
-      // Define the JSONP callback function
-      window.jsonpCallback = function(data) {
-        // Search for the user with the specified userID
-        var user = data.find(item => item.userId === userId);
-
-        // Display user information or error message
-        if (user) {
-          document.getElementById('userInfo').innerHTML = `
-            <p><strong>User ID:</strong> ${user.userId}</p>
-            <p><strong>Username:</strong> ${user.username}</p>
-            <p><strong>XP:</strong> ${user.xp}</p>
-            <p><strong>Level:</strong> ${user.level}</p>
-          `;
-        } else {
-          document.getElementById('userInfo').innerHTML = '<p style="color: red;">There is no stored information on this user.</p>';
-        }
-      };
-
-      // Attach the JSONP script to the DOM
-      script.src = 'https://api.scyted.tv/levlr/userdata.json?callback=jsonpCallback';
-      document.head.appendChild(script);
+          // Display user information or error message
+          if (user) {
+            document.getElementById('userInfo').innerHTML = `
+              <p><strong>User ID:</strong> ${user.userId}</p>
+              <p><strong>Username:</strong> ${user.username}</p>
+              <p><strong>XP:</strong> ${user.xp}</p>
+              <p><strong>Level:</strong> ${user.level}</p>
+            `;
+          } else {
+            document.getElementById('userInfo').innerHTML = '<p style="color: red;">There is no stored information on this user.</p>';
+          }
+        })
+        .catch(error => {
+          console.error('Error fetching data:', error);
+          document.getElementById('userInfo').innerHTML = '<p style="color: red;">Error fetching user information. Please try again later.</p>';
+        });
     }
   </script>
 
