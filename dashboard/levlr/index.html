@@ -278,34 +278,50 @@
         }
     
         function fetchUserApiData(userId) {
-            // Example API URL for Levlr
-            const apiUrl = 'https://api.scyted.tv/levlr/userdata.json';
-    
-            fetch(apiUrl)
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error(`API Request Failed! Status: ${response.status}`);
-                    }
-                    return response.json();
-                })
-                .then(usersData => {
-                    const userApiData = usersData.find(user => user.userId === userId);
-    
-                    if (!userApiData) {
-                        throw new Error('User data not found for the logged-in user.');
-                    }
-    
-                    // Display user info
-                    displayUserInfo(userApiData);
-                })
-                .catch(error => {
-                    console.error("Error fetching user data:", error);
-                    const errorMessage = document.getElementById('errorMessage');
-                    errorMessage.textContent = 'Error fetching user data. Please try again later.';
-                    const userInfoBox = document.getElementById('userInfoBox');
-                    userInfoBox.innerHTML = ''; // Clear user info box
-                });
+        // Example API URL for Levlr
+        const apiUrl = 'https://api.scyted.tv/levlr/userdata.json';
+
+        // Fetch user data from the provided API URL
+        fetch(apiUrl)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`API Request Failed! Status: ${response.status}`);
+                }
+                return response.json(); // Parse the JSON response
+            })
+            .then(usersData => {
+                // Find the user data for the logged-in user
+                const userApiData = usersData.find(user => user.userId === userId);
+
+                if (!userApiData) {
+                    throw new Error('User data not found for the logged-in user.');
+                }
+
+                // Display user info
+                displayUserInfo(userApiData);
+            })
+            .catch(error => {
+                console.error("Error fetching user data:", error);
+                // Display error message
+                const errorMessage = document.getElementById('errorMessage');
+                errorMessage.textContent = 'Error fetching user data. Please try again later.';
+                const userInfoBox = document.getElementById('userInfoBox');
+                userInfoBox.innerHTML = ''; // Clear user info box
+            });
+    }
+
+    function fetchUserData() {
+        const accessToken = getCookie("accessToken");
+
+        // Check if accessToken exists
+        if (accessToken) {
+            fetchUserApiData(accessToken);
+        } else {
+            console.error('Access token not found.');
+            // Handle error or redirect to login
+            // window.location.href = "https://bots.scyted.tv/login";
         }
+    }
     
         function displayUserInfo(userData) {
             const userDropdown = document.getElementById('userDropdown');
