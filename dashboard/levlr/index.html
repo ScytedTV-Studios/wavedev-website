@@ -233,15 +233,15 @@
             const userDropdown = document.getElementById('userDropdown');
             userDropdown.classList.toggle('show');
         }
-    
+
         function toggleMobileMenu() {
             const userInfo = document.querySelector('.user-info');
             userInfo.classList.toggle('show-dropdown');
         }
-    
+
         document.addEventListener("DOMContentLoaded", function () {
             const storedAccessToken = getCookie("accessToken");
-    
+
             // Redirect to login if access token is not found
             if (!storedAccessToken) {
                 window.location.href = "https://bots.scyted.tv/login";
@@ -260,10 +260,10 @@
                     });
             }
         });
-    
+
         function fetchDiscordUserData(accessToken) {
             const apiUrl = 'https://discord.com/api/users/@me';
-    
+
             return fetch(apiUrl, {
                 headers: {
                     Authorization: `Bearer ${accessToken}`,
@@ -276,79 +276,114 @@
                     return response.json();
                 });
         }
-    
-        function fetchUserApiData(userId) {
-        // Example API URL for Levlr
-        const apiUrl = 'https://api.scyted.tv/levlr/userdata.json';
 
-        // Fetch user data from the provided API URL
-        fetch(apiUrl)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error(`API Request Failed! Status: ${response.status}`);
-                }
-                return response.json(); // Parse the JSON response
-            })
-            .then(usersData => {
-                // Find the user data for the logged-in user
-                const userApiData = usersData.find(user => user.userId === userId);
+        // function fetchUserApiData(userId) {
+        //     // Example API URL for Levlr
+        //     const apiUrl = 'https://api.scyted.tv/levlr/userdata.json';
 
-                if (!userApiData) {
-                    throw new Error('User data not found for the logged-in user.');
-                }
+        //     // Fetch user data from the provided API URL
+        //     fetch(apiUrl)
+        //         .then(response => {
+        //             if (!response.ok) {
+        //                 throw new Error(`API Request Failed! Status: ${response.status}`);
+        //             }
+        //             return response.json(); // Parse the JSON response
+        //         })
+        //         .then(usersData => {
+        //             // Find the user data for the logged-in user
+        //             const userApiData = usersData.find(user => user.userId === userId);
 
-                // Display user info
-                displayUserInfo(userApiData);
-            })
-            .catch(error => {
-                console.error("Error fetching user data:", error);
-                // Display error message
-                const errorMessage = document.getElementById('errorMessage');
-                errorMessage.textContent = 'Error fetching user data. Please try again later.';
-                const userInfoBox = document.getElementById('userInfoBox');
-                userInfoBox.innerHTML = ''; // Clear user info box
-            });
-    }
+        //             if (!userApiData) {
+        //                 throw new Error('User data not found for the logged-in user.');
+        //             }
 
-    function fetchUserData() {
-        const accessToken = getCookie("accessToken");
+        //             // Display user info
+        //             displayUserInfo(userApiData);
+        //         })
+        //         .catch(error => {
+        //             console.error("Error fetching user data:", error);
+        //             // Display error message
+        //             const errorMessage = document.getElementById('errorMessage');
+        //             errorMessage.textContent = 'Error fetching user data. Please try again later.';
+        //             const userInfoBox = document.getElementById('userInfoBox');
+        //             userInfoBox.innerHTML = ''; // Clear user info box
+        //         });
+        // }
 
-        // Check if accessToken exists
-        if (accessToken) {
-            fetchUserApiData(accessToken);
-        } else {
-            console.error('Access token not found.');
-            // Handle error or redirect to login
-            // window.location.href = "https://bots.scyted.tv/login";
-        }
-    }
-    
         function displayUserInfo(userData) {
             const userDropdown = document.getElementById('userDropdown');
             const profilePicture = document.querySelector('.profile-picture');
             const username = document.querySelector('.user-info span');
-    
+
+            // Use a fallback avatar URL if the user doesn't have an avatar
             const avatarURL = userData.avatar
                 ? `https://cdn.discordapp.com/avatars/${userData.id}/${userData.avatar}.png`
                 : 'https://example.com/fallback-avatar.png';
-    
+
             profilePicture.src = avatarURL;
             username.textContent = userData.username;
             userDropdown.querySelector('.home').href = `https://bots.scyted.tv/`;
-    
-            // Fetch and display user data from the custom API
-            fetchUserApiData(userData.id);
+
+            // Example API URL for Levlr
+            const apiUrl = 'https://api.scyted.tv/levlr/userdata.json';
+
+            // Fetch user data from the provided API URL
+            fetch(apiUrl)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`API Request Failed! Status: ${response.status}`);
+                    }
+                    return response.json(); // Parse the JSON response
+                })
+                .then(usersData => {
+                    // Find the user data for the logged-in user
+                    const userApiData = usersData.find(user => user.userId === userId);
+
+                    if (!userApiData) {
+                        throw new Error('User data not found for the logged-in user.');
+                    }
+
+                    // Display user info
+                    displayUserInfo(userApiData);
+                })
+                .catch(error => {
+                    console.error("Error fetching user data:", error);
+                    // Display error message
+                    const errorMessage = document.getElementById('errorMessage');
+                    errorMessage.textContent = 'Error fetching user data. Please try again later.';
+                    const userInfoBox = document.getElementById('userInfoBox');
+                    userInfoBox.innerHTML = ''; // Clear user info box
+                });
+
+            const userInfoBox = document.getElementById('userInfoBox');
+            const errorMessage = document.getElementById('errorMessage');
+
+            // Display user info
+            const userContent = `
+        <h2>User Information</h2>
+        <div class="user-info-content">
+            <p>User ID: ${userApiData.userId}</p>
+            <p>Username: ${userApiData.username}</p>
+            <p>XP: ${userApiData.xp}</p>
+            <p>Level: ${userApiData.level}</p>
+        </div>
+    `;
+            userInfoBox.innerHTML = userContent;
+            errorMessage.textContent = ''; // Clear error message if any
         }
-    
+
         function displayBotInfo() {
             // Implement your bot info display logic here
         }
-    
+
         function logout() {
+            // Clear cookies
             document.cookie = "accessToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+
+            // Redirect to login page
             window.location.href = "https://bots.scyted.tv/";
         }
-    
+
         function getCookie(name) {
             const cookies = document.cookie.split("; ");
             for (let i = 0; i < cookies.length; i++) {
