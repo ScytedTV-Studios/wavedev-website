@@ -18,7 +18,7 @@
             const storedAccessToken = getCookie("accessToken");
             if (storedAccessToken) {
                 // Redirect to the dashboard
-                window.location.href = "../dashboard";
+                window.location.href = "https://bots.scyted.tv/dashboard";
             }
         });
 
@@ -44,7 +44,7 @@
                     setCookie("accessToken", accessToken, 30); // Set cookie to expire in 30 days
 
                     // Redirect to the dashboard
-                    window.location.href = "../dashboard";
+                    window.location.href = "https://bots.scyted.tv/dashboard";
                 } else {
                     // Clear the accessToken cookie
                     clearCookie("accessToken");

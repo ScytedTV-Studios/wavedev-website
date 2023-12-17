@@ -161,6 +161,11 @@
             transition: 0.4s;
         }
 
+        .center-italicized {
+            text-align: center;
+            font-style: italic;
+        }
+
         @media screen and (max-width: 768px) {
             .nav-container {
                 display: none;
@@ -311,6 +316,7 @@
                             <ul>
                                 ${heartEntries.map(entry => `<li>${entry[0]}: ${entry[1]}</li>`).join('')}
                             </ul>
+                            <p class="center-italicized">User information is updated on our API every 5 minutes.</p>
                         </div>
                         `;
                     } else {

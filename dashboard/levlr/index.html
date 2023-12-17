@@ -161,6 +161,11 @@
             transition: 0.4s;
         }
 
+        .center-italicized {
+            text-align: center;
+            font-style: italic;
+        }
+
         @media screen and (max-width: 768px) {
             .nav-container {
                 display: none;
@@ -192,6 +197,7 @@
             .user-info.show-dropdown .bar:nth-child(3) {
                 transform: rotate(45deg) translate(-5px, -6px);
             }
+
         }
     </style>
 </head>
@@ -310,6 +316,7 @@
                                 <p>Username: ${user.username}</p>
                                 <p>XP: ${user.xp}</p>
                                 <p>Level: ${user.level}</p>
+                                <p class="center-italicized">User information is updated on our API every 5 minutes.</p>
                             </div>
                             `;
                         } else {
