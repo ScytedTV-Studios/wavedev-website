@@ -223,7 +223,7 @@
                 <div class="bot-name">Levlr</div>
             </div>
             <div class="user-info-box" id="userInfoBox">
-                <p>User data isn't currently available for this bot.</p>
+                <p>Loading...</p>
             </div>
         </div>
         <div class="error-message" id="errorMessage"></div>
@@ -334,26 +334,28 @@
                         const user = data.find(user => user.userId === userIdInput);
 
                         // Display user information or show an error message
-                        const userInfoElement = document.getElementById('userInfo');
+                        const userInfoElement = document.getElementById('userInfoBox');
                         if (user) {
                             userInfoElement.innerHTML = `
+                            <div class="user-info-content">
                                 <h2>User Information</h2>
                                 <p>User ID: ${user.userId}</p>
                                 <p>Username: ${user.username}</p>
                                 <p>XP: ${user.xp}</p>
                                 <p>Level: ${user.level}</p>
+                            </div>
                             `;
                         } else {
                             userInfoElement.innerHTML = '<p style="color: red;">There is no stored information on this user.</p>';
                         }
                     } else {
                         console.error('Invalid JSON format - expected an array.');
-                        document.getElementById('userInfo').innerHTML = '<p style="color: red;">An error occurred while fetching user data.</p>';
+                        document.getElementById('userInfoBox').innerHTML = '<p style="color: red;">An error occurred while fetching user data.</p>';
                     }
                 })
                 .catch(error => {
                     console.error('Error fetching user data:', error);
-                    document.getElementById('userInfo').innerHTML = '<p style="color: red;">An error occurred while fetching user data.</p>';
+                    document.getElementById('userInfoBox').innerHTML = '<p style="color: red;">An error occurred while fetching user data.</p>';
                 });
         }
 
