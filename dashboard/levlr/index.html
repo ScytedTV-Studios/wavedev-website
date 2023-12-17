@@ -355,11 +355,13 @@
                         const userInfoElement = document.getElementById('userInfoBox');
                         if (user) {
                             userInfoElement.innerHTML = `
+                            <div class="user-info-content">
                                 <h2>User Information</h2>
                                 <p>User ID: ${user.userId}</p>
                                 <p>Username: ${user.username}</p>
                                 <p>XP: ${user.xp}</p>
                                 <p>Level: ${user.level}</p>
+                            </div>
                             `;
                         } else {
                             userInfoElement.innerHTML = '<p style="color: red;">There is no stored information on this user.</p>';
