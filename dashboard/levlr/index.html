@@ -277,99 +277,102 @@
                 });
         }
 
-        // function fetchUserApiData(userId) {
-        //     // Example API URL for Levlr
-        //     const apiUrl = 'https://api.scyted.tv/levlr/userdata.json';
+    //     function displayUserInfo(userData) {
+    //         const userDropdown = document.getElementById('userDropdown');
+    //         const profilePicture = document.querySelector('.profile-picture');
+    //         const username = document.querySelector('.user-info span');
 
-        //     // Fetch user data from the provided API URL
-        //     fetch(apiUrl)
-        //         .then(response => {
-        //             if (!response.ok) {
-        //                 throw new Error(`API Request Failed! Status: ${response.status}`);
-        //             }
-        //             return response.json(); // Parse the JSON response
-        //         })
-        //         .then(usersData => {
-        //             // Find the user data for the logged-in user
-        //             const userApiData = usersData.find(user => user.userId === userId);
+    //         // Use a fallback avatar URL if the user doesn't have an avatar
+    //         const avatarURL = userData.avatar
+    //             ? `https://cdn.discordapp.com/avatars/${userData.id}/${userData.avatar}.png`
+    //             : 'https://example.com/fallback-avatar.png';
 
-        //             if (!userApiData) {
-        //                 throw new Error('User data not found for the logged-in user.');
-        //             }
+    //         profilePicture.src = avatarURL;
+    //         username.textContent = userData.username;
+    //         userDropdown.querySelector('.home').href = `https://bots.scyted.tv/`;
 
-        //             // Display user info
-        //             displayUserInfo(userApiData);
-        //         })
-        //         .catch(error => {
-        //             console.error("Error fetching user data:", error);
-        //             // Display error message
-        //             const errorMessage = document.getElementById('errorMessage');
-        //             errorMessage.textContent = 'Error fetching user data. Please try again later.';
-        //             const userInfoBox = document.getElementById('userInfoBox');
-        //             userInfoBox.innerHTML = ''; // Clear user info box
-        //         });
-        // }
+    //         // Example API URL for Levlr
+    //         const apiUrl = 'https://api.scyted.tv/levlr/userdata.json';
 
-        function displayUserInfo(userData) {
-            const userDropdown = document.getElementById('userDropdown');
-            const profilePicture = document.querySelector('.profile-picture');
-            const username = document.querySelector('.user-info span');
+    //         // Fetch user data from the provided API URL
+    //         fetch(apiUrl)
+    //             .then(response => {
+    //                 if (!response.ok) {
+    //                     throw new Error(`API Request Failed! Status: ${response.status}`);
+    //                 }
+    //                 return response.json(); // Parse the JSON response
+    //             })
+    //             .then(usersData => {
+    //                 // Find the user data for the logged-in user
+    //                 const userApiData = usersData.find(user => user.userId === userId);
 
-            // Use a fallback avatar URL if the user doesn't have an avatar
-            const avatarURL = userData.avatar
-                ? `https://cdn.discordapp.com/avatars/${userData.id}/${userData.avatar}.png`
-                : 'https://example.com/fallback-avatar.png';
+    //                 if (!userApiData) {
+    //                     throw new Error('User data not found for the logged-in user.');
+    //                 }
 
-            profilePicture.src = avatarURL;
-            username.textContent = userData.username;
-            userDropdown.querySelector('.home').href = `https://bots.scyted.tv/`;
+    //                 // Display user info
+    //                 displayUserInfo(userApiData);
+    //             })
+    //             .catch(error => {
+    //                 console.error("Error fetching user data:", error);
+    //                 // Display error message
+    //                 const errorMessage = document.getElementById('errorMessage');
+    //                 errorMessage.textContent = 'Error fetching user data. Please try again later.';
+    //                 const userInfoBox = document.getElementById('userInfoBox');
+    //                 userInfoBox.innerHTML = ''; // Clear user info box
+    //             });
 
-            // Example API URL for Levlr
-            const apiUrl = 'https://api.scyted.tv/levlr/userdata.json';
+    //         const userInfoBox = document.getElementById('userInfoBox');
+    //         const errorMessage = document.getElementById('errorMessage');
 
-            // Fetch user data from the provided API URL
-            fetch(apiUrl)
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error(`API Request Failed! Status: ${response.status}`);
+    //         // Display user info
+    //         const userContent = `
+    //     <h2>User Information</h2>
+    //     <div class="user-info-content">
+    //         <p>User ID: ${userApiData.userId}</p>
+    //         <p>Username: ${userApiData.username}</p>
+    //         <p>XP: ${userApiData.xp}</p>
+    //         <p>Level: ${userApiData.level}</p>
+    //     </div>
+    // `;
+    //         userInfoBox.innerHTML = userContent;
+    //         errorMessage.textContent = ''; // Clear error message if any
+    //     }
+
+        function fetchUserData() {
+            const userIdInput = document.getElementById('userIdInput').value;
+
+            // Fetch the JSON file from the provided link
+            fetch('https://api.scyted.tv/levlr/userdata.json')
+                .then(response => response.json())
+                .then(data => {
+                    // Ensure the data is an array
+                    if (Array.isArray(data)) {
+                        // Find the user with the specified userID
+                        const user = data.find(user => user.userId === userIdInput);
+
+                        // Display user information or show an error message
+                        const userInfoElement = document.getElementById('userInfoBox');
+                        if (user) {
+                            userInfoElement.innerHTML = `
+                                <h2>User Information</h2>
+                                <p>User ID: ${user.userId}</p>
+                                <p>Username: ${user.username}</p>
+                                <p>XP: ${user.xp}</p>
+                                <p>Level: ${user.level}</p>
+                            `;
+                        } else {
+                            userInfoElement.innerHTML = '<p style="color: red;">There is no stored information on this user.</p>';
+                        }
+                    } else {
+                        console.error('Invalid JSON format - expected an array.');
+                        document.getElementById('userInfoBox').innerHTML = '<p style="color: red;">An error occurred while fetching user data.</p>';
                     }
-                    return response.json(); // Parse the JSON response
-                })
-                .then(usersData => {
-                    // Find the user data for the logged-in user
-                    const userApiData = usersData.find(user => user.userId === userId);
-
-                    if (!userApiData) {
-                        throw new Error('User data not found for the logged-in user.');
-                    }
-
-                    // Display user info
-                    displayUserInfo(userApiData);
                 })
                 .catch(error => {
-                    console.error("Error fetching user data:", error);
-                    // Display error message
-                    const errorMessage = document.getElementById('errorMessage');
-                    errorMessage.textContent = 'Error fetching user data. Please try again later.';
-                    const userInfoBox = document.getElementById('userInfoBox');
-                    userInfoBox.innerHTML = ''; // Clear user info box
+                    console.error('Error fetching user data:', error);
+                    document.getElementById('userInfoBox').innerHTML = '<p style="color: red;">An error occurred while fetching user data.</p>';
                 });
-
-            const userInfoBox = document.getElementById('userInfoBox');
-            const errorMessage = document.getElementById('errorMessage');
-
-            // Display user info
-            const userContent = `
-        <h2>User Information</h2>
-        <div class="user-info-content">
-            <p>User ID: ${userApiData.userId}</p>
-            <p>Username: ${userApiData.username}</p>
-            <p>XP: ${userApiData.xp}</p>
-            <p>Level: ${userApiData.level}</p>
-        </div>
-    `;
-            userInfoBox.innerHTML = userContent;
-            errorMessage.textContent = ''; // Clear error message if any
         }
 
         function displayBotInfo() {
