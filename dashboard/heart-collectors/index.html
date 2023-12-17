@@ -297,7 +297,7 @@
                 .then(response => response.json())
                 .then(data => {
                     // Find the user with the specified userID
-                    const user = data[userIdInput];
+                    const user = data[userData.id];
 
                     // Display heart collector information or show an error message
                     const heartCollectorInfoElement = document.getElementById('heartCollectorInfo');
@@ -307,7 +307,7 @@
 
                         heartCollectorInfoElement.innerHTML = `
                         <div class="user-info-content">
-                            <p>User ID: ${userIdInput}</p>
+                            <p>User ID: ${userData.id}</p>
                             <ul>
                                 ${heartEntries.map(entry => `<li>${entry[0]}: ${entry[1]}</li>`).join('')}
                             </ul>
