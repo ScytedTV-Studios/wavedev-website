@@ -306,10 +306,10 @@
                         if (user) {
                             userInfoElement.innerHTML = `
                             <div class="user-info-content">
-                                <p>User ID: ${user.userId}</p>
-                                <p>Username: ${user.username}</p>
-                                <p>XP: ${user.xp}</p>
-                                <p>Level: ${user.level}</p>
+                            <p>User ID: ${userIdInput}</p>
+                            <ul>
+                                ${heartEntries.map(entry => `<li>${entry[0]}: ${entry[1]}</li>`).join('')}
+                            </ul>
                             </div>
                             `;
                         } else {
