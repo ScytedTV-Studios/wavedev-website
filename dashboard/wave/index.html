@@ -218,12 +218,12 @@
     <div class="container">
         <div class="user-info-container">
             <div class="bot-details">
-                <img src="https://cdn.scyted.tv/discord-levlr/levlr.png" alt="Bot Profile Picture"
+                <img src="https://cdn.scyted.tv/discord-wave/wave.jpg" alt="Bot Profile Picture"
                     class="bot-profile-picture">
-                <div class="bot-name">Levlr</div>
+                <div class="bot-name">Wave 24/7</div>
             </div>
             <div class="user-info-box" id="userInfoBox">
-                <p>Loading...</p>
+                <p>Wave 24/7 doesn't currently store user data.</p>
             </div>
         </div>
         <a href="https://bots.scyted.tv/dashboard/" style="color: red;"><br>← back</a>
@@ -292,38 +292,6 @@
             username.textContent = userData.username;
             userDropdown.querySelector('.home').href = `https://bots.scyted.tv/`;
 
-            // Fetch the JSON file from the provided link
-            fetch('https://api.scyted.tv/levlr/userdata.json')
-                .then(response => response.json())
-                .then(data => {
-                    // Ensure the data is an array
-                    if (Array.isArray(data)) {
-                        // Find the user with the specified userID
-                        const user = data.find(user => user.userId === userData.id);
-
-                        // Display user information or show an error message
-                        const userInfoElement = document.getElementById('userInfoBox');
-                        if (user) {
-                            userInfoElement.innerHTML = `
-                            <div class="user-info-content">
-                                <p>User ID: ${user.userId}</p>
-                                <p>Username: ${user.username}</p>
-                                <p>XP: ${user.xp}</p>
-                                <p>Level: ${user.level}</p>
-                            </div>
-                            `;
-                        } else {
-                            userInfoElement.innerHTML = '<p style="color: red;">There is no stored information on this user.</p>';
-                        }
-                    } else {
-                        console.error('Invalid JSON format - expected an array.');
-                        document.getElementById('userInfoBox').innerHTML = '<p style="color: red;">An error occurred while fetching user data.</p>';
-                    }
-                })
-                .catch(error => {
-                    console.error('Error fetching user data:', error);
-                    document.getElementById('userInfoBox').innerHTML = '<p style="color: red;">An error occurred while fetching user data.</p>';
-                });
         }
 
         function displayBotInfo() {
