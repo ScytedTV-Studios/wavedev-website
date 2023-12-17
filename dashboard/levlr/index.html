@@ -331,7 +331,7 @@
                     // Ensure the data is an array
                     if (Array.isArray(data)) {
                         // Find the user with the specified userID
-                        const user = data.find(user => user.userId === userIdInput);
+                        const user = data.find(user => user.userId === userId);
 
                         // Display user information or show an error message
                         const userInfoElement = document.getElementById('userInfoBox');
