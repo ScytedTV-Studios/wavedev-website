@@ -319,12 +319,12 @@
                         </div>
                         `;
                     } else {
-                        heartCollectorInfoElement.innerHTML = '<p style="color: red;">There is no stored information on this heart collector.</p>';
+                        heartCollectorInfoElement.innerHTML = '<p style="color: red;">There is no stored information on this user.</p>';
                     }
                 })
                 .catch(error => {
                     console.error('Error fetching heart collector data:', error);
-                    document.getElementById('userInfoBox').innerHTML = '<p style="color: red;">An error occurred while fetching heart collector data.</p>';
+                    document.getElementById('userInfoBox').innerHTML = '<p style="color: red;">An error occurred while fetching user data.</p>';
                 });
         }
 
