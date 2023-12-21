@@ -1,65 +1,234 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wave 24/7</title>
-    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;700&display=swap" rel="stylesheet">
+    <title>Wave 24/7 - Invite</title>
     <style>
         body {
-            font-family: 'Rubik', sans-serif;
-            background-color: #000;
-            color: #FFF;
-            text-align: center;
-            padding: 20px;
             margin: 0;
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f0f0;
+        }
+
+        header {
+            background-color: #7289da;
+            color: #fff;
+            padding: 10px 20px;
             display: flex;
-            flex-direction: column;
+            justify-content: space-between;
             align-items: center;
-            justify-content: center;
-            height: 100vh;
         }
 
-        h1 {
-            color: #FFEA00;
-            margin-bottom: 15px;
-        }
-
-        #redirect-message {
-            margin-bottom: 20px;
-            line-height: 1.5;
-        }
-
-        #redirect-link {
-            color: #FFEA00;
+        .logo {
+            font-size: 24px;
             font-weight: bold;
         }
 
-        #redirect-link:hover {
+        .nav-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            margin-right: 20px;
+        }
+
+        .profile-picture {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        .user-dropdown {
+            display: none;
+            position: absolute;
+            top: 60px;
+            right: 20px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            flex-direction: column;
+            z-index: 1;
+        }
+
+        .user-dropdown a {
+            color: #333;
+            padding: 10px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .user-dropdown a:hover {
+            background-color: #ddd;
+        }
+
+        .user-dropdown.show {
+            display: flex;
+        }
+
+        .user-dropdown a.logout {
+            color: #ff5252;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        .user-info-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-top: 20px;
+        }
+
+        .bot-details {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            padding: 20px;
+            margin-right: 20px;
+        }
+
+        .bot-profile-picture {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin-bottom: 10px;
+        }
+
+        .bot-name {
+            font-weight: bold;
+            color: #333;
+            text-align: center;
+            /* Center the bot name */
+        }
+
+        .user-info-box {
+            flex: 1;
+            padding: 20px;
+            background-color: #eee;
+            border-radius: 8px;
+        }
+
+        .user-info-content {
+            text-align: left;
+        }
+
+        .error-message {
+            color: #ff5252;
+            margin-top: 10px;
+        }
+
+        .bot-details a {
+            text-decoration: none;
+        }
+
+        .bot-details a:hover .bot-name {
             text-decoration: underline;
         }
 
-        @media (max-width: 600px) {
-            h1 {
-                font-size: 24px;
-                margin-bottom: 10px;
+        /* Hamburger menu styles */
+        .hamburger-menu {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            padding: 10px;
+        }
+
+        .bar {
+            width: 25px;
+            height: 3px;
+            background-color: #fff;
+            margin: 3px 0;
+            transition: 0.4s;
+        }
+
+        .center-italicized {
+            text-align: center;
+            font-style: italic;
+        }
+
+        @media screen and (max-width: 768px) {
+            .nav-container {
+                display: none;
             }
 
-            #redirect-message {
-                font-size: 14px;
-                margin-bottom: 15px;
+            .hamburger-menu {
+                display: flex;
             }
+
+            .user-info,
+            .user-info-container {
+                flex-direction: column;
+                align-items: center;
+                /* Center the user info */
+            }
+
+            .user-dropdown {
+                right: 0;
+            }
+
+            .user-info.show-dropdown .bar:nth-child(1) {
+                transform: rotate(-45deg) translate(-5px, 6px);
+            }
+
+            .user-info.show-dropdown .bar:nth-child(2) {
+                opacity: 0;
+            }
+
+            .user-info.show-dropdown .bar:nth-child(3) {
+                transform: rotate(45deg) translate(-5px, -6px);
+            }
+
         }
     </style>
-    <script>
-        // Redirect to YouTube after 5 seconds
-        setTimeout(function(){
-            window.location.href = "https://discord.com/api/oauth2/authorize?client_id=1174137218181369878&permissions=36700416&scope=bot+applications.commands";
-        }, 5000);
-    </script>
 </head>
+
 <body>
-    <h1>Redirecting...</h1>
-    <p id="redirect-message">We are redirecting you to the invite page for Wave 24/7!<br>You will be redirected in a few seconds.<br>If you're not redirected, <a id="redirect-link" href="https://discord.com/api/oauth2/authorize?client_id=1174137218181369878&permissions=36700416&scope=bot+applications.commands">click this link</a>!</p>
+    <header>
+        <div class="logo">ScytedTV Bot Network</div>
+        <nav class="nav-container">
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <div class="bot-details">
+            <img src="https://cdn.scyted.tv/discord-wave/wave.jpg" alt="Bot Profile Picture"
+                class="bot-profile-picture">
+            <div class="bot-name">Wave 24/7</div>
+        </div>
+        <div class="user-info-box" id="userInfoBox">
+            <h1>Redirecting...</h1>
+            <p id="redirect-message">We are redirecting you to the invite page for Wave 24/7!<br>You will be redirected
+                in a few seconds.<br>If you're not redirected, <a id="redirect-link"
+                    href="https://discord.com/api/oauth2/authorize?client_id=1174137218181369878&permissions=36700416&scope=bot+applications.commands">click
+                    this link</a>!</p>
+        </div>
+    </div>
 </body>
+<script>
+    // Redirect to YouTube after 5 seconds
+    setTimeout(function () {
+        window.location.href = "https://discord.com/api/oauth2/authorize?client_id=1174137218181369878&permissions=36700416&scope=bot+applications.commands";
+    }, 5000);
+</script>
+
 </html>
