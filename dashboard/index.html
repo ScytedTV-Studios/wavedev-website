@@ -167,6 +167,7 @@
 
             // Redirect to login if access token is not found
             if (!storedAccessToken) {
+                logout()
                 window.location.href = "https://bots.scyted.tv/login";
             } else {
                 // Fetch user data from Discord API
