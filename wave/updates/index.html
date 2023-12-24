@@ -13,12 +13,10 @@
         }
 
         header {
-            background-color: #7289da;
+            background-color: #7289DA;
             color: #fff;
-            padding: 10px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            text-align: center;
+            padding: 1em 0;
         }
 
         .logo {
@@ -103,8 +101,7 @@
             flex-direction: column;
             align-items: center;
             cursor: pointer;
-            padding: 20px;
-            margin-right: 20px;
+            padding: 10px;
         }
 
         .bot-profile-picture {
@@ -126,7 +123,7 @@
             padding: 20px;
             background-color: #eee;
             border-radius: 8px;
-            margin-bottom: 10px;
+            margin-top: 10px;
         }
 
         .user-info-content {
@@ -167,6 +164,70 @@
             font-style: italic;
         }
 
+        nav ul {
+            list-style-type: none;
+            display: flex;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #fff;
+            margin: 0 20px;
+            font-weight: bold;
+            font-size: 16px;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: #ddd;
+        }
+
+        nav {
+            max-width: 900px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav li {
+            margin: 0 10px;
+        }
+
+        header {
+            background-color: #7289DA;
+            color: #fff;
+            text-align: center;
+            padding: 10px 10;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+
+        ul {
+            list-style: none;
+            display: flex;
+        }
+
+        li {
+            margin: 0 10px;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         @media screen and (max-width: 768px) {
             .nav-container {
                 display: none;
@@ -205,84 +266,170 @@
 
 <body>
     <header>
-        <div class="logo">ScytedTV Bot Network</div>
-        <nav class="nav-container">
+        <nav>
+            <div class="logo">ScytedTV Bot Network</div>
+            <ul>
+                <li><a href="https://bots.scyted.tv/" class="active">Home</a></li>
+                <li><a href="#" onclick="redirectToLogin()">Login</a></li>
+            </ul>
             </div>
         </nav>
     </header>
     <div class="container">
-            <div class="bot-details">
-                <img src="https://cdn.scyted.tv/discord-wave/wave.jpg" alt="Bot Profile Picture"
-                    class="bot-profile-picture">
-                <div class="bot-name">Wave 24/7</div>
-                <h1>Updates</h1>
-            </div>
-            <div class="user-info-box" id="userInfoBox">
-                <h2>Update v1.2.0 - "2023 Christmas Update"</h2>
-                <ul><li>Updated to the "Christmas" Profile Picture.</li></ul>
-                <ul><li>NEW EVENT: "Christmas Event"
+        <div class="bot-details">
+            <img src="https://cdn.scyted.tv/discord-wave/wave.jpg" alt="Bot Profile Picture"
+                class="bot-profile-picture">
+            <div class="bot-name">Wave 24/7</div>
+            <h1>Updates</h1>
+        </div>
+        <div class="user-info-box" id="userInfoBox">
+            <h2>Update v1.2.0 - "2023 Christmas Update"</h2>
+            <ul>
+                <li>Updated to the "Christmas" Profile Picture.</li>
+            </ul>
+            <ul>
+                <li>NEW EVENT: "Christmas Event"
                     <br>- Start Date: December 6, 2023
                     <br>- End Date: January 1, 2023
-                </li></ul>
-                <ul><li>Added 6 new genres:
+                </li>
+            </ul>
+            <ul>
+                <li>Added 6 new genres:
                     <br>- "Christmas Classics"
                     <br>- "Christmas Lofi"
                     <br>- "Instrumental Christmas"
                     <br>- "Snowstorm"
                     <br>- "Fireplace"
                     <br>- "Christmas and Fire"
-                </li></ul>
-                <ul><li>Added the "/recommend genre" command for users to recommend new genres for the bot.</li></ul>
-                <ul><li>Added the "/recommend feature" command for users to recommend new features for the bot.</li></ul>
-                <ul><li>Added the "/event" command to view any current events hosted on the bot.</li></ul>
-                <ul><li>Added the "/update" command to view information on the latest update.</li></ul>
-                <ul><li>Added the "/invite" command that displays Wave's invite links.</li></ul>
-                <h3>Update v1.2.1</h3>
-                <ul><li>Added the "/denyfeaturerequest" and "/denygenrerequest" command to deny feature and genre requests. This command is only usable by bot moderators.</li></ul>
-                <h3>Update v1.2.2</h3>
-                <ul><li>Added the "/reload" command to reload the bot remotely. This command is only usable by bot moderators.</li></ul>
-                <ul><li>Attempted fix to an error causing the bot to crash randomly.</li></ul>
-                <ul><li>Added the "/bugs report" command for users to report bugs found on the bot.</li></ul>
-                <ul><li>Added the "/bugs list" command that shows a list of all known bugs.</li></ul>
-                <ul><li>Added the "/help general" command to view general help information on the bot.</li></ul>
-                <ul><li>Added the "/help commands" command to get a list of commands and their uses.</li></ul>
-                <ul><li>Added the "/set voicechannel" command to replace the "/setvoicechannel" command.</li></ul>
-                <ul><li>Added the "/set genre" command to replace the "/setgenre" command.</li></ul>
-                <ul><li>Added a deprecation message to the "/setvoicechannel" command as we're replacing it with the "/set voicechannel" command.</li></ul>
-                <ul><li>Added a deprecation message to the "/setgenre" command as we're replacing it with the "/set genre" command.</li></ul>
-                <h3>Update v1.2.3</h3>
-                <ul><li>Added the "/acceptfeaturerequest" and "/acceptgenrerequest" command to accept feature and genre requests. This command is only usable by bot moderators.</li></ul>
-                <h3>Update v1.2.4</h3>
-                <ul><li>Added 3 new genres:
+                </li>
+            </ul>
+            <ul>
+                <li>Added the "/recommend genre" command for users to recommend new genres for the bot.</li>
+            </ul>
+            <ul>
+                <li>Added the "/recommend feature" command for users to recommend new features for the bot.</li>
+            </ul>
+            <ul>
+                <li>Added the "/event" command to view any current events hosted on the bot.</li>
+            </ul>
+            <ul>
+                <li>Added the "/update" command to view information on the latest update.</li>
+            </ul>
+            <ul>
+                <li>Added the "/invite" command that displays Wave's invite links.</li>
+            </ul>
+            <h3>Update v1.2.1</h3>
+            <ul>
+                <li>Added the "/denyfeaturerequest" and "/denygenrerequest" command to deny feature and genre requests.
+                    This command is only usable by bot moderators.</li>
+            </ul>
+            <h3>Update v1.2.2</h3>
+            <ul>
+                <li>Added the "/reload" command to reload the bot remotely. This command is only usable by bot
+                    moderators.</li>
+            </ul>
+            <ul>
+                <li>Attempted fix to an error causing the bot to crash randomly.</li>
+            </ul>
+            <ul>
+                <li>Added the "/bugs report" command for users to report bugs found on the bot.</li>
+            </ul>
+            <ul>
+                <li>Added the "/bugs list" command that shows a list of all known bugs.</li>
+            </ul>
+            <ul>
+                <li>Added the "/help general" command to view general help information on the bot.</li>
+            </ul>
+            <ul>
+                <li>Added the "/help commands" command to get a list of commands and their uses.</li>
+            </ul>
+            <ul>
+                <li>Added the "/set voicechannel" command to replace the "/setvoicechannel" command.</li>
+            </ul>
+            <ul>
+                <li>Added the "/set genre" command to replace the "/setgenre" command.</li>
+            </ul>
+            <ul>
+                <li>Added a deprecation message to the "/setvoicechannel" command as we're replacing it with the "/set
+                    voicechannel" command.</li>
+            </ul>
+            <ul>
+                <li>Added a deprecation message to the "/setgenre" command as we're replacing it with the "/set genre"
+                    command.</li>
+            </ul>
+            <h3>Update v1.2.3</h3>
+            <ul>
+                <li>Added the "/acceptfeaturerequest" and "/acceptgenrerequest" command to accept feature and genre
+                    requests. This command is only usable by bot moderators.</li>
+            </ul>
+            <h3>Update v1.2.4</h3>
+            <ul>
+                <li>Added 3 new genres:
                     <br>- "Christmas Hits" (via recommendation)
                     <br>- "Cozy Christmas"
                     <br>- "Christmas Carols"
-                </li></ul>
-                <h3>Update v1.2.5</h3>
-                <ul><li>The bot now requires you vote for it on top.gg in order to use the "/set voicechannel" and "/set genre" command.</li></ul>
-                <h3>Update v1.2.6</h3>
-                <ul><li>Attempted another fix to the bot crashing issue. This fix will now automatically restart the bot upon error, while letting us know what the error was so that we can fix it.</li></ul>
-                <h3>Update v1.2.7</h3>
-                <ul><li>Added "Dashboard", "Terms of Service", and "Privacy Policy" links to the "/help general" command.</li></ul>
-            </div>
-            <div class="user-info-box" id="userInfoBox">
-                <h2>Update 1.1.0</h2>
-                <ul><li>Added 3 new genres (via recommendation):
+                </li>
+            </ul>
+            <h3>Update v1.2.5</h3>
+            <ul>
+                <li>The bot now requires you vote for it on top.gg in order to use the "/set voicechannel" and "/set
+                    genre" command.</li>
+            </ul>
+            <h3>Update v1.2.6</h3>
+            <ul>
+                <li>Attempted another fix to the bot crashing issue. This fix will now automatically restart the bot
+                    upon error, while letting us know what the error was so that we can fix it.</li>
+            </ul>
+            <h3>Update v1.2.7</h3>
+            <ul>
+                <li>Added "Dashboard", "Terms of Service", and "Privacy Policy" links to the "/help general" command.
+                </li>
+            </ul>
+            <h3>Update v1.2.8</h3>
+            <ul>
+                <li>Added better logging features that log all actions taken by users on the bot (this information is
+                    only viewable by bot moderators for debugging purposes).</li>
+            </ul>
+            <ul>
+                <li>Added better error handling as well as logging errors to discord (viewable by bot moderators).</li>
+            </ul>
+            <ul>
+                <li>Updated the way we display bot stats on our support server.</li>
+            </ul>
+        </div>
+        <div class="user-info-box" id="userInfoBox">
+            <h2>Update 1.1.0</h2>
+            <ul>
+                <li>Added 3 new genres (via recommendation):
                     <br>- "Instrumental Country"
                     <br>- "Country"
                     <br>- "Classic Rock"
-                </li></ul>
-                <ul><li>Added the "/support" command linking to this Discord Server.</li></ul>
-                <ul><li>Separated all genres into different categories:
+                </li>
+            </ul>
+            <ul>
+                <li>Added the "/support" command linking to this Discord Server.</li>
+            </ul>
+            <ul>
+                <li>Separated all genres into different categories:
                     <br>- Genres: Lofi, Jazz, Instrumental Country, Country
                     <br>- Limited Time: Minecraft Rain
                     <br>- Seasonal: Christmas
-                </li></ul>
-                <ul><li>Added the version number in the bot's status.</li></ul>
-                <ul><li>Added the version number to the "/genres" embed.</li></ul>
-            </div>
+                </li>
+            </ul>
+            <ul>
+                <li>Added the version number in the bot's status.</li>
+            </ul>
+            <ul>
+                <li>Added the version number to the "/genres" embed.</li>
+            </ul>
         </div>
+    </div>
 </body>
+<script>
+    function redirectToLogin() {
+        window.location.href = 'https://bots.scyted.tv/login';
+    }
+</script>
 
 </html>
 
