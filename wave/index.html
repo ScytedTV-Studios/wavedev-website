@@ -82,7 +82,7 @@
             background-color: #fff;
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            text-align: left;
+            text-align: center;
         }
 
         h1 {
@@ -127,7 +127,7 @@
         }
 
         .user-info-content {
-            text-align: left;
+            text-align: center;
         }
 
         .error-message {
@@ -266,8 +266,12 @@
 
 <body>
     <header>
-        <div class="logo">ScytedTV Bot Network</div>
-        <nav class="nav-container">
+        <nav>
+            <div class="logo">ScytedTV Bot Network</div>
+            <ul>
+                <li><a href="https://bots.scyted.tv/" class="active">Home</a></li>
+                <li><a href="#" onclick="redirectToLogin()">Login</a></li>
+            </ul>
             </div>
         </nav>
     </header>
