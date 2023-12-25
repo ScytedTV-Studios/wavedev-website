@@ -11,7 +11,7 @@
         <!-- <h1>Login to Your Dashboard</h1> -->
         <div id="errorMessage" class="error-message"></div>
         <button onclick="redirectToDiscord()">Login with Discord</button>
-        <a href="https://bots.scyted.tv/" style="color: red;"><br><br>← back</a>
+        <a href="https://www.wavedev.app/" style="color: red;"><br><br>← back</a>
     </div>
     <script>
         document.addEventListener("DOMContentLoaded", function () {
@@ -19,13 +19,13 @@
             const storedAccessToken = getCookie("accessToken");
             if (storedAccessToken) {
                 // Redirect to the dashboard
-                window.location.href = "https://bots.scyted.tv/dashboard";
+                window.location.href = "https://www.wavedev.app/dashboard";
             }
         });
 
         function redirectToDiscord() {
             const clientId = '1182368783248134175'; // Replace with your Discord application's client ID
-            const redirectUri = 'https://bots.scyted.tv/dashboard/levlr/login'; // Replace with your Discord application's redirect URI
+            const redirectUri = 'https://www.wavedev.app/dashboard/levlr/login'; // Replace with your Discord application's redirect URI
             const scope = 'identify'; // Adjust scopes as needed
 
             const discordAuthUrl = `https://discord.com/api/oauth2/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=token&scope=${scope}`;
@@ -45,7 +45,7 @@
                     setCookie("accessToken", accessToken, 30); // Set cookie to expire in 30 days
 
                     // Redirect to the dashboard
-                    window.location.href = "https://bots.scyted.tv/dashboard/levlr";
+                    window.location.href = "https://www.wavedev.app/dashboard/levlr";
                 } else {
                     // Clear the accessToken cookie
                     clearCookie("accessToken");
