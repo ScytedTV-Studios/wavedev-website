@@ -329,12 +329,12 @@
                         }
                     } else {
                         console.error('Invalid JSON format - expected an array.');
-                        document.getElementById('userInfoBox').innerHTML = '<p style="color: red;">An error occurred while fetching user data.</p>';
+                        document.getElementById('userInfoBox').innerHTML = `<h2>${seasonName}</h2><p style="color: red;">An error occurred while fetching user data.</p>`;
                     }
                 })
                 .catch(error => {
                     console.error('Error fetching user data:', error);
-                    document.getElementById('userInfoBox').innerHTML = '<p style="color: red;">An error occurred while fetching user data.</p>';
+                    document.getElementById('userInfoBox').innerHTML = `<h2>${seasonName}</h2><p style="color: red;">An error occurred while fetching user data.</p>`;
                 });
         }
 
