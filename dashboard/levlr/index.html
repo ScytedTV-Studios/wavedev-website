@@ -325,8 +325,7 @@
             </div>
         `;
                         } else {
-                            // userInfoElement.innerHTML = '<p style="color: red;">There is no stored information on this user.</p>';
-                            userInfoElement.innerHTML = '';
+                            userInfoElement.innerHTML = `<h2>${seasonName}</h2><p style="color: red;">There is no stored information on this user.</p>`;
                         }
                     } else {
                         console.error('Invalid JSON format - expected an array.');
