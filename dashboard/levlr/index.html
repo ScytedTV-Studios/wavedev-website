@@ -134,6 +134,10 @@
             text-align: left;
         }
 
+        h2 {
+            text-align: Center;
+        }
+
         .error-message {
             color: #ff5252;
             margin-top: 10px;
@@ -258,7 +262,7 @@
             .then(userData => {
                 // Display bot info and user info on the dashboard
                 displayBotInfo();
-                displayUserInfo(userData, 'userInfoBox1', 'https://api.scyted.tv/levlr/userdata.json', 'Season 1: January 2023');
+                displayUserInfo(userData, 'userInfoBox1', 'https://api.scyted.tv/levlr/userdata.json', 'Season 1: January 2024');
                     displayUserInfo(userData, 'userInfoBox0', 'https://api.scyted.tv/levlr/userdata-season0.json', 'Season 0');
             })
                     .catch(error => {
@@ -321,7 +325,8 @@
             </div>
         `;
                         } else {
-                            userInfoElement.innerHTML = '<p style="color: red;">There is no stored information on this user.</p>';
+                            // userInfoElement.innerHTML = '<p style="color: red;">There is no stored information on this user.</p>';
+                            userInfoElement.innerHTML = '';
                         }
                     } else {
                         console.error('Invalid JSON format - expected an array.');
