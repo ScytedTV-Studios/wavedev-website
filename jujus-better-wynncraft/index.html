@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JuJu's Better Wynncraft - Download</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f0f0;
+        }
+
+        header {
+            background-color: #7289DA;
+            color: #fff;
+            text-align: center;
+            padding: 1em 0;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .nav-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            margin-right: 20px;
+        }
+
+        .profile-picture {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        .user-dropdown {
+            display: none;
+            position: absolute;
+            top: 60px;
+            right: 20px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            flex-direction: column;
+            z-index: 1;
+        }
+
+        .user-dropdown a {
+            color: #333;
+            padding: 10px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .user-dropdown a:hover {
+            background-color: #ddd;
+        }
+
+        .user-dropdown.show {
+            display: flex;
+        }
+
+        .user-dropdown a.logout {
+            color: #ff5252;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: left;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        .user-info-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-top: 20px;
+        }
+
+        .bot-details {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            padding: 10px;
+        }
+
+        .bot-profile-picture {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin-bottom: 10px;
+        }
+
+        .bot-name {
+            font-weight: bold;
+            color: #333;
+            text-align: center;
+            /* Center the bot name */
+        }
+
+        .user-info-box {
+            flex: 1;
+            padding: 20px;
+            background-color: #eee;
+            border-radius: 8px;
+            margin-top: 10px;
+        }
+
+        .user-info-box h2 {
+            text-align: center;
+        }
+
+        .user-info-content {
+            text-align: left;
+        }
+
+        .error-message {
+            color: #ff5252;
+            margin-top: 10px;
+        }
+
+        .bot-details a {
+            text-decoration: none;
+        }
+
+        .bot-details a:hover .bot-name {
+            text-decoration: underline;
+        }
+
+        /* Hamburger menu styles */
+        .hamburger-menu {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            padding: 10px;
+        }
+
+        .bar {
+            width: 25px;
+            height: 3px;
+            background-color: #fff;
+            margin: 3px 0;
+            transition: 0.4s;
+        }
+
+        .center-italicized {
+            text-align: center;
+            font-style: italic;
+        }
+
+        nav ul {
+            list-style-type: none;
+            display: flex;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #fff;
+            margin: 0 20px;
+            font-weight: bold;
+            font-size: 16px;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: #ddd;
+        }
+
+        nav {
+            max-width: 900px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav li {
+            margin: 0 10px;
+        }
+
+        header {
+            background-color: #7289DA;
+            color: #fff;
+            text-align: center;
+            padding: 10px 10;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+
+        ul {
+            list-style: none;
+            display: flex;
+        }
+
+        li {
+            margin: 0 10px;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Style the list */
+        ul.breadcrumb {
+            padding: 10px 16px;
+            list-style: none;
+            background-color: #eee;
+        }
+
+        /* Display list items side by side */
+        ul.breadcrumb li {
+            display: inline;
+            font-size: 18px;
+        }
+
+        /* Add a slash symbol (/) before/behind each list item */
+        ul.breadcrumb li+li:before {
+            padding: 8px;
+            color: black;
+            content: "/\00a0";
+        }
+
+        /* Add a color to all links inside the list */
+        ul.breadcrumb li a {
+            color: #0275d8;
+            text-decoration: none;
+        }
+
+        /* Add a color on mouse-over */
+        ul.breadcrumb li a:hover {
+            color: #01447e;
+            text-decoration: underline;
+        }
+
+        @media screen and (max-width: 768px) {
+            .nav-container {
+                display: none;
+            }
+
+            .hamburger-menu {
+                display: flex;
+            }
+
+            .user-info,
+            .user-info-container {
+                flex-direction: column;
+                align-items: center;
+                /* Center the user info */
+            }
+
+            .user-dropdown {
+                right: 0;
+            }
+
+            .user-info.show-dropdown .bar:nth-child(1) {
+                transform: rotate(-45deg) translate(-5px, 6px);
+            }
+
+            .user-info.show-dropdown .bar:nth-child(2) {
+                opacity: 0;
+            }
+
+            .user-info.show-dropdown .bar:nth-child(3) {
+                transform: rotate(45deg) translate(-5px, -6px);
+            }
+
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <nav>
+            <div class="logo">Wave Development</div>
+            <ul>
+                <li><a href="https://www.wavedev.app/" class="active">Home</a></li>
+                <li><a href="" onclick="redirectToLogin()">Login</a></li>
+            </ul>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <div class="bot-details">
+            <img src="https://cdn.scyted.tv/jujus-better-wynncraft/logo.png" alt="JuJu's Better Wynncraft Logo"
+                class="bot-profile-picture">
+            <div class="bot-name"></div>
+            <h1>JuJu's Better Wynncraft</h1>
+        </div>
+        <div class="user-info-box" id="userInfoBox">
+            <p>With the goal of optimizing your Wynncraft experience for either functionality or experience, we have
+                created "JuJu's Better Wynncraft" to bring you what you're looking for.</p>
+        </div>
+        <div class="user-info-box" id="userInfoBox">
+
+            <h2>LATEST [v1.4]</h2>
+
+            <form name="downloadForm" id="downloadForm" action="" onsubmit="return validateForm()">
+                <label for="pack">Pack:</label>
+                <select name="pack" id="pack" required>
+                    <option value="" selected="selected">Select pack</option>
+                </select>
+                <br><br>
+
+                <label for="shader">Shader:</label>
+                <select name="shader" id="shader" required>
+                    <option value="" selected="selected">Select shader</option>
+                </select>
+                <br><br>
+
+                <label for="modLoader">Mod Loader:</label>
+                <select name="modLoader" id="modLoader" required>
+                    <option value="" selected="selected">Select mod loader</option>
+                </select>
+                <br><br>
+
+                <input type="submit" value="Download">
+            </form>
+
+            <h3>JuJu's Better Wynncraft: Essentials</h3>
+            <p>The Essentials pack focuses on fast performace, whilst also including a few quality of life mods.</p>
+            
+            <h4>Updates</h4>
+            <li>ADDED: Replay Mod (Fabric & Forge)</li>
+
+            <h4>Mods</h4>
+            <li>Athena</li>
+            <li>Better Third Person</li>
+            <li>Capes</li>
+            <li>Cloth Config API (Fabric/Forge/NeoForge)</li>
+            <li>Controlling</li>
+            <li>Fabric API</li>
+            <li>Fabric Language Kotlin</li>
+            <li>Iris Shaders</li>
+            <li>FPS Reducer</li>
+            <li>Mouse Tweaks</li>
+            <li>Not Enough Animations</li>
+            <li>Replay Mod (Fabric & Forge)</li>
+            <li>Searchables</li>
+            <li>Skin Layers 3D (Fabric/Forge)</li>
+            <li>Sodium</li>
+            <li>Sodium Extra</li>
+            <li>Sound Physics Remastered</li>
+            <li>Voices of Wynn</li>
+            <li>Wynntils</li>
+            <li>YDM's Weapon Master</li>
+            <li>YetAnotherConfigLib</li>
+            <li>Zoomify</li>
+            <p>[ <a href="https://github.com/ScytedTV-Studios/JuJus-Better-Wynncraft/releases/latest">GitHub</a> ] | [
+                <a href="https://discord.gg/JEeUqPQwBF">Discord</a> ]</p>
+        </div>
+        <div class="user-info-box" id="userInfoBox">
+
+            <h2>ARCHIVE</h2>
+            <form name="archiveForm" id="archiveForm" action="" onsubmit="return validateArchiveForm()">
+
+                <!-- Major Version Section -->
+                <label for="majorVersion">Major Version:</label>
+                <select name="majorVersion" id="majorVersion" onchange="updateArchiveOptions()" required>
+                    <option value="" selected="selected">Select major version</option>
+                    <option value="version1">Version 1</option>
+                    <option value="version2">Version 2</option>
+                </select>
+                <br><br>
+
+                <!-- Pack Section -->
+                <label for="archivePack">Pack:</label>
+                <select name="archivePack" id="archivePack" disabled required>
+                    <option value="" selected="selected">Select pack</option>
+                    <option value="essentials">Essentials</option>
+                    <option value="extras">Extras</option>
+                </select>
+                <br><br>
+
+                <!-- Shader Section -->
+                <label for="archiveShader">Shader:</label>
+                <select name="archiveShader" id="archiveShader" disabled required>
+                    <option value="" selected="selected">Select shader</option>
+                    <option value="noShader">No Shader</option>
+                    <option value="sildursMedium">Sildurs Medium</option>
+                    <option value="sildursExtreme">Sildurs Extreme</option>
+                </select>
+                <br><br>
+
+                <!-- Version Section -->
+                <label for="version">Version:</label>
+                <select name="version" id="version" disabled required>
+                    <option value="" selected="selected">Select version</option>
+                </select>
+                <br><br>
+
+                <!-- Mod Loader Section -->
+                <label for="archiveModLoader">Mod Loader:</label>
+                <select name="archiveModLoader" id="archiveModLoader" disabled required>
+                    <option value="" selected="selected">Select mod loader</option>
+                    <option value="CurseForge">CurseForge</option>
+                    <option value="Modrinth">Modrinth</option>
+                </select>
+                <br><br>
+
+                <input type="submit" value="Download Archive">
+                <button type="button" onclick="viewChangelogs()">View Changelogs</button>
+            </form>
+
+            <div id="messageContainer"></div>
+        </div>
+
+    </div>
+    </div>
+
+</body>
+<script>
+    // LATEST VERSION DOWNLOAD
+    const latestVersion = "v1.4";
+
+    document.addEventListener('DOMContentLoaded', function () {
+        var packOptions = ["Essentials", "Extras"];
+        var shaderOptions = ["No Shaders", "Sildurs Medium", "Sildurs Extreme"];
+        var modLoaderOptions = ["CurseForge", "Modrinth"];
+
+        var packSel = document.getElementById("pack");
+        var shaderSel = document.getElementById("shader");
+        var modLoaderSel = document.getElementById("modLoader");
+
+        // Populate pack options
+        for (var i = 0; i < packOptions.length; i++) {
+            packSel.options[packSel.options.length] = new Option(packOptions[i], packOptions[i]);
+        }
+
+        // Populate shader options
+        for (var i = 0; i < shaderOptions.length; i++) {
+            shaderSel.options[shaderSel.options.length] = new Option(shaderOptions[i], shaderOptions[i]);
+        }
+
+        // Populate mod loader options
+        for (var i = 0; i < modLoaderOptions.length; i++) {
+            modLoaderSel.options[modLoaderSel.options.length] = new Option(modLoaderOptions[i], modLoaderOptions[i]);
+        }
+
+        // Set selected values based on URL parameters
+        var urlParams = new URLSearchParams(window.location.search);
+        packSel.value = urlParams.get("pack") || "";
+        shaderSel.value = urlParams.get("shader") || "";
+        modLoaderSel.value = urlParams.get("modLoader") || "";
+    });
+
+    function validateForm() {
+        var packValue = document.getElementById("pack").value.replace(/\s+/g, ''); // Remove spaces
+        var shaderValue = document.getElementById("shader").value.replace(/\s+/g, ''); // Remove spaces
+        var modLoaderValue = document.getElementById("modLoader").value.replace(/\s+/g, ''); // Remove spaces
+
+        if (packValue === "" || shaderValue === "" || modLoaderValue === "") {
+            alert("Please select one option from each menu.");
+            return false;
+        }
+
+        var downloadLink = `https://github.com/ScytedTV-Studios/JuJus-Better-Wynncraft/releases/download/${latestVersion}/` + "/JuJus-Better-Wynncraft" + "+" + latestVersion + "+" + packValue + "+" + shaderValue + "+" + modLoaderValue;
+
+        // Append the appropriate file extension based on the selected "modLoader" option
+        if (modLoaderValue === "CurseForge") {
+            downloadLink += ".zip";
+        } else if (modLoaderValue === "Modrinth") {
+            downloadLink += ".mrpack";
+        }
+
+        window.open(downloadLink, "_blank");
+
+        return true;
+    }
+
+    // ARCHIVE VERSION DOWNLOAD
+
+    function updateArchiveOptions() {
+        var majorVersion = document.getElementById("majorVersion").value;
+
+        // Enable or disable sections based on the selected major version
+        var packSection = document.getElementById("archivePack");
+        var shaderSection = document.getElementById("archiveShader");
+        var versionSection = document.getElementById("version");
+        var modLoaderSection = document.getElementById("archiveModLoader");
+
+        packSection.disabled = true;
+        shaderSection.disabled = true;
+        versionSection.disabled = true;
+        modLoaderSection.disabled = true;
+
+        if (majorVersion === "version1") {
+
+            packSection.options.length = 1;
+
+            shaderSection.options.length = 1;
+
+            versionSection.options.length = 1;
+            versionSection.options[versionSection.options.length] = new Option("v1.0", "v1.0");
+            versionSection.options[versionSection.options.length] = new Option("v1.1", "v1.1");
+            versionSection.options[versionSection.options.length] = new Option("v1.2", "v1.2");
+            versionSection.options[versionSection.options.length] = new Option("v1.3", "v1.3");
+            versionSection.options[versionSection.options.length] = new Option("v1.4", "v1.4");
+
+            modLoaderSection.options.length = 1;
+            modLoaderSection.options[modLoaderSection.options.length] = new Option("CurseForge", "CurseForge");
+            modLoaderSection.options[modLoaderSection.options.length] = new Option("Modrinth", "Modrinth");
+
+            versionSection.disabled = false;
+            modLoaderSection.disabled = false;
+
+        } else if (majorVersion === "version2") {
+
+            packSection.options.length = 1;
+            packSection.options[packSection.options.length] = new Option("Essentials", "Essentials");
+            packSection.options[packSection.options.length] = new Option("Extras", "Extras");
+
+            shaderSection.options.length = 1;
+            shaderSection.options[shaderSection.options.length] = new Option("No Shaders", "No Shaders");
+            shaderSection.options[shaderSection.options.length] = new Option("Sildurs Medium", "Sildurs Medium");
+            shaderSection.options[shaderSection.options.length] = new Option("Sildurs Extreme", "Sildurs Extreme");
+
+            versionSection.options.length = 1;
+            versionSection.options[versionSection.options.length] = new Option("v2.0", "v2.0");
+
+            modLoaderSection.options.length = 1;
+            modLoaderSection.options[modLoaderSection.options.length] = new Option("CurseForge", "CurseForge");
+            modLoaderSection.options[modLoaderSection.options.length] = new Option("Modrinth", "Modrinth");
+
+            packSection.disabled = false;
+            shaderSection.disabled = false;
+            versionSection.disabled = false;
+            modLoaderSection.disabled = false;
+
+        }
+    }
+
+    var versionOptions = ["v1.0", "v1.1", "v1.2", "v1.3", "v1.4"];
+    var archiveModLoaderOptions = ["CurseForge", "Modrinth"];
+
+    window.onload = function () {
+        var versionSel = document.getElementById("version");
+        var archiveModLoaderSel = document.getElementById("archiveModLoader");
+        var majorVersionSel = document.getElementById("majorVersion");
+        var packSel = document.getElementById("archivePack");
+        var shaderSel = document.getElementById("archiveShader");
+
+        // Populate version options
+        for (var i = 0; i < versionOptions.length; i++) {
+            versionSel.options[versionSel.options.length] = new Option(versionOptions[i], versionOptions[i]);
+        }
+
+        // Populate mod loader options
+        for (var i = 0; i < archiveModLoaderOptions.length; i++) {
+            archiveModLoaderSel.options[archiveModLoaderSel.options.length] = new Option(archiveModLoaderOptions[i], archiveModLoaderOptions[i]);
+        }
+
+        // Populate major version options
+        majorVersionSel.options.length = 1;
+        majorVersionSel.options[majorVersionSel.options.length] = new Option("Version 1", "version1");
+        majorVersionSel.options[majorVersionSel.options.length] = new Option("Version 2", "version2");
+
+        // Set selected values for major version, pack, and shader
+        var urlParams = new URLSearchParams(window.location.search);
+        var majorVersionValue = urlParams.get("majorVersion") || "";
+        majorVersionSel.value = majorVersionValue;
+
+        // Trigger the updateArchiveOptions function to set the dependent options based on major version
+        updateArchiveOptions();
+
+        // Set selected values for pack and shader
+        packSel.value = urlParams.get("archivePack") || "";
+        shaderSel.value = urlParams.get("archiveShader") || "";
+
+        // Set selected values for version and archiveModLoader
+        versionSel.value = urlParams.get("version") || "";
+        archiveModLoaderSel.value = urlParams.get("archiveModLoader") || "";
+    };
+
+    function validateArchiveForm() {
+        var versionValue = document.getElementById("version").value.replace(/\s+/g, ''); // Remove spaces
+        var archiveModLoaderValue = document.getElementById("archiveModLoader").value.replace(/\s+/g, ''); // Remove spaces
+        var packValue = document.getElementById("archivePack").value.replace(/\s+/g, ''); // Remove spaces
+        var shaderValue = document.getElementById("archiveShader").value.replace(/\s+/g, ''); // Remove spaces
+
+        if (versionValue === "" || archiveModLoaderValue === "") {
+            alert("Please select one option from each menu.");
+            return false;
+        }
+
+        // Build the download link dynamically based on selected values
+        var archiveDownloadLink = "https://github.com/ScytedTV-Studios/JuJus-Better-Wynncraft/releases/download/" + versionValue + "/JuJus-Better-Wynncraft" +
+            "+" + versionValue +
+            (packValue ? "+" + packValue : "") +
+            (shaderValue ? "+" + shaderValue : "") +
+            "+" + archiveModLoaderValue;
+
+        // Append the appropriate file extension based on the selected "archiveModLoader" option
+        if (archiveModLoaderValue === "CurseForge") {
+            archiveDownloadLink += ".zip";
+        } else if (archiveModLoaderValue === "Modrinth") {
+            archiveDownloadLink += ".mrpack";
+        }
+
+        // Open the archive download link in a new tab
+        window.open(archiveDownloadLink, "_blank");
+
+        return true;
+    }
+
+    function viewChangelogs() {
+        var versionValue = document.getElementById("version").value.replace(/\s+/g, ''); // Remove spaces
+
+        if (versionValue === "") {
+            alert("Please select a version.");
+            return false;
+        }
+
+        var changelogsLink = "https://github.com/ScytedTV-Studios/JuJus-Better-Wynncraft/releases/tag/" + versionValue;
+
+        // Redirect to the changelogs link
+        window.open(changelogsLink, "_blank");
+    }
+</script>
+
+</html>
