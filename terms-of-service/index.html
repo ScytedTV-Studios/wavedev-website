@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3996501092754288"
+    crossorigin="anonymous"></script>
+
+    <title>Wave Development - Terms of Service</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f0f0;
+        }
+
+        header {
+            background-color: #7289DA;
+            color: #fff;
+            text-align: center;
+            padding: 1em 0;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .nav-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            margin-right: 20px;
+        }
+
+        .profile-picture {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        .user-dropdown {
+            display: none;
+            position: absolute;
+            top: 60px;
+            right: 20px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            flex-direction: column;
+            z-index: 1;
+        }
+
+        .user-dropdown a {
+            color: #333;
+            padding: 10px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .user-dropdown a:hover {
+            background-color: #ddd;
+        }
+
+        .user-dropdown.show {
+            display: flex;
+        }
+
+        .user-dropdown a.logout {
+            color: #ff5252;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: left;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        .user-info-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-top: 20px;
+        }
+
+        .bot-details {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            padding: 10px;
+        }
+
+        .bot-profile-picture {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin-bottom: 10px;
+        }
+
+        .bot-name {
+            font-weight: bold;
+            color: #333;
+            text-align: center;
+            /* Center the bot name */
+        }
+
+        .user-info-box {
+            flex: 1;
+            padding: 20px;
+            background-color: #eee;
+            border-radius: 8px;
+            margin-top: 10px;
+        }
+
+        .user-info-content {
+            text-align: left;
+        }
+
+        .error-message {
+            color: #ff5252;
+            margin-top: 10px;
+        }
+
+        .bot-details a {
+            text-decoration: none;
+        }
+
+        .bot-details a:hover .bot-name {
+            text-decoration: underline;
+        }
+
+        /* Hamburger menu styles */
+        .hamburger-menu {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            padding: 10px;
+        }
+
+        .bar {
+            width: 25px;
+            height: 3px;
+            background-color: #fff;
+            margin: 3px 0;
+            transition: 0.4s;
+        }
+
+        .center-italicized {
+            text-align: center;
+            font-style: italic;
+        }
+
+        nav ul {
+            list-style-type: none;
+            display: flex;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #fff;
+            margin: 0 20px;
+            font-weight: bold;
+            font-size: 16px;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: #ddd;
+        }
+
+        nav {
+            max-width: 900px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav li {
+            margin: 0 10px;
+        }
+
+        header {
+            background-color: #7289DA;
+            color: #fff;
+            text-align: center;
+            padding: 10px 10;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+
+        ul {
+            list-style: none;
+            display: flex;
+        }
+
+        li {
+            margin: 0 10px;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        @media screen and (max-width: 768px) {
+            .nav-container {
+                display: none;
+            }
+
+            .hamburger-menu {
+                display: flex;
+            }
+
+            .user-info,
+            .user-info-container {
+                flex-direction: column;
+                align-items: center;
+                /* Center the user info */
+            }
+
+            .user-dropdown {
+                right: 0;
+            }
+
+            .user-info.show-dropdown .bar:nth-child(1) {
+                transform: rotate(-45deg) translate(-5px, 6px);
+            }
+
+            .user-info.show-dropdown .bar:nth-child(2) {
+                opacity: 0;
+            }
+
+            .user-info.show-dropdown .bar:nth-child(3) {
+                transform: rotate(45deg) translate(-5px, -6px);
+            }
+
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <nav>
+            <div class="logo">Wave Development</div>
+            <ul>
+                <li><a href="https://www.wavedev.app/" class="active">Home</a></li>
+                <li><a href="#" onclick="redirectToLogin()">Login</a></li>
+            </ul>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+            <div class="bot-details">
+                <h1>Terms of Service</h1>
+            </div>
+            <div class="user-info-box" id="userInfoBox">
+                <h3>Last Updated: January 26, 2024</h3>
+                <p>By using Wave Development, you agree to be bound by these Terms of Service. If you do not agree to these terms, please refrain from using our website.</p>
+                <h2>1. User Conduct:</h2>
+                <ul><li>You agree not to engage in any activity that may disrupt or interfere with the proper functioning of the website. This includes, but is not limited to, hacking, phishing, or any other malicious activities.</li></ul>
+                <h2>2. Intellectual Property:</h2>
+                <ul><li>All content on our website, including but not limited to text, graphics, logos, and software, is the property of Wave Development and is protected by intellectual property laws.</li></ul>
+                <h2>3. Limitation of Liability:</h2>
+                <ul><li>We are not liable for any direct, indirect, incidental, special, or consequential damages arising out of or in any way connected with the use of our website.</li></ul>
+                <h2>4. Modification of Services:</h2>
+                <ul><li>We reserve the right to modify, suspend, or discontinue any part of the website at any time without prior notice.</li></ul>
+                <h2>5. Governing Law:</h2>
+                <ul><li>These Terms of Service are governed by and construed in accordance with the laws of Canada.</li></ul>
+                <h2>6. Contact Us:</h2>
+                <ul><li>If you have any questions or concerns about our Terms of Service, please contact us at <a href="mailto:support@scyted.tv">support@scyed.tv</a>.</li></ul>
+            </div>
+        </div>
+</body>
+<script>
+    function redirectToLogin() {
+    window.location.href = 'https://www.wavedev.app/login';
+}
+</script>
+</html>
