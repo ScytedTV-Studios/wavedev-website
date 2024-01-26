@@ -319,38 +319,14 @@
             <h1>JuJu's Better Wynncraft</h1>
         </div>
         <div class="user-info-box" id="userInfoBox">
-            <p>With the goal of optimizing your Wynncraft experience for either functionality or experience, we have
-                created "JuJu's Better Wynncraft" to bring you what you're looking for.</p>
+            <p>With the goal of optimizing your Wynncraft experience, we have
+                created "JuJu's Better Wynncraft" to bring you Modpacks for both Functionality and Quality of Life changes.</p>
         </div>
         <div class="user-info-box" id="userInfoBox">
 
-            <h2>LATEST [v1.4]</h2>
-
-            <form name="downloadForm" id="downloadForm" action="" onsubmit="return validateForm()">
-                <label for="pack">Pack:</label>
-                <select name="pack" id="pack" required>
-                    <option value="" selected="selected">Select pack</option>
-                </select>
-                <br><br>
-
-                <label for="shader">Shader:</label>
-                <select name="shader" id="shader" required>
-                    <option value="" selected="selected">Select shader</option>
-                </select>
-                <br><br>
-
-                <label for="modLoader">Mod Loader:</label>
-                <select name="modLoader" id="modLoader" required>
-                    <option value="" selected="selected">Select mod loader</option>
-                </select>
-                <br><br>
-
-                <input type="submit" value="Download">
-            </form>
-
-            <h3>JuJu's Better Wynncraft: Essentials</h3>
+            <h3>JuJu's Better Wynncraft: Essentials [v1.4]</h3>
             <p>The Essentials pack focuses on fast performace, whilst also including a few quality of life mods.</p>
-            
+
             <h4>Updates</h4>
             <li>ADDED: Replay Mod (Fabric & Forge)</li>
 
@@ -378,11 +354,39 @@
             <li>YetAnotherConfigLib</li>
             <li>Zoomify</li>
             <p>[ <a href="https://github.com/ScytedTV-Studios/JuJus-Better-Wynncraft/releases/latest">GitHub</a> ] | [
-                <a href="https://discord.gg/JEeUqPQwBF">Discord</a> ]</p>
+                <a href="https://discord.gg/JEeUqPQwBF">Discord</a> ]
+            </p>
+
+        </div>
+        <div class="user-info-box" id="userInfoBox">
+            <h2>DOWNLOAD LATEST [v1.4]</h2>
+
+            <form name="downloadForm" id="downloadForm" action="" onsubmit="return validateForm()">
+                <label for="pack">Pack:</label>
+                <select name="pack" id="pack" required>
+                    <option value="" selected="selected">Select pack</option>
+                </select>
+                <br><br>
+
+                <label for="shader">Shader:</label>
+                <select name="shader" id="shader" required>
+                    <option value="" selected="selected">Select shader</option>
+                </select>
+                <br><br>
+
+                <label for="modLoader">Mod Loader:</label>
+                <select name="modLoader" id="modLoader" required>
+                    <option value="" selected="selected">Select mod loader</option>
+                </select>
+                <br><br>
+
+                <input type="submit" value="Download">
+                <button type="button" onclick="viewChangelogs()">View Changelogs</button>
+            </form>
         </div>
         <div class="user-info-box" id="userInfoBox">
 
-            <h2>ARCHIVE</h2>
+            <h2>ARCHIVE DOWNLOADS</h2>
             <form name="archiveForm" id="archiveForm" action="" onsubmit="return validateArchiveForm()">
 
                 <!-- Major Version Section -->
@@ -429,8 +433,8 @@
                 </select>
                 <br><br>
 
-                <input type="submit" value="Download Archive">
-                <button type="button" onclick="viewChangelogs()">View Changelogs</button>
+                <input type="submit" value="Download">
+                <button type="button" onclick="viewArchiveChangelogs()">View Changelogs</button>
             </form>
 
             <div id="messageContainer"></div>
@@ -634,7 +638,7 @@
         return true;
     }
 
-    function viewChangelogs() {
+    function viewArchiveChangelogs() {
         var versionValue = document.getElementById("version").value.replace(/\s+/g, ''); // Remove spaces
 
         if (versionValue === "") {
@@ -646,6 +650,17 @@
 
         // Redirect to the changelogs link
         window.open(changelogsLink, "_blank");
+    }
+
+    function viewChangelogs() {
+
+        var changelogsLink = "https://github.com/ScytedTV-Studios/JuJus-Better-Wynncraft/releases/latest/";
+
+        window.open(changelogsLink, "_blank");
+    }
+
+    function redirectToLogin() {
+        window.location.href = 'https://www.wavedev.app/login';
     }
 </script>
 
