@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3996501092754288"
-     crossorigin="anonymous"></script>
+        crossorigin="anonymous"></script>
 
     <title>JuJu's Better Wynncraft - Download</title>
     <style>
@@ -340,8 +340,8 @@
                 <br><br>
 
                 <label for="shader">Shader:</label>
-                <select name="shader" id="shader" required>
-                    <option value="" selected="selected">Select shader</option>
+                <select name="shader" id="shader" disabled>
+                    <option value="" selected="selected">No Shaders Available</option>
                 </select>
                 <br><br>
 
@@ -392,17 +392,15 @@
 
             <p>Includes everything from Essentials, Plus:</p>
 
-            <li>Ambient Environment</li>
+            <li>AmbientSounds 5</li>
             <li>Athena</li>
             <li>Better Third Person</li>
             <li>Capes</li>
             <li>CompleteConfig</li>
             <li>CreativeCore</li>
             <li>Debugify</li>
-            <li>Dynamic Sound Filters</li>
             <li>Enhanced Block Entities</li>
             <li>Entity Texture Features</li>
-            <li>Exordium</li>
             <li>Falling Leaves</li>
             <li>FerriteCore</li>
             <li>Indium</li>
@@ -411,7 +409,9 @@
             <li>Lithium</li>
             <li>Mouse Tweaks</li>
             <li>Not Enough Animations</li>
+            <li>Physics Mod</li>
             <li>Skin Layers 3D</li>
+            <li>Sound Physics Remastered</li>
             <li>Starlight</li>
             <li>YDM's Weapon Master</li>
             <li>Zoomify</li>
@@ -431,15 +431,13 @@
 
             <p>Includes everything from Essentials and Extras, Plus:</p>
 
-            <li>Auto HUD</li>
             <li>Avomod</li>
             <li>Better Beds</li>
             <li>Blur</li>
-            <li>Chat Heads</li>
             <li>CIT Resewn</li>
             <li>Don't Clear Chat History</li>
             <li>Entity View Distance</li>
-            <li>MAmbience</li>
+            <li>Inventory HUD+</li>
             <li>More Chat History</li>
             <li>Reese's Sodium Options</li>
             <li>Replay Mod</li>
@@ -465,16 +463,23 @@
                 <!-- Major Version Section -->
                 <label for="majorVersion">Major Version:</label>
                 <select name="majorVersion" id="majorVersion" onchange="updateArchiveOptions()" required>
-                    <option value="" selected="selected">Select major version</option>
+                    <option value="" selected="selected">Select Major Version</option>
                     <option value="version1">Version 1</option>
                     <option value="version2">Version 2</option>
+                </select>
+                <br><br>
+
+                <!-- Version Section -->
+                <label for="version">Version:</label>
+                <select name="version" id="version" onchange="updateArchiveOptionsVersions()" disabled required>
+                    <option value="" selected="selected">Select a Major Version</option>
                 </select>
                 <br><br>
 
                 <!-- Pack Section -->
                 <label for="archivePack">Pack:</label>
                 <select name="archivePack" id="archivePack" disabled required>
-                    <option value="" selected="selected">Select pack</option>
+                    <option value="" selected="selected">Select a Major Version</option>
                     <option value="essentials">Essentials</option>
                     <option value="extras">Extras</option>
                     <option value="extreme">Extreme</option>
@@ -484,24 +489,14 @@
                 <!-- Shader Section -->
                 <label for="archiveShader">Shader:</label>
                 <select name="archiveShader" id="archiveShader" disabled required>
-                    <option value="" selected="selected">Select shader</option>
-                    <option value="noShader">No Shader</option>
-                    <option value="sildursMedium">Sildurs Medium</option>
-                    <option value="sildursExtreme">Sildurs Extreme</option>
-                </select>
-                <br><br>
-
-                <!-- Version Section -->
-                <label for="version">Version:</label>
-                <select name="version" id="version" disabled required>
-                    <option value="" selected="selected">Select version</option>
+                    <option value="" selected="selected">Select a Major Version</option>
                 </select>
                 <br><br>
 
                 <!-- Mod Loader Section -->
                 <label for="archiveModLoader">Mod Loader:</label>
                 <select name="archiveModLoader" id="archiveModLoader" disabled required>
-                    <option value="" selected="selected">Select mod loader</option>
+                    <option value="" selected="selected">Select a Major Version</option>
                     <option value="CurseForge">CurseForge</option>
                     <option value="Modrinth">Modrinth</option>
                 </select>
@@ -520,7 +515,7 @@
 </body>
 <script>
     // LATEST VERSION DOWNLOAD
-    const latestVersion = "v2.0";
+    const latestVersion = "v2.1";
 
     document.addEventListener('DOMContentLoaded', function () {
         var packOptions = ["Essentials", "Extras", "Extreme"];
@@ -555,15 +550,17 @@
 
     function validateForm() {
         var packValue = document.getElementById("pack").value.replace(/\s+/g, ''); // Remove spaces
-        var shaderValue = document.getElementById("shader").value.replace(/\s+/g, ''); // Remove spaces
+        // var shaderValue = document.getElementById("shader").value.replace(/\s+/g, ''); // Remove spaces
         var modLoaderValue = document.getElementById("modLoader").value.replace(/\s+/g, ''); // Remove spaces
 
-        if (packValue === "" || shaderValue === "" || modLoaderValue === "") {
+        // if (packValue === "" || shaderValue === "" || modLoaderValue === "") {
+        if (packValue === "" || modLoaderValue === "") {
             alert("Please select one option from each menu.");
             return false;
         }
 
-        var downloadLink = `https://github.com/ScytedTV-Studios/JuJus-Better-Wynncraft/releases/download/${latestVersion}/` + "/JuJus-Better-Wynncraft" + "+" + latestVersion + "+" + packValue + "+" + shaderValue + "+" + modLoaderValue;
+        // var downloadLink = `https://github.com/ScytedTV-Studios/JuJus-Better-Wynncraft/releases/download/${latestVersion}/` + "/JuJus-Better-Wynncraft" + "+" + latestVersion + "+" + packValue + "+" + shaderValue + "+" + modLoaderValue;
+        var downloadLink = `https://github.com/ScytedTV-Studios/JuJus-Better-Wynncraft/releases/download/${latestVersion}/` + "/JuJus-Better-Wynncraft" + "+" + latestVersion + "+" + packValue + "+" + modLoaderValue;
 
         // Append the appropriate file extension based on the selected "modLoader" option
         if (modLoaderValue === "CurseForge") {
@@ -587,6 +584,7 @@
         var shaderSection = document.getElementById("archiveShader");
         var versionSection = document.getElementById("version");
         var modLoaderSection = document.getElementById("archiveModLoader");
+        var majorVersionCheck = document.getElementById("majorVersion")
 
         packSection.disabled = true;
         shaderSection.disabled = true;
@@ -595,18 +593,22 @@
 
         if (majorVersion === "version1") {
 
-            packSection.options.length = 1;
+            packSection.options.length = 0;
+            packSection.options[packSection.options.length] = new Option("No Packs Available", "");
 
-            shaderSection.options.length = 1;
+            shaderSection.options.length = 0;
+            shaderSection.options[shaderSection.options.length] = new Option("No Shaders Available", "");
 
-            versionSection.options.length = 1;
+            versionSection.options.length = 0;
+            versionSection.options[versionSection.options.length] = new Option("Select Version", "");
             versionSection.options[versionSection.options.length] = new Option("v1.0", "v1.0");
             versionSection.options[versionSection.options.length] = new Option("v1.1", "v1.1");
             versionSection.options[versionSection.options.length] = new Option("v1.2", "v1.2");
             versionSection.options[versionSection.options.length] = new Option("v1.3", "v1.3");
             versionSection.options[versionSection.options.length] = new Option("v1.4", "v1.4");
 
-            modLoaderSection.options.length = 1;
+            modLoaderSection.options.length = 0;
+            modLoaderSection.options[modLoaderSection.options.length] = new Option("Select Mod Loader", "");
             modLoaderSection.options[modLoaderSection.options.length] = new Option("CurseForge", "CurseForge");
             modLoaderSection.options[modLoaderSection.options.length] = new Option("Modrinth", "Modrinth");
 
@@ -615,27 +617,80 @@
 
         } else if (majorVersion === "version2") {
 
-            packSection.options.length = 1;
+            packSection.options.length = 0;
+            packSection.options[packSection.options.length] = new Option("Select Pack", "");
             packSection.options[packSection.options.length] = new Option("Essentials", "Essentials");
             packSection.options[packSection.options.length] = new Option("Extras", "Extras");
             packSection.options[packSection.options.length] = new Option("Extreme", "Extreme");
 
-            shaderSection.options.length = 1;
-            shaderSection.options[shaderSection.options.length] = new Option("No Shaders", "No Shaders");
-            shaderSection.options[shaderSection.options.length] = new Option("Sildurs Medium", "Sildurs Medium");
-            shaderSection.options[shaderSection.options.length] = new Option("Sildurs Extreme", "Sildurs Extreme");
+            shaderSection.options.length = 0;
+            shaderSection.options[shaderSection.options.length] = new Option("Select a Version", "");
 
-            versionSection.options.length = 1;
+            versionSection.options.length = 0;
+            versionSection.options[versionSection.options.length] = new Option("Select Version", "");
             versionSection.options[versionSection.options.length] = new Option("v2.0", "v2.0");
+            versionSection.options[versionSection.options.length] = new Option("v2.1", "v2.1");
 
-            modLoaderSection.options.length = 1;
+            modLoaderSection.options.length = 0;
+            modLoaderSection.options[modLoaderSection.options.length] = new Option("Select Mod Loader", "");
             modLoaderSection.options[modLoaderSection.options.length] = new Option("CurseForge", "CurseForge");
             modLoaderSection.options[modLoaderSection.options.length] = new Option("Modrinth", "Modrinth");
 
             packSection.disabled = false;
-            shaderSection.disabled = false;
+            shaderSection.disabled = true;
             versionSection.disabled = false;
             modLoaderSection.disabled = false;
+
+        } else if (majorVersionCheck.selectedIndex == 0) {
+
+            packSection.options.length = 0;
+            packSection.options[packSection.options.length] = new Option("Select a Major Version", "");
+
+            shaderSection.options.length = 0;
+            shaderSection.options[shaderSection.options.length] = new Option("Select a Major Version", "");
+
+            versionSection.options.length = 0;
+            versionSection.options[versionSection.options.length] = new Option("Select a Major Version", "");
+
+            modLoaderSection.options.length = 0;
+            modLoaderSection.options[modLoaderSection.options.length] = new Option("Select a Major Version", "");
+
+        }
+    }
+
+    function updateArchiveOptionsVersions() {
+        var versionSection = document.getElementById("version").value;
+
+        // Enable or disable sections based on the selected major version
+        var packSection = document.getElementById("archivePack");
+        var shaderSection = document.getElementById("archiveShader");
+        var majorVersion = document.getElementById("majorVersion");
+        var modLoaderSection = document.getElementById("archiveModLoader");
+        var versionSectionCheck = document.getElementById("version");
+
+        if (versionSection === "v2.0") {
+
+            shaderSection.options.length = 0;
+            shaderSection.options[shaderSection.options.length] = new Option("Select Shader", "");
+            shaderSection.options[shaderSection.options.length] = new Option("No Shaders", "No Shaders");
+            shaderSection.options[shaderSection.options.length] = new Option("Sildurs Medium", "Sildurs Medium");
+            shaderSection.options[shaderSection.options.length] = new Option("Sildurs Extreme", "Sildurs Extreme");
+
+            shaderSection.disabled = false;
+
+        } else if (versionSectionCheck.selectedIndex === 0 && majorVersion.selectedIndex !== 0 && majorVersion.selectedIndex !== 1) {
+
+            shaderSection.options.length = 0;
+            shaderSection.options[shaderSection.options.length] = new Option("Select a Version", "");
+
+            shaderSection.disabled = true;
+
+        } else if (versionSection !== "v2.0" && versionSectionCheck.selectedIndex !== 0 && majorVersion.selectedIndex !== 0) {
+
+            shaderSection.options.length = 0;
+            shaderSection.options[shaderSection.options.length] = new Option("No Shaders Available", "");
+
+            shaderSection.disabled = true;
 
         }
     }
@@ -672,6 +727,7 @@
 
         // Trigger the updateArchiveOptions function to set the dependent options based on major version
         updateArchiveOptions();
+        updateArchiveOptionsVersions();
 
         // Set selected values for pack and shader
         packSel.value = urlParams.get("archivePack") || "";
