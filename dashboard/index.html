@@ -21,23 +21,7 @@
         <a href="#" class="logout" onclick="logout()"><br>Logout</a>
     </div>
     <script src="https://api.scyted.tv/wave-development/navbar.js"></script>
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-    // Load the navigation bar template
-    fetch("https://api.scyted.tv/wave-development/navbar.html")
-        .then(response => response.text())
-        .then(navbarHtml => {
-            const navbarContainer = document.getElementById('navbar-container');
-            navbarContainer.innerHTML = navbarHtml;
-
-            // Include the JavaScript code for the navigation bar
-            const navbarScript = document.createElement('script');
-            navbarScript.src = 'https://api.scyted.tv/wave-development/navbar.js';
-            document.body.appendChild(navbarScript);
-        })
-        .catch(error => console.error("Error loading navbar:", error));
-});
-    </script>
+    <script src="https://api.scyted.tv/wave-development/navbar-include.js"></script>
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-LF3ZTHGQHE"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
