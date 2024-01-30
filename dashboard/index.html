@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3996501092754288"
-     crossorigin="anonymous"></script>
+        crossorigin="anonymous"></script>
 
     <title>Dashboard</title>
     <style>
@@ -130,7 +130,7 @@
 
         .bot-name {
             font-weight: bold;
-            color: #fff;
+            color: #000000;
             text-decoration: none;
         }
 
@@ -184,7 +184,8 @@
     </header>
     <div class="container">
         <h1>Dashboard</h1>
-        <p>This Dashboard allows you to view your user data collected by our bots. Select the bot you would like to view.</p>
+        <p>This Dashboard allows you to view your user data collected by our bots. Select the bot you would like to
+            view.</p>
         <div id="botInfo" class="bot-info-container"></div>
         <a href="#" class="logout" onclick="logout()"><br>Logout</a>
     </div>
@@ -252,9 +253,9 @@
 
             // Example data (replace with actual data)
             const botData = [
-                { name: "Wave 24/7", profilePicture: "https://cdn.scyted.tv/discord-wave/wave.jpg", backgroundColor: "#9b72f9", link: "https://www.wavedev.app/dashboard/wave" },
-                { name: "Levlr", profilePicture: "https://cdn.scyted.tv/discord-levlr/levlr.png", backgroundColor: "#9e3595", link: "https://www.wavedev.app/dashboard/levlr" },
-                { name: "Heart Collectors", profilePicture: "https://cdn.scyted.tv/discord-heart-collectors/heart-collectors.png", backgroundColor: "#dc4437", link: "https://www.wavedev.app/dashboard/heart-collectors" },
+                { name: "Wave 24/7", profilePicture: "https://cdn.scyted.tv/discord-wave/wave.jpg", backgroundColor: "#f0f0f0", link: "https://www.wavedev.app/dashboard/wave" },
+                { name: "Levlr", profilePicture: "https://cdn.scyted.tv/discord-levlr/levlr.png", backgroundColor: "#f0f0f0", link: "https://www.wavedev.app/dashboard/levlr" },
+                { name: "Heart Collectors", profilePicture: "https://cdn.scyted.tv/discord-heart-collectors/heart-collectors.png", backgroundColor: "#f0f0f0", link: "https://www.wavedev.app/dashboard/heart-collectors" },
             ];
 
             botData.forEach(bot => {
@@ -307,11 +308,11 @@
     </script>
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-LF3ZTHGQHE"></script>
     <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-    
-      gtag('config', 'G-LF3ZTHGQHE');
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-LF3ZTHGQHE');
     </script>
 </body>
 
