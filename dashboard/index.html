@@ -174,7 +174,8 @@
         <div class="logo">Wave Development</div>
         <nav>
             <div class="user-info" onclick="toggleUserDropdown()">
-                <img src="https://cdn.scyted.tv/website-assets/wave-development/default-discord.png" alt="Profile Picture" class="profile-picture">
+                <img src="https://cdn.scyted.tv/website-assets/wave-development/default-discord.png"
+                    alt="Profile Picture" class="profile-picture">
                 <span>Loading...</span>
                 <div class="user-dropdown" id="userDropdown">
                     <a href="https://www.wavedev.app/" class="home">Home</a>
@@ -190,9 +191,8 @@
         <div id="botInfo" class="bot-info-container"></div>
         <a href="#" class="logout" onclick="logout()"><br>Logout</a>
     </div>
-    <!-- <script src="loading.js" defer></script> -->
-    <script src="../login-scripts.js" defer></script>
-    <!-- <script src="../test-login-scripts.js" defer></script> -->
+    <!-- <script src="../login-scripts.js" defer></script> -->
+    <script src="../test-login-scripts.js" defer></script>
     <script>
         function toggleUserDropdown() {
             const userDropdown = document.getElementById('userDropdown');
@@ -254,7 +254,13 @@
             const profilePicture = document.querySelector('.profile-picture');
             const username = document.querySelector('.user-info span');
 
-            profilePicture.src = `https://cdn.discordapp.com/avatars/${userData.id}/${userData.avatar}.png`;
+            // Check if userData.avatar is null
+            if (userData.avatar === null || userData.avatar === "null") {
+                profilePicture.src = "https://cdn.scyted.tv/website-assets/wave-development/default-discord.png";
+            } else {
+                profilePicture.src = `https://cdn.discordapp.com/avatars/${userData.id}/${userData.avatar}.png`;
+            }
+
             username.textContent = userData.username;
             userDropdown.querySelector('.home').href = `https://www.wavedev.app/`;
         }

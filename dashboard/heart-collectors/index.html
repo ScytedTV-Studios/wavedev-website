@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3996501092754288"
-     crossorigin="anonymous"></script>
+        crossorigin="anonymous"></script>
 
     <title>Heart Collectors - User Information</title>
     <style>
@@ -171,7 +171,7 @@
         }
 
         @media screen and (max-width: 768px) {
-            
+
 
             .user-info,
             .user-info-container {
@@ -212,7 +212,8 @@
         <div class="logo">Wave Development</div>
         <nav>
             <div class="user-info" onclick="toggleUserDropdown()">
-                <img src="https://cdn.scyted.tv/website-assets/wave-development/default-discord.png" alt="Profile Picture" class="profile-picture">
+                <img src="https://cdn.scyted.tv/website-assets/wave-development/default-discord.png"
+                    alt="Profile Picture" class="profile-picture">
                 <span>Loading...</span>
                 <div class="user-dropdown" id="userDropdown">
                     <a href="https://www.wavedev.app/" class="home">Home</a>
@@ -291,12 +292,13 @@
             const profilePicture = document.querySelector('.profile-picture');
             const username = document.querySelector('.user-info span');
 
-            // Use a fallback avatar URL if the user doesn't have an avatar
-            const avatarURL = userData.avatar
-                ? `https://cdn.discordapp.com/avatars/${userData.id}/${userData.avatar}.png`
-                : 'https://example.com/fallback-avatar.png';
+            // Check if userData.avatar is null
+            if (userData.avatar === null || userData.avatar === "null") {
+                profilePicture.src = "https://cdn.scyted.tv/website-assets/wave-development/default-discord.png";
+            } else {
+                profilePicture.src = `https://cdn.discordapp.com/avatars/${userData.id}/${userData.avatar}.png`;
+            }
 
-            profilePicture.src = avatarURL;
             username.textContent = userData.username;
             userDropdown.querySelector('.home').href = `https://www.wavedev.app/`;
 
@@ -356,11 +358,11 @@
     </script>
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-LF3ZTHGQHE"></script>
     <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-    
-      gtag('config', 'G-LF3ZTHGQHE');
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-LF3ZTHGQHE');
     </script>
 </body>
 
