@@ -189,6 +189,8 @@
         <div id="botInfo" class="bot-info-container"></div>
         <a href="#" class="logout" onclick="logout()"><br>Logout</a>
     </div>
+    <script src="../login-scripts.js" defer></script>
+    <!-- <script src="../test-login-scripts.js" defer></script> -->
     <script>
         function toggleUserDropdown() {
             const userDropdown = document.getElementById('userDropdown');
@@ -233,8 +235,15 @@
                     return response.json();
                 })
                 .then(userData => {
-                    // Display user info on the dashboard
-                    displayUserInfo(userData);
+                    if (userData && userData.id) {
+                        return userData;
+                    } else {
+                        throw new Error('Invalid response from Discord API');
+                    }
+                })
+                .catch(error => {
+                    console.error("Error fetching user data:", error);
+                    throw error; // Rethrow the error to be caught in the calling function
                 });
         }
 
@@ -258,33 +267,70 @@
                 { name: "Heart Collectors", profilePicture: "https://cdn.scyted.tv/discord-heart-collectors/heart-collectors.png", backgroundColor: "#f0f0f0", link: "https://www.wavedev.app/dashboard/heart-collectors" },
             ];
 
-            botData.forEach(bot => {
-                const botContainer = document.createElement("a"); // Use an anchor element for the link
-                botContainer.classList.add("bot-details");
-                botContainer.style.backgroundColor = bot.backgroundColor || "#ddd"; // Set background color
-                botContainer.href = bot.link || "#"; // Set link
+            // Fetch user's Discord ID from Discord API using the stored access token
+            const storedAccessToken = getCookie("accessToken");
 
-                const botProfilePicture = document.createElement("img");
-                botProfilePicture.src = bot.profilePicture;
-                botProfilePicture.alt = "Bot Profile Picture";
-                botProfilePicture.classList.add("bot-profile-picture");
+            if (storedAccessToken) {
+                fetchDiscordUserData(storedAccessToken)
+                    .then(userData => {
+                        // Display user info on the dashboard
+                        displayUserInfo(userData);
 
-                const botName = document.createElement("div");
-                botName.classList.add("bot-name");
-                botName.textContent = bot.name;
+                        const loggedInUserId = userData.id;
 
-                botContainer.appendChild(botProfilePicture);
-                botContainer.appendChild(botName);
+                        // Fetch the list of user IDs from the JSON file
+                        fetch('https://api.scyted.tv/wave-development/dashboard/access/scytedtv-user-access.json')
+                            .then(response => response.json())
+                            .then(userIds => {
+                                // Check if the logged-in user's ID is in the list
+                                if (userIds.includes(loggedInUserId)) {
+                                    // Add "ScytedTV Assets" entry
+                                    botData.push({
+                                        name: "ScytedTV Assets",
+                                        profilePicture: "https://cdn.scyted.tv/assets/scytedtv/logos/scytedtv-inverted.jpg",
+                                        backgroundColor: "#f0f0f0",
+                                        link: "https://www.wavedev.app/dashboard/scytedtv-assets"
+                                    });
+                                }
 
-                botContainer.addEventListener("click", function (event) {
-                    // Handle click on bot square (add your logic here)
-                    console.log(`Clicked on ${bot.name}`);
-                    // If you want to navigate to the link, remove the next line
-                    // event.preventDefault();
-                });
+                                botData.forEach(bot => {
+                                    const botContainer = document.createElement("a"); // Use an anchor element for the link
+                                    botContainer.classList.add("bot-details");
+                                    botContainer.style.backgroundColor = bot.backgroundColor || "#ddd"; // Set background color
+                                    botContainer.href = bot.link || "#"; // Set link
 
-                botInfoDiv.appendChild(botContainer);
-            });
+                                    const botProfilePicture = document.createElement("img");
+                                    botProfilePicture.src = bot.profilePicture;
+                                    botProfilePicture.alt = "Bot Profile Picture";
+                                    botProfilePicture.classList.add("bot-profile-picture");
+
+                                    const botName = document.createElement("div");
+                                    botName.classList.add("bot-name");
+                                    botName.textContent = bot.name;
+
+                                    botContainer.appendChild(botProfilePicture);
+                                    botContainer.appendChild(botName);
+
+                                    botContainer.addEventListener("click", function (event) {
+                                        // Handle click on bot square (add your logic here)
+                                        console.log(`Clicked on ${bot.name}`);
+                                        // If you want to navigate to the link, remove the next line
+                                        // event.preventDefault();
+                                    });
+
+                                    botInfoDiv.appendChild(botContainer);
+                                });
+                            })
+                            .catch(error => {
+                                console.error("Error fetching user IDs:", error);
+                                // Handle error
+                            });
+                    })
+                    .catch(error => {
+                        console.error("Error fetching user data:", error);
+                        // Handle error
+                    });
+            }
         }
 
         function logout() {

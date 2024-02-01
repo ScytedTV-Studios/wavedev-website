@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3996501092754288"
+     crossorigin="anonymous"></script>
+
+    <title>Wave 24/7 - User Information</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f0f0;
+        }
+
+        header {
+            background-color: #7289da;
+            color: #fff;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .nav-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            margin-right: 20px;
+        }
+
+        .profile-picture {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        .user-dropdown {
+            display: none;
+            position: absolute;
+            top: 60px;
+            right: 20px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            flex-direction: column;
+            z-index: 1;
+        }
+
+        .user-dropdown a {
+            color: #333;
+            padding: 10px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .user-dropdown a:hover {
+            background-color: #ddd;
+        }
+
+        .user-dropdown.show {
+            display: flex;
+        }
+
+        .user-dropdown a.logout {
+            color: #ff5252;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        .user-info-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-top: 20px;
+        }
+
+        .bot-details {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            padding: 20px;
+            margin-right: 20px;
+        }
+
+        .bot-profile-picture {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin-bottom: 10px;
+        }
+
+        .bot-name {
+            font-weight: bold;
+            color: #333;
+            text-align: center;
+            /* Center the bot name */
+        }
+
+        .user-info-box {
+            flex: 1;
+            padding: 20px;
+            background-color: #eee;
+            border-radius: 8px;
+        }
+
+        .user-info-content {
+            text-align: left;
+        }
+
+        .error-message {
+            color: #ff5252;
+            margin-top: 10px;
+        }
+
+        .bot-details a {
+            text-decoration: none;
+        }
+
+        .bot-details a:hover .bot-name {
+            text-decoration: underline;
+        }
+
+        /* Hamburger menu styles */
+        .hamburger-menu {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            padding: 10px;
+        }
+
+        .bar {
+            width: 25px;
+            height: 3px;
+            background-color: #fff;
+            margin: 3px 0;
+            transition: 0.4s;
+        }
+
+        .center-italicized {
+            text-align: center;
+            font-style: italic;
+        }
+
+        @media screen and (max-width: 768px) {
+            
+
+            .user-info,
+            .user-info-container {
+                flex-direction: column;
+                align-items: center;
+                /* Center the user info */
+            }
+
+            header {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .logo {
+                margin-bottom: 10px;
+            }
+
+            nav {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .user-info {
+                margin: 0;
+            }
+
+            .user-dropdown {
+                right: 0;
+            }
+
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="logo">Wave Development</div>
+        <nav>
+            <div class="user-info" onclick="toggleUserDropdown()">
+                <img src="" alt="Profile Picture" class="profile-picture">
+                <span>Loading...</span>
+                <div class="user-dropdown" id="userDropdown">
+                    <a href="https://www.wavedev.app/" class="home">Home</a>
+                    <a href="#" class="logout" onclick="logout()">Logout</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <div class="user-info-container">
+            <div class="bot-details">
+                <img src="https://cdn.scyted.tv/discord-wave/wave.jpg" alt="Bot Profile Picture"
+                    class="bot-profile-picture">
+                <div class="bot-name">Wave 24/7</div>
+            </div>
+            <div class="user-info-box" id="userInfoBox">
+                <p>Wave 24/7 doesn't currently store user-specific data.<br></p>
+                <p><a href="https://www.wavedev.app/wave/terms-of-service/">Terms of Service</a> - <a href="https://www.wavedev.app/wave/privacy-policy/">Privacy Policy</a></p>
+            </div>
+        </div>
+        <a href="https://www.wavedev.app/dashboard/" style="color: red;"><br>← back</a>
+        <div class="error-message" id="errorMessage"></div>
+    </div>
+    <script>
+        function toggleUserDropdown() {
+            const userDropdown = document.getElementById('userDropdown');
+            userDropdown.classList.toggle('show');
+        }
+
+        function toggleMobileMenu() {
+            const userInfo = document.querySelector('.user-info');
+            userInfo.classList.toggle('show-dropdown');
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+    const storedAccessToken = getCookie("accessToken");
+
+    // Redirect to login if access token is not found
+    if (!storedAccessToken) {
+        window.location.href = "https://www.wavedev.app/dashboard/scytedtv-assets/login";
+    } else {
+        // Fetch user data from Discord API
+        fetchDiscordUserData(storedAccessToken)
+            .then(userData => {
+                // Display bot info and user info on the dashboard
+                displayBotInfo();
+                displayUserInfo(userData);
+
+                const loggedInUserId = userData.id;
+
+                // Fetch the list of user IDs from the JSON file
+                fetch('https://api.scyted.tv/wave-development/dashboard/access/scytedtv-user-access.json')
+                    .then(response => response.json())
+                    .then(userIds => {
+                        // Check if the logged-in user's ID is in the list
+                        if (!userIds.includes(loggedInUserId)) {
+                            // Redirect to the specified page if the user's ID is not in the list
+                            window.location.href = "https://www.wavedev.app/dashboard/";
+                        }
+                    })
+                    .catch(error => {
+                        console.error("Error fetching user IDs:", error);
+                        // Handle error
+                    });
+            })
+            .catch(error => {
+                console.error("Error fetching user data:", error);
+                // Handle error (e.g., redirect to login page)
+                window.location.href = "https://www.wavedev.app/dashboard/scytedtv-assets/login";
+            });
+    }
+});
+
+        function fetchDiscordUserData(accessToken) {
+            const apiUrl = 'https://discord.com/api/users/@me';
+
+            return fetch(apiUrl, {
+                headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                },
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`Discord API Request Failed! Status: ${response.status}`);
+                    }
+                    return response.json();
+                });
+        }
+
+        function displayUserInfo(userData) {
+            const userDropdown = document.getElementById('userDropdown');
+            const profilePicture = document.querySelector('.profile-picture');
+            const username = document.querySelector('.user-info span');
+
+            // Use a fallback avatar URL if the user doesn't have an avatar
+            const avatarURL = userData.avatar
+                ? `https://cdn.discordapp.com/avatars/${userData.id}/${userData.avatar}.png`
+                : 'https://example.com/fallback-avatar.png';
+
+            profilePicture.src = avatarURL;
+            username.textContent = userData.username;
+            userDropdown.querySelector('.home').href = `https://www.wavedev.app/`;
+
+        }
+
+        function displayBotInfo() {
+            // Implement your bot info display logic here
+        }
+
+        function logout() {
+            // Clear cookies
+            document.cookie = "accessToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+
+            // Redirect to login page
+            window.location.href = "https://www.wavedev.app/dashboard/scytedtv-assets/login";
+        }
+
+        function getCookie(name) {
+            const cookies = document.cookie.split("; ");
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].split("=");
+                if (cookie[0] === name) {
+                    return cookie[1];
+                }
+            }
+            return null;
+        }
+    </script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-LF3ZTHGQHE"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+    
+      gtag('config', 'G-LF3ZTHGQHE');
+    </script>
+</body>
+
+</html>
