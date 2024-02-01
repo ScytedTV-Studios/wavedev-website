@@ -276,68 +276,107 @@
                 { name: "Heart Collectors", profilePicture: "https://cdn.scyted.tv/discord-heart-collectors/heart-collectors.png", backgroundColor: "#f0f0f0", link: "https://www.wavedev.app/dashboard/heart-collectors" },
             ];
 
-            // Fetch user's Discord ID from Discord API using the stored access token
+            const jsonUrls = [
+                'https://api.scyted.tv/wave-development/dashboard/access/scytedtv-user-access.json',
+                'https://api.scyted.tv/wave-development/dashboard/access/jujus-better-wynncraft-beta.json',
+                'https://api.scyted.tv/wave-development/dashboard/access/jujus-better-wynncraft-archives.json'
+            ];
+
+            const botDataArrays = [
+                [
+                    {
+                        name: "ScytedTV Assets",
+                        profilePicture: "https://cdn.scyted.tv/assets/scytedtv/logos/scytedtv-inverted.jpg",
+                        backgroundColor: "#f0f0f0",
+                        link: "https://www.wavedev.app/dashboard/scytedtv-assets"
+                    }
+                ],
+                [
+                    {
+                        name: "JBW Beta Program",
+                        profilePicture: "https://cdn.scyted.tv/jujus-better-wynncraft/logo.png",
+                        backgroundColor: "#f0f0f0",
+                        link: "https://www.wavedev.app/dashboard/jbw-beta"
+                    }
+                ],
+                [
+                    {
+                        name: "The JBW Archive",
+                        profilePicture: "https://cdn.scyted.tv/jujus-better-wynncraft/logo-inverted.png",
+                        backgroundColor: "#f0f0f0",
+                        link: "https://www.wavedev.app/dashboard/jbw-archive"
+                    }
+                ]
+            ];
+
+            fetchBotDataAndDisplay(jsonUrls, botDataArrays, botInfoDiv, botData);
+        }
+
+        function fetchBotDataAndDisplay(jsonUrls, botDataArrays, botInfoDiv, initialBotData) {
             const storedAccessToken = getCookie("accessToken");
 
             if (storedAccessToken) {
                 fetchDiscordUserData(storedAccessToken)
                     .then(userData => {
-                        // Display user info on the dashboard
                         displayUserInfo(userData);
 
                         const loggedInUserId = userData.id;
 
-                        // Fetch the list of user IDs from the JSON file
-                        fetch('https://api.scyted.tv/wave-development/dashboard/access/scytedtv-user-access.json')
-                            .then(response => response.json())
-                            .then(userIds => {
-                                // Check if the logged-in user's ID is in the list
-                                if (userIds.includes(loggedInUserId)) {
-                                    // Add "ScytedTV Assets" entry
-                                    botData.push({
-                                        name: "ScytedTV Assets",
-                                        profilePicture: "https://cdn.scyted.tv/assets/scytedtv/logos/scytedtv-inverted.jpg",
-                                        backgroundColor: "#f0f0f0",
-                                        link: "https://www.wavedev.app/dashboard/scytedtv-assets"
+                        // Create a copy of the initialBotData array to avoid modifying the original array
+                        const botData = [...initialBotData];
+
+                        // Iterate over each JSON file URL and corresponding botData array
+                        jsonUrls.forEach((jsonUrl, index) => {
+                            fetch(jsonUrl)
+                                .then(response => response.json())
+                                .then(userIds => {
+                                    if (userIds.includes(loggedInUserId)) {
+                                        // Add entries to the botData array based on the JSON file
+                                        botDataArrays[index].forEach(entry => {
+                                            botData.push(entry);
+                                        });
+                                    }
+
+                                    // Clear existing bot elements
+                                    botInfoDiv.innerHTML = "";
+
+                                    // Iterate through botData and create elements
+                                    botData.forEach(bot => {
+                                        const botContainer = document.createElement("a");
+                                        botContainer.classList.add("bot-details");
+                                        botContainer.style.backgroundColor = bot.backgroundColor || "#ddd";
+                                        botContainer.href = bot.link || "#";
+
+                                        const botProfilePicture = document.createElement("img");
+                                        botProfilePicture.src = bot.profilePicture;
+                                        botProfilePicture.alt = "Bot Profile Picture";
+                                        botProfilePicture.classList.add("bot-profile-picture");
+
+                                        const botName = document.createElement("div");
+                                        botName.classList.add("bot-name");
+                                        botName.textContent = bot.name;
+
+                                        botContainer.appendChild(botProfilePicture);
+                                        botContainer.appendChild(botName);
+
+                                        botContainer.addEventListener("click", function (event) {
+                                            console.log(`Clicked on ${bot.name}`);
+                                            // If you want to navigate to the link, remove the next line
+                                            // event.preventDefault();
+                                        });
+
+                                        botInfoDiv.appendChild(botContainer);
                                     });
-                                }
-
-                                botData.forEach(bot => {
-                                    const botContainer = document.createElement("a"); // Use an anchor element for the link
-                                    botContainer.classList.add("bot-details");
-                                    botContainer.style.backgroundColor = bot.backgroundColor || "#ddd"; // Set background color
-                                    botContainer.href = bot.link || "#"; // Set link
-
-                                    const botProfilePicture = document.createElement("img");
-                                    botProfilePicture.src = bot.profilePicture;
-                                    botProfilePicture.alt = "Bot Profile Picture";
-                                    botProfilePicture.classList.add("bot-profile-picture");
-
-                                    const botName = document.createElement("div");
-                                    botName.classList.add("bot-name");
-                                    botName.textContent = bot.name;
-
-                                    botContainer.appendChild(botProfilePicture);
-                                    botContainer.appendChild(botName);
-
-                                    botContainer.addEventListener("click", function (event) {
-                                        // Handle click on bot square (add your logic here)
-                                        console.log(`Clicked on ${bot.name}`);
-                                        // If you want to navigate to the link, remove the next line
-                                        // event.preventDefault();
-                                    });
-
-                                    botInfoDiv.appendChild(botContainer);
+                                })
+                                .catch(error => {
+                                    console.error(`Error fetching user IDs for JSON file ${index + 1}:`, error);
+                                    // Handle error for each fetch call
                                 });
-                            })
-                            .catch(error => {
-                                console.error("Error fetching user IDs:", error);
-                                // Handle error
-                            });
+                        });
                     })
                     .catch(error => {
                         console.error("Error fetching user data:", error);
-                        // Handle error
+                        // Handle error for the Discord user data fetch
                     });
             }
         }

@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" href="https://api.scyted.tv/wave-development/scrollbar-styles.css">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3996501092754288"
+        crossorigin="anonymous"></script>
+
+    <title>JBW Beta Program - Dashboard</title>
+    <style>
+        /* Styles from the second file */
+        body {
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f0f0;
+        }
+
+        header {
+            background-color: #7289da;
+            color: #fff;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .nav-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            margin-right: 20px;
+        }
+
+        .profile-picture {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        .user-dropdown {
+            display: none;
+            position: absolute;
+            top: 60px;
+            right: 20px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            flex-direction: column;
+            z-index: 1;
+        }
+
+        .user-dropdown a {
+            color: #333;
+            padding: 10px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .user-dropdown a:hover {
+            background-color: #ddd;
+        }
+
+        .user-dropdown.show {
+            display: flex;
+        }
+
+        .user-dropdown a.logout {
+            color: #ff5252;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: left;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        .user-info-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-top: 20px;
+        }
+
+        .bot-details {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            padding: 10px;
+        }
+
+        .bot-profile-picture {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin-bottom: 10px;
+        }
+
+        .bot-name {
+            font-weight: bold;
+            color: #333;
+            text-align: center;
+            /* Center the bot name */
+        }
+
+        .user-info-box {
+            flex: 1;
+            padding: 20px;
+            background-color: #eee;
+            border-radius: 8px;
+            margin-top: 10px;
+        }
+
+        .user-info-box h2 {
+            text-align: center;
+        }
+
+        .user-info-content {
+            text-align: left;
+        }
+
+        .error-message {
+            color: #ff5252;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .bot-details a {
+            text-decoration: none;
+        }
+
+        .bot-details a:hover .bot-name {
+            text-decoration: underline;
+        }
+
+        /* Hamburger menu styles */
+        .hamburger-menu {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            padding: 10px;
+        }
+
+        .bar {
+            width: 25px;
+            height: 3px;
+            background-color: #fff;
+            margin: 3px 0;
+            transition: 0.4s;
+        }
+
+        .center-italicized {
+            text-align: center;
+            font-style: italic;
+        }
+
+         /* Style the list */
+         ul.breadcrumb {
+            padding: 10px 16px;
+            list-style: none;
+            background-color: #eee;
+        }
+
+        /* Display list items side by side */
+        ul.breadcrumb li {
+            display: inline;
+            font-size: 18px;
+        }
+
+        /* Add a slash symbol (/) before/behind each list item */
+        ul.breadcrumb li+li:before {
+            padding: 8px;
+            color: black;
+            content: "/\00a0";
+        }
+
+        /* Add a color to all links inside the list */
+        ul.breadcrumb li a {
+            color: #0275d8;
+            text-decoration: none;
+        }
+
+        /* Add a color on mouse-over */
+        ul.breadcrumb li a:hover {
+            color: #01447e;
+            text-decoration: underline;
+        }
+
+        @media screen and (max-width: 768px) {
+
+            /* Mobile-specific styles */
+
+            .container {
+                padding: 10px;
+            }
+
+            .user-info,
+            .user-info-container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            header {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .logo {
+                margin-bottom: 10px;
+            }
+
+            nav {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .user-info {
+                margin: 0;
+            }
+
+            .user-dropdown {
+                right: 0;
+            }
+
+            .user-info.show-dropdown .bar:nth-child(1) {
+                transform: rotate(-45deg) translate(-5px, 6px);
+            }
+
+            .user-info.show-dropdown .bar:nth-child(2) {
+                opacity: 0;
+            }
+
+            .user-info.show-dropdown .bar:nth-child(3) {
+                transform: rotate(45deg) translate(-5px, -6px);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <script src="https://api.scyted.tv/wave-development/dashboard/page-loading-script.js"></script>
+    <header>
+        <div class="logo">Wave Development</div>
+        <nav>
+            <div class="user-info" onclick="toggleUserDropdown()">
+                <img src="https://cdn.scyted.tv/website-assets/wave-development/default-discord.png"
+                    alt="Profile Picture" class="profile-picture">
+                <span>Loading...</span>
+                <div class="user-dropdown" id="userDropdown">
+                    <a href="https://www.wavedev.app/" class="home">Home</a>
+                    <a href="#" class="logout" onclick="logout()">Logout</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <div class="bot-details">
+            <img src="https://cdn.scyted.tv/jujus-better-wynncraft/logo.png" alt="JuJu's Better Wynncraft Logo"
+                class="bot-profile-picture">
+            <div class="bot-name"></div>
+            <h1>JuJu's Better Wynncraft</h1>
+        </div>
+        <div class="user-info-box" id="userInfoBox">
+            <p>With the goal of optimizing your Wynncraft experience, we have
+                created "JuJu's Better Wynncraft" to bring you Modpacks for both Functionality and Quality of Life
+                changes.</p>
+        </div>
+
+
+        <div class="user-info-box" id="userInfoBox">
+            <h2>DOWNLOAD LATEST</h2>
+
+            <form name="downloadForm" id="downloadForm" action="" onsubmit="return validateForm()">
+                <label for="pack">Pack:</label>
+                <select name="pack" id="pack" required>
+                    <option value="" selected="selected">Select pack</option>
+                </select>
+                <br><br>
+
+                <label for="shader">Shader:</label>
+                <select name="shader" id="shader" disabled>
+                    <option value="" selected="selected">No Shaders Available</option>
+                </select>
+                <br><br>
+
+                <label for="modLoader">Mod Loader:</label>
+                <select name="modLoader" id="modLoader" required>
+                    <option value="" selected="selected">Select mod loader</option>
+                </select>
+                <br><br>
+
+                <input type="submit" value="Download">
+                <button type="button" onclick="viewChangelogs()">View Changelogs</button>
+            </form>
+        </div>
+
+
+        <div class="user-info-box" id="userInfoBox">
+
+            <h3>JuJu's Better Wynncraft: Essentials</h3>
+            <p>The Essentials pack focuses on fast performance, whilst also including a few quality of life mods.</p>
+
+            <h4>Mods</h4>
+
+            <li>Cloth Config API</li>
+            <li>Controlling</li>
+            <li>Fabric API</li>
+            <li>Fabric Language Kotlin</li>
+            <li>Iris Shaders</li>
+            <li>FPS Reducer</li>
+            <li>Searchables</li>
+            <li>Sodium</li>
+            <li>Sodium Extra</li>
+            <li>Voices of Wynn</li>
+            <li>Wynntils</li>
+            <li>YetAnotherConfigLib</li>
+
+            <p>[ <a href="https://github.com/ScytedTV-Studios/JuJus-Better-Wynncraft/releases/latest">GitHub</a> ] | [
+                <a href="https://discord.gg/JEeUqPQwBF">Discord</a> ]
+            </p>
+        </div>
+
+
+        <div class="user-info-box" id="userInfoBox">
+
+            <h3>JuJu's Better Wynncraft: Extras</h3>
+            <p>The Extras pack improves slightly more on performance and adds some extra quality of life mods.</p>
+
+            <h4>Mods</h4>
+
+            <p>Includes everything from Essentials, Plus:</p>
+
+            <li>AmbientSounds 5</li>
+            <li>Athena</li>
+            <li>Better Third Person</li>
+            <li>Capes</li>
+            <li>CompleteConfig</li>
+            <li>CreativeCore</li>
+            <li>Debugify</li>
+            <li>Enhanced Block Entities</li>
+            <li>Entity Texture Features</li>
+            <li>Falling Leaves</li>
+            <li>FerriteCore</li>
+            <li>Indium</li>
+            <li>Krypton</li>
+            <li>LazyDFU</li>
+            <li>Lithium</li>
+            <li>Mouse Tweaks</li>
+            <li>Not Enough Animations</li>
+            <li>Physics Mod</li>
+            <li>Skin Layers 3D</li>
+            <li>Sound Physics Remastered</li>
+            <li>Starlight</li>
+            <li>YDM's Weapon Master</li>
+            <li>Zoomify</li>
+
+            <p>[ <a href="https://github.com/ScytedTV-Studios/JuJus-Better-Wynncraft/releases/latest">GitHub</a> ] | [
+                <a href="https://discord.gg/JEeUqPQwBF">Discord</a> ]
+            </p>
+        </div>
+
+
+        <div class="user-info-box" id="userInfoBox">
+
+            <h3>JuJu's Better Wynncraft: Extreme</h3>
+            <p>The Extreme pack adds more quality of life features, as well as some advanced mods.</p>
+
+            <h4>Mods</h4>
+
+            <p>Includes everything from Essentials and Extras, Plus:</p>
+
+            <li>Avomod</li>
+            <li>Better Beds</li>
+            <li>Blur</li>
+            <li>CIT Resewn</li>
+            <li>Don't Clear Chat History</li>
+            <li>Entity View Distance</li>
+            <li>Inventory HUD+</li>
+            <li>More Chat History</li>
+            <li>Reese's Sodium Options</li>
+            <li>Replay Mod</li>
+            <li>Satin API</li>
+            <li>Shoulder Surfing Reloaded</li>
+            <li>Show Me Your Skin</li>
+            <li>ShowMeMyDPS!</li>
+            <li>Sounds</li>
+            <li>Visuality</li>
+            <li>Wavey Capes</li>
+
+            <p>[ <a href="https://github.com/ScytedTV-Studios/JuJus-Better-Wynncraft/releases/latest">GitHub</a> ] | [
+                <a href="https://discord.gg/JEeUqPQwBF">Discord</a> ]
+            </p>
+        </div>
+
+
+        <div class="user-info-box" id="userInfoBox">
+
+            <h2>ARCHIVE DOWNLOADS</h2>
+            <form name="archiveForm" id="archiveForm" action="" onsubmit="return validateArchiveForm()">
+
+                <!-- Major Version Section -->
+                <label for="majorVersion">Major Version:</label>
+                <select name="majorVersion" id="majorVersion" onchange="updateArchiveOptions()" required>
+                    <option value="" selected="selected">Select Major Version</option>
+                    <option value="version1">Version 1</option>
+                    <option value="version2">Version 2</option>
+                </select>
+                <br><br>
+
+                <!-- Version Section -->
+                <label for="version">Version:</label>
+                <select name="version" id="version" onchange="updateArchiveOptionsVersions()" disabled required>
+                    <option value="" selected="selected">Select a Major Version</option>
+                </select>
+                <br><br>
+
+                <!-- Pack Section -->
+                <label for="archivePack">Pack:</label>
+                <select name="archivePack" id="archivePack" disabled required>
+                    <option value="" selected="selected">Select a Major Version</option>
+                    <option value="essentials">Essentials</option>
+                    <option value="extras">Extras</option>
+                    <option value="extreme">Extreme</option>
+                </select>
+                <br><br>
+
+                <!-- Shader Section -->
+                <label for="archiveShader">Shader:</label>
+                <select name="archiveShader" id="archiveShader" disabled required>
+                    <option value="" selected="selected">Select a Major Version</option>
+                </select>
+                <br><br>
+
+                <!-- Mod Loader Section -->
+                <label for="archiveModLoader">Mod Loader:</label>
+                <select name="archiveModLoader" id="archiveModLoader" disabled required>
+                    <option value="" selected="selected">Select a Major Version</option>
+                    <option value="CurseForge">CurseForge</option>
+                    <option value="Modrinth">Modrinth</option>
+                </select>
+                <br><br>
+
+                <input type="submit" value="Download">
+                <button type="button" onclick="viewArchiveChangelogs()">View Changelogs</button>
+            </form>
+
+            <div id="messageContainer"></div>
+        </div>
+
+        <div class="error-message" id="errorMessage">
+        <a href="https://www.wavedev.app/dashboard/" style="color: red;"><br>← back</a>
+        </div>
+
+    </div>
+    </div>
+
+    <script>
+        function toggleUserDropdown() {
+            const userDropdown = document.getElementById('userDropdown');
+            userDropdown.classList.toggle('show');
+        }
+
+        function toggleMobileMenu() {
+            const userInfo = document.querySelector('.user-info');
+            userInfo.classList.toggle('show-dropdown');
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const storedAccessToken = getCookie("accessToken");
+
+            // Redirect to login if access token is not found
+            if (!storedAccessToken) {
+                window.location.href = "https://www.wavedev.app/dashboard/jbw-archive/login";
+            } else {
+                // Fetch user data from Discord API
+                fetchDiscordUserData(storedAccessToken)
+                    .then(userData => {
+                        // Display bot info and user info on the dashboard
+                        displayBotInfo();
+                        displayUserInfo(userData);
+
+                        const loggedInUserId = userData.id;
+
+                        // Fetch the list of user IDs from the JSON file
+                        fetch('https://api.scyted.tv/wave-development/dashboard/access/scytedtv-user-access.json')
+                            .then(response => response.json())
+                            .then(userIds => {
+                                // Check if the logged-in user's ID is in the list
+                                if (!userIds.includes(loggedInUserId)) {
+                                    // Redirect to the specified page if the user's ID is not in the list
+                                    window.location.href = "https://www.wavedev.app/dashboard/";
+                                }
+                            })
+                            .catch(error => {
+                                console.error("Error fetching user IDs:", error);
+                                // Handle error
+                            });
+                    })
+                    .catch(error => {
+                        console.error("Error fetching user data:", error);
+                        // Handle error (e.g., redirect to login page)
+                        window.location.href = "https://www.wavedev.app/dashboard/jbw-archive/login";
+                    });
+            }
+        });
+
+        function fetchDiscordUserData(accessToken) {
+            const apiUrl = 'https://discord.com/api/users/@me';
+
+            return fetch(apiUrl, {
+                headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                },
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`Discord API Request Failed! Status: ${response.status}`);
+                    }
+                    return response.json();
+                });
+        }
+
+        function displayUserInfo(userData) {
+            const userDropdown = document.getElementById('userDropdown');
+            const profilePicture = document.querySelector('.profile-picture');
+            const username = document.querySelector('.user-info span');
+
+            // Check if userData.avatar is null
+            if (userData.avatar === null || userData.avatar === "null") {
+                profilePicture.src = "https://cdn.scyted.tv/website-assets/wave-development/default-discord.png";
+            } else {
+                profilePicture.src = `https://cdn.discordapp.com/avatars/${userData.id}/${userData.avatar}.png`;
+            }
+
+            username.textContent = userData.username;
+            userDropdown.querySelector('.home').href = `https://www.wavedev.app/`;
+        }
+
+        function displayBotInfo() {
+            // Implement your bot info display logic here
+        }
+
+        function logout() {
+            // Clear cookies
+            document.cookie = "accessToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+
+            // Redirect to login page
+            window.location.href = "https://www.wavedev.app/dashboard/jbw-archive/login";
+        }
+
+        function getCookie(name) {
+            const cookies = document.cookie.split("; ");
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].split("=");
+                if (cookie[0] === name) {
+                    return cookie[1];
+                }
+            }
+            return null;
+        }
+    </script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-LF3ZTHGQHE"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-LF3ZTHGQHE');
+    </script>
+</body>
+
+</html>
