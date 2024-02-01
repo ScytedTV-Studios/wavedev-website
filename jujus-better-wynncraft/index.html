@@ -310,7 +310,7 @@
             <div class="logo">Wave Development</div>
             <ul>
                 <li><a href="https://www.wavedev.app/" class="active">Home</a></li>
-                <li><a href="" onclick="redirectToLogin()">Login</a></li>
+                <li><a href="https://www.wavedev.app/dashboard">Login</a></li>
             </ul>
             </div>
         </nav>
@@ -569,7 +569,7 @@
             downloadLink += ".mrpack";
         }
 
-        window.open(downloadLink, "_blank");
+        window.open(downloadLink, "_self");
 
         return true;
     }
@@ -765,7 +765,7 @@
         }
 
         // Open the archive download link in a new tab
-        window.open(archiveDownloadLink, "_blank");
+        window.open(archiveDownloadLink, "_self");
 
         return true;
     }
