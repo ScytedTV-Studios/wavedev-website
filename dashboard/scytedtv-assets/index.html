@@ -10,6 +10,113 @@
 
     <title>ScytedTV Assets - Download Portal</title>
     <style>
+        .table-container {
+            margin-top: 20px;
+            width: 100%;
+            overflow-x: auto;
+        }
+
+        table {
+            border-collapse: collapse;
+            table-layout: fixed;
+            width: 100%;
+            /* Ensure the table takes up the full width */
+        }
+
+        th,
+        td {
+            padding: 12px;
+            color: black;
+            border-bottom: 1px solid #fff;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            text-align: left;
+            vertical-align: middle;
+        }
+
+        th {
+            background-color: #FFF;
+            text-transform: uppercase;
+        }
+
+        td {
+            position: relative;
+            padding-left: 20px;
+        }
+
+        td .preview-container {
+            position: relative;
+        }
+
+        td .preview {
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            border-radius: 50%;
+        }
+
+        td .preview:hover {
+            transform: scale(1.2);
+        }
+
+        td .lightbox {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 999;
+        }
+
+        td .lightbox video,
+        td .lightbox img {
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 10px;
+        }
+
+        td .close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 24px;
+            color: white;
+            cursor: pointer;
+            background-color: rgba(0, 0, 0, 0.5);
+            width: 30px;
+            height: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%;
+        }
+
+        td button {
+            background-color: #fff;
+            color: #000000;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 30px;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            font-size: 12px;
+        }
+
+        td button:hover {
+            background-color: #f0f0f0;
+            cursor: pointer;
+        }
+
+        /* Styles from the second file */
         body {
             margin: 0;
             font-family: 'Arial', sans-serif;
@@ -126,10 +233,17 @@
         }
 
         .user-info-box {
-            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
             padding: 20px;
             background-color: #eee;
             border-radius: 8px;
+            box-sizing: border-box;
+            margin-right: 20px;
+            overflow: auto;
+            flex: 1;
         }
 
         .user-info-content {
@@ -172,36 +286,97 @@
 
         @media screen and (max-width: 768px) {
 
+/* Mobile-specific styles */
 
-            .user-info,
-            .user-info-container {
-                flex-direction: column;
-                align-items: center;
-                /* Center the user info */
-            }
+.container {
+    padding: 10px;
+}
 
-            header {
-                flex-direction: column;
-                align-items: center;
-            }
+.user-info,
+.user-info-container {
+    flex-direction: column;
+    align-items: center;
+}
 
-            .logo {
-                margin-bottom: 10px;
-            }
+header {
+    flex-direction: column;
+    align-items: center;
+}
 
-            nav {
-                width: 100%;
-                justify-content: center;
-            }
+.logo {
+    margin-bottom: 10px;
+}
 
-            .user-info {
-                margin: 0;
-            }
+nav {
+    width: 100%;
+    justify-content: center;
+}
 
-            .user-dropdown {
-                right: 0;
-            }
+.user-info {
+    margin: 0;
+}
 
+.user-dropdown {
+    right: 0;
+}
+
+.button-container {
+    margin-top: 10px;
+}
+
+.api-button {
+    font-size: 12px;
+    padding: 8px 16px;
+}
+
+.table-container {
+    margin-top: 10px;
+}
+
+th,
+td {
+    padding: 8px;
+}
+
+.preview {
+    width: 30px;
+    height: 30px;
+}
+
+.lightbox video,
+.lightbox img {
+    max-width: 80%;
+    max-height: 80%;
+}
+
+.close {
+    width: 20px;
+    height: 20px;
+    font-size: 18px;
+}
+}
+
+        .button-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .api-button {
+            background-color: #7289da;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+            font-size: 14px;
+            transition: background-color 0.3s ease;
+        }
+
+        .api-button:hover {
+            background-color: #4e5d94;
         }
     </style>
 </head>
@@ -225,19 +400,122 @@
     <div class="container">
         <div class="user-info-container">
             <div class="bot-details">
-                <img src="https://cdn.scyted.tv/discord-wave/wave.jpg" alt="Bot Profile Picture"
+                <img src="https://cdn.scyted.tv/assets/scytedtv/logos/scytedtv-inverted.jpg" alt="Bot Profile Picture"
                     class="bot-profile-picture">
-                <div class="bot-name">Wave 24/7</div>
+                <div class="bot-name">ScytedTV Assets</div>
+                <div class="button-container">
+                    <button class="api-button"
+                        onclick="changeApiUrl('https://api.scyted.tv/assets-library/libraries/logos.json')">Logos</button>
+                    <button class="api-button"
+                        onclick="changeApiUrl('https://api.scyted.tv/assets-library/libraries/intros-outros.json')">Intros
+                        & Outros</button>
+                </div>
             </div>
+
             <div class="user-info-box" id="userInfoBox">
-                <p>Wave 24/7 doesn't currently store user-specific data.<br></p>
-                <p><a href="https://www.wavedev.app/wave/terms-of-service/">Terms of Service</a> - <a
-                        href="https://www.wavedev.app/wave/privacy-policy/">Privacy Policy</a></p>
             </div>
         </div>
+
         <a href="https://www.wavedev.app/dashboard/" style="color: red;"><br>← back</a>
         <div class="error-message" id="errorMessage"></div>
     </div>
+
+
+    <script>
+
+        function changeApiUrl(newUrl) {
+            // Fetch the JSON data with the new URL
+            fetch(newUrl)
+                .then(response => response.json())
+                .then(data => {
+                    // Clear the existing table content
+                    document.getElementById('userInfoBox').innerHTML = '';
+                    // Populate the table with the new data
+                    populateTable(data.items);
+                })
+                .catch(error => console.error('Error fetching JSON:', error));
+        }
+
+        // Table generation code from the first file
+        function populateTable(items) {
+            const tableBody = document.getElementById('userInfoBox');
+
+            items.forEach(item => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${item.fileName}</td>
+                    <td>
+                        <div class="preview-container">
+                            ${getMediaPreview(item.fileLink, item.fileName)}
+                            <div class="lightbox" onclick="closeLightbox()">
+                                ${getLargeMediaPreview(item.fileLink, item.fileName)}
+                                <span class="close" onclick="closeLightbox()">&times;</span>
+                            </div>
+                        </div>
+                    </td>
+                    <td><a href="${item.fileDownloadLink}" download><button>Download</button></a></td>
+                `;
+                tableBody.appendChild(row);
+            });
+        }
+
+        function getMediaPreview(src, fileName) {
+            const ext = fileName.split('.').pop().toLowerCase();
+            if (ext === 'mp4') {
+                return `
+          <video class="preview" width="50" height="50" onclick="openLightbox('${src}')">
+            <source src="${src}" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>`;
+            } else if (ext.match(/(png|jpe?g|gif)$/)) {
+                return `<img class="preview" src="${src}" alt="${fileName}" onclick="openLightbox('${src}')">`;
+            } else {
+                // Display a file icon for other file types
+                return `<img class="preview" src="file-icon.png" alt="${fileName}" onclick="openLightbox('${src}')">`;
+            }
+        }
+
+        function getLargeMediaPreview(src, fileName) {
+            const ext = fileName.split('.').pop().toLowerCase();
+            if (ext === 'mp4') {
+                return `
+          <video class="preview-large" controls>
+            <source src="${src}" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>`;
+            } else if (ext.match(/(png|jpe?g|gif)$/)) {
+                return `<img class="preview-large" src="${src}" alt="${fileName}">`;
+            } else {
+                // Display a file icon for other file types
+                return `<img class="preview-large" src="file-icon.png" alt="${fileName}">`;
+            }
+        }
+
+        function openLightbox(src) {
+            const lightbox = document.querySelector('.lightbox');
+            const media = lightbox.querySelector('.preview-large');
+            media.src = src;
+            lightbox.style.display = 'flex';
+        }
+
+        function closeLightbox() {
+            const lightbox = document.querySelector('.lightbox');
+            const media = lightbox.querySelector('.preview-large');
+            if (media.tagName === 'VIDEO') {
+                media.pause();
+            }
+            lightbox.style.display = 'none';
+        }
+
+        // Fetch the JSON data
+        fetch('https://api.scyted.tv/assets-library/libraries/logos.json')
+            .then(response => response.json())
+            .then(data => populateTable(data.items))
+            .catch(error => console.error('Error fetching JSON:', error));
+
+    </script>
+
+
     <script>
         function toggleUserDropdown() {
             const userDropdown = document.getElementById('userDropdown');
