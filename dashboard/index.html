@@ -190,7 +190,7 @@
         <div id="botInfo" class="bot-info-container"></div>
         <a href="#" class="logout" onclick="logout()"><br>Logout</a>
     </div>
-    <script src="../login-scripts.js" defer></script>
+    <!-- <script src="../login-scripts.js" defer></script> -->
     <!-- <script src="../test-login-scripts.js" defer></script> -->
     <script>
         function toggleUserDropdown() {
@@ -345,7 +345,7 @@
             document.cookie = "accessToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
 
             // Redirect to login page
-            window.location.href = "https://www.wavedev.app/";
+            window.location.href = "https://www.wavedev.app/login";
         }
 
         function getCookie(name) {
