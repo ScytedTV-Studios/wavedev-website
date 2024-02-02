@@ -561,8 +561,8 @@
             return false;
         }
 
-        // var downloadLink = `https://github.com/ScytedTV-Studios/JuJus-Better-Wynncraft/releases/download/${latestVersion}/` + "/JuJus-Better-Wynncraft" + "+" + latestVersion + "+" + packValue + "+" + shaderValue + "+" + modLoaderValue;
-        var downloadLink = `https://github.com/ScytedTV-Studios/JuJus-Better-Wynncraft/releases/download/${latestVersion}/` + "/JuJus-Better-Wynncraft" + "+" + latestVersion + "+" + packValue + "+" + modLoaderValue;
+        // var downloadLink = `https://github.com/ScytedTV-Studios/JuJus-Better-Wynncraft/releases/download/${latestVersion}` + "/JuJus-Better-Wynncraft" + "+" + latestVersion + "+" + packValue + "+" + shaderValue + "+" + modLoaderValue;
+        var downloadLink = `https://github.com/ScytedTV-Studios/JuJus-Better-Wynncraft/releases/download/${latestVersion}` + "/JuJus-Better-Wynncraft" + "+" + latestVersion + "+" + packValue + "+" + modLoaderValue;
 
         // Append the appropriate file extension based on the selected "modLoader" option
         if (modLoaderValue === "CurseForge") {
@@ -571,7 +571,7 @@
             downloadLink += ".mrpack";
         }
 
-        window.open(downloadLink, "_self");
+        window.open(downloadLink, "_blank");
 
         return true;
     }
@@ -767,7 +767,7 @@
         }
 
         // Open the archive download link in a new tab
-        window.open(archiveDownloadLink, "_self");
+        window.open(archiveDownloadLink, "_blank");
 
         return true;
     }
