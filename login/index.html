@@ -109,7 +109,7 @@
     </script>
 </body>
 <script>
-    const page = "oauth/discord/?callbackUrl=https://www.scyted.tv/resources";
+    const page = "oauth/discord/?callbackUrl=https://www.scyted.tv";
     
     // Check if the user is on a mobile device
     function isMobileDevice() {
@@ -124,7 +124,7 @@
         } else {
             // If user is on a computer, redirect them to a different website
             console.log("User is on a computer. Redirecting...");
-            window.location.href = `https://www.scyted.tv/resources/${page}`; // Replace "https://example.com" with your desired URL
+            window.location.href = `https://www.scyted.tv/${page}`; // Replace "https://example.com" with your desired URL
         }
     }
     
